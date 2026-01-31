@@ -1,4 +1,4 @@
-# AI Mental Chatbot WebUI (Frontend)
+# CurhatIn: AI Mental Chatbot WebUI (Frontend)
 
 The frontend interface for the AI Mental Health Chatbot, providing a responsive and accessible chat experience.
 
