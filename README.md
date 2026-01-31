@@ -79,3 +79,15 @@ The frontend does NOT:
 - Store conversation history permanently
 - Make clinical or diagnostic decisions
 
+## 🔐 Privacy & Data Handling (Frontend)
+
+To respect user privacy and ethical boundaries:
+
+- No personal identity (name, email, phone) is required to use the chat
+- Messages are sent directly to the backend API and not persisted on the client
+- Local storage is avoided for chat content unless explicitly enabled for UX purposes
+- The frontend does not log or analyze user messages
+
+All sensitive processing is delegated to the backend with anonymization policies.
+
+
