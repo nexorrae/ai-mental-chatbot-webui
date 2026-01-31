@@ -11,7 +11,9 @@ interface ChatPageProps {
     onBack: () => void;
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { config } from '../config';
+
+const API_URL = config.apiUrl;
 
 export default function ChatPage({ onBack }: ChatPageProps) {
     const [messages, setMessages] = useState<Message[]>([]);
