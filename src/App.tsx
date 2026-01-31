@@ -18,7 +18,7 @@ function App() {
         <div className="container nav-container">
           <a href="/" className="nav-logo">
             <span className="logo-icon">🌿</span>
-            <span className="logo-text">MindJournal</span>
+            <span className="logo-text">Curhatin</span>
           </a>
           <div className="nav-links">
             <a href="#features">Features</a>
@@ -193,7 +193,7 @@ function App() {
               <span className="section-label">Privacy & Security</span>
               <h2>Your Thoughts, <span className="text-gradient">Your Control</span></h2>
               <p className="privacy-description">
-                We built MindJournal with privacy as the foundation, not an afterthought.
+                We built Curhatin with privacy as the foundation, not an afterthought.
                 Your mental wellness journey deserves complete confidentiality.
               </p>
 
@@ -269,7 +269,7 @@ function App() {
             <div className="footer-brand">
               <a href="/" className="nav-logo">
                 <span className="logo-icon">🌿</span>
-                <span className="logo-text">MindJournal</span>
+                <span className="logo-text">Curhatin</span>
               </a>
               <p>A safe space for daily reflection and mental wellness.</p>
             </div>
@@ -295,7 +295,7 @@ function App() {
           </div>
 
           <div className="footer-bottom">
-            <p>© 2024 MindJournal. Made with 💚 for mental wellness.</p>
+            <p>© 2024 Curhatin. Made with 💚 for mental wellness.</p>
           </div>
         </div>
       </footer>

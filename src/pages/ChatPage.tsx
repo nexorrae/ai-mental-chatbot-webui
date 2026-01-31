@@ -41,7 +41,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
         setMessages([
             {
                 role: 'assistant',
-                content: 'Halo! 👋 Selamat datang di MindJournal. Saya di sini untuk mendengarkan dan menemanimu berefleksi. Bagaimana perasaanmu hari ini?',
+                content: 'Halo! 👋 Selamat datang di Curhatin. Saya di sini untuk mendengarkan dan menemanimu berefleksi. Bagaimana perasaanmu hari ini?',
                 timestamp: new Date(),
             },
         ]);
@@ -168,7 +168,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
                 <div className="chat-title">
                     <span className="chat-icon">🌿</span>
                     <div>
-                        <h1>MindJournal</h1>
+                        <h1>Curhatin</h1>
                         <span className="chat-status">
                             {isLoading ? 'Sedang mengetik...' : 'Online'}
                         </span>
