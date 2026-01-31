@@ -90,4 +90,14 @@ To respect user privacy and ethical boundaries:
 
 All sensitive processing is delegated to the backend with anonymization policies.
 
+## ⚠️ Ethical Disclaimer
+
+Curhatin is a non-clinical AI companion designed for reflective and supportive conversations.
+
+The frontend must clearly communicate that:
+- This chatbot is NOT a mental health professional
+- Responses are not medical, psychological, or psychiatric advice
+- Users experiencing emergencies should seek professional help
+
+This disclaimer should be visible in the UI (e.g., footer, onboarding modal, or info section).
 
