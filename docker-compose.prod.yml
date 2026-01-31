@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  # React Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-mental-chatbot-frontend
+    restart: unless-stopped
+    environment:
+      # Now pointing to itself (Nginx Proxy) because /api is proxied!
+      - VITE_API_URL=https://curhatinai.com
+    networks:
+      - curhatin-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/nginx-health"]
+
+  # Nginx SSL Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: ai-mental-chatbot-frontend-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.ssl.conf:/etc/nginx/nginx.conf:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    networks:
+      - curhatin-network
+    depends_on:
+      - frontend
+      
+  # Certbot (Auto-renew)
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+networks:
+  curhatin-network:
+    external: true
