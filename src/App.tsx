@@ -1,6 +1,16 @@
+import { useState } from 'react'
 import './App.css'
+import ChatPage from './pages/ChatPage'
+
+type Page = 'landing' | 'chat';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState<Page>('landing');
+
+  if (currentPage === 'chat') {
+    return <ChatPage onBack={() => setCurrentPage('landing')} />;
+  }
+
   return (
     <div className="landing-page">
       {/* Navigation */}
@@ -15,7 +25,7 @@ function App() {
             <a href="#how-it-works">How It Works</a>
             <a href="#privacy">Privacy</a>
           </div>
-          <a href="#get-started" className="btn btn-primary">Get Started</a>
+          <button onClick={() => setCurrentPage('chat')} className="btn btn-primary">Mulai Chat</button>
         </div>
       </nav>
 
@@ -34,10 +44,10 @@ function App() {
               only when you choose.
             </p>
             <div className="hero-buttons">
-              <a href="#get-started" className="btn btn-primary btn-lg">
-                Start Journaling Free
+              <button onClick={() => setCurrentPage('chat')} className="btn btn-primary btn-lg">
+                Mulai Chat Sekarang
                 <span className="btn-arrow">→</span>
-              </a>
+              </button>
               <a href="#how-it-works" className="btn btn-secondary btn-lg">
                 Learn More
               </a>
@@ -78,7 +88,7 @@ function App() {
                 </p>
                 <div className="card-footer">
                   <span className="entry-time">✍️ 2 mins ago</span>
-                  <button className="reflect-btn">
+                  <button onClick={() => setCurrentPage('chat')} className="reflect-btn">
                     ✨ Reflect with AI
                   </button>
                 </div>
@@ -242,10 +252,10 @@ function App() {
             <h2>Start Your Mindful Journey Today</h2>
             <p>Join thousands who've found clarity through private, thoughtful reflection.</p>
             <div className="cta-buttons">
-              <a href="#" className="btn btn-primary btn-lg">
-                Get Started Free
+              <button onClick={() => setCurrentPage('chat')} className="btn btn-primary btn-lg">
+                Mulai Chat Sekarang
                 <span className="btn-arrow">→</span>
-              </a>
+              </button>
             </div>
             <span className="cta-note">No account required • Always free • Your data stays yours</span>
           </div>
