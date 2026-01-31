@@ -63,3 +63,19 @@ docker build -t mental-chatbot-webui .
 docker run -p 3001:80 --env-file .env mental-chatbot-webui
 ```
 *(Note: Dockerfile configuration typically serves static assets via Nginx).*
+
+## 🧭 Frontend Role in Curhatin Workflow
+
+The WebUI serves as the primary user interaction layer in Curhatin.
+
+Responsibilities:
+- Collect user input in a safe and accessible manner
+- Display AI-generated responses clearly and transparently
+- Act as a thin client without storing sensitive data
+- Forward messages to the backend API for processing
+
+The frontend does NOT:
+- Perform AI inference
+- Store conversation history permanently
+- Make clinical or diagnostic decisions
+
