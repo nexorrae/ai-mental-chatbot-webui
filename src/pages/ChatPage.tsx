@@ -16,6 +16,12 @@ import { config } from '../config';
 const API_URL = config.apiUrl;
 
 export default function ChatPage({ onBack }: ChatPageProps) {
+    // Theme state: default to 'light' to match landing page
+    const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+        const saved = localStorage.getItem('theme');
+        return (saved as 'dark' | 'light') || 'light';
+    });
+
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +29,16 @@ export default function ChatPage({ onBack }: ChatPageProps) {
     const [error, setError] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLTextAreaElement>(null);
+
+    // Persist theme
+    useEffect(() => {
+        localStorage.setItem('theme', theme);
+        // Update meta theme-color logic if needed, but for now CSS handles styles
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    };
 
     // Auto-scroll to bottom when new messages arrive
     useEffect(() => {
@@ -120,7 +136,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
     // Consent Modal
     if (showConsent) {
         return (
-            <div className="chat-page">
+            <div className={`chat-page ${theme === 'light' ? 'light-mode' : ''}`}>
                 <div className="consent-overlay">
                     <div className="consent-modal">
                         <div className="consent-icon">🔒</div>
@@ -161,7 +177,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
     }
 
     return (
-        <div className="chat-page">
+        <div className={`chat-page ${theme === 'light' ? 'light-mode' : ''}`}>
             {/* Header */}
             <header className="chat-header">
                 <button className="back-button" onClick={onBack}>
@@ -176,7 +192,11 @@ export default function ChatPage({ onBack }: ChatPageProps) {
                         </span>
                     </div>
                 </div>
-                <div className="header-spacer"></div>
+
+                {/* Theme Toggle Button */}
+                <button className="theme-toggle" onClick={toggleTheme} title="Toggle Theme">
+                    {theme === 'dark' ? '☀️' : '🌙'}
+                </button>
             </header>
 
             {/* Messages */}
