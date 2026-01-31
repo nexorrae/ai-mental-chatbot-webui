@@ -2,22 +2,22 @@
 
 The frontend interface for the AI Mental Health Chatbot, providing a responsive and accessible chat experience.
 
-## 🛠 Tech Stack
+## Tech Stack
 - **Framework:** [React 19](https://react.dev/)
 - **Language:** TypeScript
 - **Build Tool:** [Vite](https://vitejs.dev/)
 - **Styling:** CSS (Modular/Global)
 
-## 🚀 Features
+## Features
 - **Real-time Chat:** Interactive chat interface with the backend.
 - **Markdown Support:** Renders AI responses with proper formatting.
 - **Responsive Design:** Optimized for desktop and mobile viewports.
 
-## 📦 Prerequisites
+## Prerequisites
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/)
 
-## ⚙️ Configuration
+## Configuration
 Copy the `.env.example` file to `.env` and configure:
 
 ```bash
@@ -32,7 +32,7 @@ cp .env.example .env
 
 > **Note:** `VITE_API_URL` must point to your running SDK instance.
 
-## 🏃‍♂️ Running Locally
+## Running Locally
 
 1. **Install Dependencies:**
    ```bash
@@ -55,7 +55,7 @@ cp .env.example .env
    npm run preview
    ```
 
-## 🐳 Docker Support
+## Docker Support
 The application is container-ready. 
 
 ```bash
@@ -64,7 +64,7 @@ docker run -p 3001:80 --env-file .env mental-chatbot-webui
 ```
 *(Note: Dockerfile configuration typically serves static assets via Nginx).*
 
-## 🧭 Frontend Role in Curhatin Workflow
+## Frontend Role in Curhatin Workflow
 
 The WebUI serves as the primary user interaction layer in Curhatin.
 
@@ -79,7 +79,7 @@ The frontend does NOT:
 - Store conversation history permanently
 - Make clinical or diagnostic decisions
 
-## 🔐 Privacy & Data Handling (Frontend)
+## Privacy & Data Handling (Frontend)
 
 To respect user privacy and ethical boundaries:
 
@@ -90,7 +90,7 @@ To respect user privacy and ethical boundaries:
 
 All sensitive processing is delegated to the backend with anonymization policies.
 
-## ⚠️ Ethical Disclaimer
+## Ethical Disclaimer
 
 Curhatin is a non-clinical AI companion designed for reflective and supportive conversations.
 
@@ -101,7 +101,7 @@ The frontend must clearly communicate that:
 
 This disclaimer should be visible in the UI (e.g., footer, onboarding modal, or info section).
 
-## 🧠 AI Transparency
+## AI Transparency
 
 To ensure responsible AI use:
 
@@ -111,7 +111,7 @@ To ensure responsible AI use:
 
 Any future AI-powered premium features must include clear user consent.
 
-## 🔌 Backend Dependency
+## Backend Dependency
 
 This frontend depends on a running backend service that:
 - Handles AI model selection
@@ -122,4 +122,11 @@ The frontend should gracefully handle:
 - API downtime
 - Rate limiting
 - Incomplete or blocked responses
+
+## Non-Goals
+
+The frontend is intentionally NOT designed to:
+- Replace professional mental health services
+- Diagnose or assess mental disorders
+- Handle crisis intervention scenarios
 
