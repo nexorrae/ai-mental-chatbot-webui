@@ -51,10 +51,31 @@ $COMPOSE_CMD -f docker-compose.prod.yml run --rm --entrypoint "\
     -subj '/CN=localhost'" certbot
 echo
 
+# Workaround for docker-compose v1 'ContainerConfig' bug:
+# Remove existing containers so it doesn't try to read their (incompatible) config.
+docker rm -f ai-mental-chatbot-frontend ai-mental-chatbot-frontend-nginx >/dev/null 2>&1
+
 echo "### Starting nginx ..."
 $COMPOSE_CMD -f docker-compose.prod.yml up --force-recreate -d nginx
-echo "### Waiting for Nginx to stabilize..."
-sleep 20
+
+echo "### Waiting for Nginx to be healthy..."
+timeout=60
+while [ $timeout -gt 0 ]; do
+    if docker ps | grep "ai-mental-chatbot-frontend-nginx" | grep "(healthy)" >/dev/null 2>&1; then
+        echo "✅ Nginx is healthy!"
+        break
+    fi
+    echo "Waiting for Nginx... ($timeout s)"
+    sleep 2
+    timeout=$((timeout - 2))
+done
+
+if [ $timeout -le 0 ]; then
+    echo "❌ ERROR: Nginx failed to start or become healthy."
+    echo "See logs below:"
+    $COMPOSE_CMD -f docker-compose.prod.yml logs nginx
+    exit 1
+fi
 echo
 
 # echo "### Deleting dummy certificate for $domains ..."
