@@ -130,3 +130,38 @@ The frontend is intentionally NOT designed to:
 - Diagnose or assess mental disorders
 - Handle crisis intervention scenarios
 
+## 📌 Project Milestone (v0.1)
+Status: Early Working Prototype
+As of this milestone, the project has reached a functional and deployable state:
+✅ Landing Page Completed
+A privacy-first, user-facing landing page is live and publicly accessible.
+✅ Core Chatbot Functional
+Users can interact with the AI chatbot end-to-end via the web interface.
+✅ Frontend–Backend Integration
+The WebUI and SDK are fully connected and communicating through stable APIs.
+✅ Server Deployment
+The system is deployed on a live server environment (not localhost), validating real-world operability.
+✅ Cost-Conscious Architecture
+Early-stage testing leverages free-tier or low-cost LLM resources to minimize operational overhead.
+✅ Ethics & Scope Defined
+
+## Clear boundaries are established regarding:
+Non-clinical positioning
+AI limitations
+User privacy and data handling principles
+
+## Current Focus
+The project is intentionally focused on:
+Stability
+UX clarity
+Ethical guardrails
+Early validation
+
+## Out of Scope (for this phase)
+The following are explicitly deferred:
+Mobile applications
+Multi-platform integrations (Discord, WhatsApp, etc.)
+Advanced personalization or clinical advice
+Monetization features
+
+This milestone represents a transition from concept to working prototype, forming a stable foundation for future research, validation, or product iteration.
