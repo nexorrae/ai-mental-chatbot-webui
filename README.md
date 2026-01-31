@@ -101,3 +101,14 @@ The frontend must clearly communicate that:
 
 This disclaimer should be visible in the UI (e.g., footer, onboarding modal, or info section).
 
+## 🧠 AI Transparency
+
+To ensure responsible AI use:
+
+- The UI should indicate that responses are AI-generated
+- The chatbot tone must remain supportive, neutral, and non-judgmental
+- The frontend should avoid presenting responses as absolute truths
+
+Any future AI-powered premium features must include clear user consent.
+
+
