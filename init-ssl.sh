@@ -6,6 +6,14 @@ data_path="./certbot"
 email="admin@curhatinai.com" # Change this if needed
 staging=0 # Set to 1 if you're testing strict to avoid rate limits
 
+# Check and create network if missing
+if ! docker network inspect curhatin-network >/dev/null 2>&1; then
+  echo "### Creating network 'curhatin-network' ..."
+  docker network create curhatin-network
+else
+  echo "### Network 'curhatin-network' exists."
+fi
+
 if [ -d "$data_path" ]; then
   read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
   if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
