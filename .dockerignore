@@ -22,3 +22,4 @@ docs/
 .DS_Store
 *.log
 .env*
+certbot/
