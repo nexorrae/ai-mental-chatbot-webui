@@ -4,7 +4,7 @@ domains=(curhatinai.com)
 rsa_key_size=4096
 data_path="./certbot"
 email="admin@curhatinai.com" # Change this if needed
-staging=0 # Set to 1 if you're testing strict to avoid rate limits
+staging=1 # Set to 1 if you're testing strict to avoid rate limits
 
 # Check and create network if missing
 if ! docker network inspect curhatin-network >/dev/null 2>&1; then
