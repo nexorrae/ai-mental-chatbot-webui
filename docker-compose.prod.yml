@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     environment:
       # Now pointing to itself (Nginx Proxy) because /api is proxied!
-      - VITE_API_URL=https://curhatinai.com
+      - VITE_API_URL=${VITE_API_URL:-https://curhatinai.com}
     networks:
       - curhatin-network
     healthcheck:
