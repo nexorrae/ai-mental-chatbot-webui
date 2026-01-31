@@ -72,7 +72,11 @@ done
 
 if [ $timeout -le 0 ]; then
     echo "❌ ERROR: Nginx failed to start or become healthy."
-    echo "See logs below:"
+    echo "### DEBUG INFO ###"
+    echo "Running containers:"
+    docker ps -a
+    echo "------------------"
+    echo "Nginx Logs:"
     $COMPOSE_CMD -f docker-compose.prod.yml logs nginx
     exit 1
 fi
