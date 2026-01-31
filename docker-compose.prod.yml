@@ -31,6 +31,11 @@ services:
       - curhatin-network
     depends_on:
       - frontend
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/nginx-health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
       
   # Certbot (Auto-renew)
   certbot:
