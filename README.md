@@ -111,4 +111,15 @@ To ensure responsible AI use:
 
 Any future AI-powered premium features must include clear user consent.
 
+## 🔌 Backend Dependency
+
+This frontend depends on a running backend service that:
+- Handles AI model selection
+- Applies safety checks and rate limits
+- Enforces ethical constraints
+
+The frontend should gracefully handle:
+- API downtime
+- Rate limiting
+- Incomplete or blocked responses
 
