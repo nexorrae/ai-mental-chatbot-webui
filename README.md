@@ -1,167 +1,110 @@
-# CurhatIn: AI Mental Chatbot WebUI (Frontend)
+# CurhatIn WebUI (Frontend)
 
-The frontend interface for the AI Mental Health Chatbot, providing a responsive and accessible chat experience.
+<div align="center">
+  <h3>A Safe Space for Daily Reflection</h3>
+  <p>The gentle, responsive, and privacy-focused interface for CurhatIn.</p>
+</div>
 
-## Tech Stack
-- **Framework:** [React 19](https://react.dev/)
-- **Language:** TypeScript
-- **Build Tool:** [Vite](https://vitejs.dev/)
-- **Styling:** CSS (Modular/Global)
+---
 
-## Features
-- **Real-time Chat:** Interactive chat interface with the backend.
-- **Markdown Support:** Renders AI responses with proper formatting.
-- **Responsive Design:** Optimized for desktop and mobile viewports.
+## 📖 Overview
 
-## Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher recommended)
-- [npm](https://www.npmjs.com/)
+**CurhatIn WebUI** is the user-facing frontend for the CurhatIn platform. Built with **React 19** and **Vite**, it emphasizes a calming user experience with soft colors, smooth animations, and a focus on accessibility. It connects seamlessly to the CurhatIn SDK to provide a real-time, supportive chat experience.
 
-## Configuration
-Copy the `.env.example` file to `.env` and configure:
+## ✨ Features
 
+- **🌗 Adaptive Theming**: Seamless Light and Dark mode with brand-aligned calming colors.
+- **⚡ Real-time Interaction**: Fast, responsive chat interface with typing indicators.
+- **📱 Fully Responsive**: Optimized experience across Desktop, Tablet, and Mobile.
+- **📝 Markdown Support**: Rich text rendering for structured AI responses.
+- **🔒 Privacy Design**: No user tracking, no PII collection, and ephemeral session handling.
+
+## 🛠️ Tech Stack
+
+- **Framework**: React 19
+- **Build Tool**: Vite
+- **Language**: TypeScript
+- **Styling**: CSS Modules / Custom Design System
+- **Icons**: React Icons / Custom SVG
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18+)
+- **npm** or **yarn**
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/ai-mental-chatbot-webui.git
+    cd ai-mental-chatbot-webui
+    ```
+
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment**
+    Copy the example env file:
+    ```bash
+    cp .env.example .env
+    ```
+    Set your backend URL:
+    ```env
+    VITE_API_URL=http://localhost:3000
+    ```
+
+### Development
+
+Start the development server with Hot Module Replacement (HMR):
 ```bash
-cp .env.example .env
+npm run dev
+```
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+### Production Build
+
+Build the app for production:
+```bash
+npm run build
+```
+Preview the production build:
+```bash
+npm run preview
 ```
 
-### Environment Variables
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `FRONTEND_PORT` | Port for the dev server | `3001` |
-| `VITE_API_URL` | URL of the backend API | `http://localhost:3000` |
+## 🐳 Docker Deployment
 
-> **Note:** `VITE_API_URL` must point to your running SDK instance.
-
-## Running Locally
-
-1. **Install Dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Start Development Server:**
-   ```bash
-   npm run dev
-   ```
-   Access the app at `http://localhost:3001` (or the port shown in terminal).
-
-3. **Build for Production:**
-   ```bash
-   npm run build
-   ```
-
-4. **Preview Production Build:**
-   ```bash
-   npm run preview
-   ```
-
-## Docker Support
-The application is container-ready. 
+The application is container-ready with Nginx serving static assets.
 
 ```bash
-docker build -t mental-chatbot-webui .
-docker run -p 3001:80 --env-file .env mental-chatbot-webui
+docker build -t curhatin-webui .
+docker run -p 80:80 curhatin-webui
 ```
-*(Note: Dockerfile configuration typically serves static assets via Nginx).*
 
-## Frontend Role in Curhatin Workflow
+## 📂 Project Structure
 
-The WebUI serves as the primary user interaction layer in Curhatin.
+```
+src/
+├── components/   # Reusable UI components
+├── pages/        # Route pages (Landing, Chat)
+├── assets/       # Images and fonts
+└── App.tsx       # Main application entry
+```
 
-Responsibilities:
-- Collect user input in a safe and accessible manner
-- Display AI-generated responses clearly and transparently
-- Act as a thin client without storing sensitive data
-- Forward messages to the backend API for processing
+## 🤝 Contributing
 
-The frontend does NOT:
-- Perform AI inference
-- Store conversation history permanently
-- Make clinical or diagnostic decisions
+This project is open source. Please refer to `docs/FRONTEND_OVERVIEW.md` for historical context and design philosophy.
 
-## Privacy & Data Handling (Frontend)
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/NewLook`)
+3.  Commit your Changes (`git commit -m 'Update UI'`)
+4.  Push to the Branch (`git push origin feature/NewLook`)
+5.  Open a Pull Request
 
-To respect user privacy and ethical boundaries:
+## 📄 License
 
-- No personal identity (name, email, phone) is required to use the chat
-- Messages are sent directly to the backend API and not persisted on the client
-- Local storage is avoided for chat content unless explicitly enabled for UX purposes
-- The frontend does not log or analyze user messages
-
-All sensitive processing is delegated to the backend with anonymization policies.
-
-## Ethical Disclaimer
-
-Curhatin is a non-clinical AI companion designed for reflective and supportive conversations.
-
-The frontend must clearly communicate that:
-- This chatbot is NOT a mental health professional
-- Responses are not medical, psychological, or psychiatric advice
-- Users experiencing emergencies should seek professional help
-
-This disclaimer should be visible in the UI (e.g., footer, onboarding modal, or info section).
-
-## AI Transparency
-
-To ensure responsible AI use:
-
-- The UI should indicate that responses are AI-generated
-- The chatbot tone must remain supportive, neutral, and non-judgmental
-- The frontend should avoid presenting responses as absolute truths
-
-Any future AI-powered premium features must include clear user consent.
-
-## Backend Dependency
-
-This frontend depends on a running backend service that:
-- Handles AI model selection
-- Applies safety checks and rate limits
-- Enforces ethical constraints
-
-The frontend should gracefully handle:
-- API downtime
-- Rate limiting
-- Incomplete or blocked responses
-
-## Non-Goals
-
-The frontend is intentionally NOT designed to:
-- Replace professional mental health services
-- Diagnose or assess mental disorders
-- Handle crisis intervention scenarios
-
-## 📌 Project Milestone (v0.1)
-Status: Early Working Prototype
-As of this milestone, the project has reached a functional and deployable state:
-✅ Landing Page Completed
-A privacy-first, user-facing landing page is live and publicly accessible.
-✅ Core Chatbot Functional
-Users can interact with the AI chatbot end-to-end via the web interface.
-✅ Frontend–Backend Integration
-The WebUI and SDK are fully connected and communicating through stable APIs.
-✅ Server Deployment
-The system is deployed on a live server environment (not localhost), validating real-world operability.
-✅ Cost-Conscious Architecture
-Early-stage testing leverages free-tier or low-cost LLM resources to minimize operational overhead.
-✅ Ethics & Scope Defined
-
-## Clear boundaries are established regarding:
-Non-clinical positioning
-AI limitations
-User privacy and data handling principles
-
-## Current Focus
-The project is intentionally focused on:
-Stability
-UX clarity
-Ethical guardrails
-Early validation
-
-## Out of Scope (for this phase)
-The following are explicitly deferred:
-Mobile applications
-Multi-platform integrations (Discord, WhatsApp, etc.)
-Advanced personalization or clinical advice
-Monetization features
-
-This milestone represents a transition from concept to working prototype, forming a stable foundation for future research, validation, or product iteration.
+Distributed under the MIT License. See `LICENSE` for more information.
