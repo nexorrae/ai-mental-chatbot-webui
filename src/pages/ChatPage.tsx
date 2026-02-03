@@ -15,6 +15,14 @@ import { config } from '../config';
 
 const API_URL = config.apiUrl;
 
+const categories = [
+    { id: 'General', icon: '🌿', label: 'Umum' },
+    { id: 'Karir', icon: '💼', label: 'Karir' },
+    { id: 'Asmara', icon: '❤️', label: 'Asmara' },
+    { id: 'Keluarga', icon: '🏠', label: 'Keluarga' },
+    { id: 'Pengembangan Diri', icon: '✨', label: 'Pengembangan Diri' },
+];
+
 export default function ChatPage({ onBack }: ChatPageProps) {
     // Theme state: default to 'light' to match landing page
     const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -22,6 +30,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
         return (saved as 'dark' | 'light') || 'light';
     });
 
+    const [selectedCategory, setSelectedCategory] = useState<string>('General');
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -94,6 +103,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
                 body: JSON.stringify({
                     message: userMessage.content,
                     conversation_history: conversationHistory,
+                    category: selectedCategory,
                 }),
             });
 
@@ -198,6 +208,20 @@ export default function ChatPage({ onBack }: ChatPageProps) {
                     {theme === 'dark' ? '☀️' : '🌙'}
                 </button>
             </header>
+
+            {/* Category Selector */}
+            <div className="category-selector">
+                {categories.map((cat) => (
+                    <button
+                        key={cat.id}
+                        className={`category-chip ${selectedCategory === cat.id ? 'active' : ''}`}
+                        onClick={() => setSelectedCategory(cat.id)}
+                    >
+                        <span className="category-chip-icon">{cat.icon}</span>
+                        {cat.label}
+                    </button>
+                ))}
+            </div>
 
             {/* Messages */}
             <main className="chat-messages">
