@@ -7,26 +7,26 @@ export function BillingPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard>
-        <h1 className="text-h4 font-extrabold">Billing & Subscription</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Billing & Subscription</h1>
         <p className="text-body text-ink-soft">Kelola paket langganan dan metode pembayaran.</p>
       </OutlinedCard>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <OutlinedCard className="space-y-3">
           <Badge tone="accent">Aktif</Badge>
-          <h2 className="text-h6 font-bold">Calm Plus</h2>
+          <h2 className="text-h6 font-semibold tracking-tight">Calm Plus</h2>
           <p className="text-body text-ink-soft">Rp79.000/bulan</p>
-          <Button variant="secondary" onClick={() => setOpen(true)}>Ubah paket</Button>
+          <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setOpen(true)}>Ubah paket</Button>
         </OutlinedCard>
         <OutlinedCard className="space-y-3">
-          <h2 className="text-h6 font-bold">Metode bayar</h2>
+          <h2 className="text-h6 font-semibold tracking-tight">Metode bayar</h2>
           <p className="text-body text-ink-soft">Visa **** 1024</p>
-          <Button variant="secondary">Kelola kartu</Button>
+          <Button variant="secondary" className="w-full sm:w-auto">Kelola kartu</Button>
         </OutlinedCard>
         <OutlinedCard className="space-y-3">
-          <h2 className="text-h6 font-bold">Riwayat tagihan</h2>
+          <h2 className="text-h6 font-semibold tracking-tight">Riwayat tagihan</h2>
           <p className="text-body text-ink-soft">3 invoice terakhir tersedia.</p>
-          <Button variant="secondary">Unduh invoice</Button>
+          <Button variant="secondary" className="w-full sm:w-auto">Unduh invoice</Button>
         </OutlinedCard>
       </div>
 

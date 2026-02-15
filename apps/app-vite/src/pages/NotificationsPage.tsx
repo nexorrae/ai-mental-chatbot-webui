@@ -4,7 +4,7 @@ export function NotificationsPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard>
-        <h1 className="text-h4 font-extrabold">Notifications</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Notifications</h1>
         <p className="text-body text-ink-soft">Atur pengingat check-in agar ritmemu konsisten.</p>
       </OutlinedCard>
 

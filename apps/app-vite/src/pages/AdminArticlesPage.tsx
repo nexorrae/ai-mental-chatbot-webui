@@ -172,7 +172,7 @@ export function AdminArticlesPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard className="space-y-3">
-        <h1 className="text-h4 font-extrabold">Article CMS</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Article CMS</h1>
         <p className="text-body text-ink-soft">
           Kelola artikel wellness untuk landing page public. Endpoint aktif di <code>{apiBase || '/'}</code>.
         </p>
@@ -184,9 +184,9 @@ export function AdminArticlesPage() {
       {toast && <Toast message={toast} tone="success" />}
       {error && <Toast message={error} tone="error" />}
 
-      <div className="grid gap-4 xl:grid-cols-[420px_1fr]">
+      <div className="grid gap-4 xl:grid-cols-[400px_1fr] 2xl:grid-cols-[420px_1fr]">
         <OutlinedCard className="space-y-4">
-          <h2 className="text-h6 font-bold">
+          <h2 className="text-h6 font-semibold tracking-tight">
             {editingSlug ? `Edit artikel: ${editingSlug}` : 'Tambah artikel baru'}
           </h2>
 
@@ -253,11 +253,11 @@ export function AdminArticlesPage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={saveArticle} disabled={saving}>
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Button className="w-full sm:w-auto" onClick={saveArticle} disabled={saving}>
               {saving ? 'Menyimpan...' : editingSlug ? 'Update artikel' : 'Buat artikel'}
             </Button>
-            <Button variant="secondary" onClick={resetForm} disabled={saving}>
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={resetForm} disabled={saving}>
               Reset
             </Button>
           </div>
@@ -265,7 +265,7 @@ export function AdminArticlesPage() {
 
         <OutlinedCard className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-h6 font-bold">Daftar artikel</h2>
+            <h2 className="text-h6 font-semibold tracking-tight">Daftar artikel</h2>
             <Button variant="secondary" onClick={fetchArticles} disabled={loading}>
               Refresh
             </Button>
@@ -293,7 +293,7 @@ export function AdminArticlesPage() {
                   </div>
 
                   <div className="space-y-1">
-                    <p className="text-h6 font-bold">{article.title}</p>
+                    <p className="text-h6 font-semibold tracking-tight">{article.title}</p>
                     <p className="text-caption text-muted">/{article.slug}</p>
                     <p className="text-body text-ink-soft">{article.excerpt}</p>
                   </div>
@@ -304,11 +304,11 @@ export function AdminArticlesPage() {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    <Button variant="secondary" onClick={() => startEdit(article)}>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                    <Button variant="secondary" className="w-full sm:w-auto" onClick={() => startEdit(article)}>
                       Edit
                     </Button>
-                    <Button variant="secondary" onClick={() => removeArticle(article.slug)}>
+                    <Button variant="secondary" className="w-full sm:w-auto" onClick={() => removeArticle(article.slug)}>
                       Hapus
                     </Button>
                     {article.status === 'published' ? (
@@ -316,12 +316,12 @@ export function AdminArticlesPage() {
                         href={`${apiBase}/articles/${article.slug}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center rounded-pill border-base border-border px-4 py-2 text-caption font-semibold hover:bg-accent"
+                        className="inline-flex h-9 w-full items-center justify-center rounded-md border border-border px-3 text-caption font-medium hover:bg-accent sm:w-auto"
                       >
                         Preview landing
                       </a>
                     ) : (
-                      <span className="inline-flex items-center rounded-pill border-base border-border px-4 py-2 text-caption font-semibold text-muted">
+                      <span className="inline-flex h-9 w-full items-center justify-center rounded-md border border-border px-3 text-caption font-medium text-muted sm:w-auto">
                         Publish dulu untuk preview
                       </span>
                     )}

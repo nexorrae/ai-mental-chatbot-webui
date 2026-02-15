@@ -4,7 +4,7 @@ export function ResourcesPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard>
-        <h1 className="text-h4 font-extrabold">Resources</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Resources</h1>
         <p className="text-body text-ink-soft">Daftar sumber bacaan dan latihan ringan untuk dukung refleksi harian.</p>
       </OutlinedCard>
 

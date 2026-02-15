@@ -3,8 +3,8 @@ import { Button, OutlinedCard, Select } from '../components/ui';
 export function AdminSettingsPage() {
   return (
     <OutlinedCard className="space-y-4">
-      <h1 className="text-h4 font-extrabold">Admin Settings</h1>
-      <div className="grid gap-4 md:grid-cols-2">
+      <h1 className="text-h4 font-semibold tracking-tight">Admin Settings</h1>
+      <div className="grid gap-4 sm:grid-cols-2">
         <Select
           id="admin-retention"
           label="Data retention policy"
@@ -26,7 +26,7 @@ export function AdminSettingsPage() {
           defaultValue="strict"
         />
       </div>
-      <Button variant="primary">Simpan konfigurasi</Button>
+      <Button variant="primary" className="w-full sm:w-auto">Simpan konfigurasi</Button>
     </OutlinedCard>
   );
 }

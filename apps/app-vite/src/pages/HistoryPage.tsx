@@ -4,7 +4,7 @@ export function HistoryPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard>
-        <h1 className="text-h4 font-extrabold">Conversation History</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Conversation History</h1>
         <p className="text-body text-ink-soft">Riwayat percakapan tersusun per tanggal agar mudah ditinjau.</p>
       </OutlinedCard>
 

@@ -4,7 +4,7 @@ export function InsightsPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard className="space-y-3">
-        <h1 className="text-h4 font-extrabold">Insights</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Insights</h1>
         <p className="text-body text-ink-soft">Lihat pola perilaku dan emosi tanpa label diagnosis.</p>
       </OutlinedCard>
 

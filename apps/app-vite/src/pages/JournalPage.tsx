@@ -16,15 +16,15 @@ export function JournalPage() {
     <div className="space-y-4">
       <OutlinedCard className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-h4 font-extrabold">Journal</h1>
+          <h1 className="text-h4 font-semibold tracking-tight">Journal</h1>
           <p className="text-body text-ink-soft">Tulis entri singkat harian untuk melihat pola yang berulang.</p>
         </div>
-        <Button variant="primary" onClick={() => setOpenModal(true)}>
+        <Button variant="primary" className="w-full sm:w-auto" onClick={() => setOpenModal(true)}>
           Entri baru
         </Button>
       </OutlinedCard>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2">
         <JournalEntryCard />
         <JournalEntryCard
           title="Catatan sore"
@@ -43,9 +43,10 @@ export function JournalPage() {
       >
         <div className="space-y-3">
           <Textarea id="journal-entry" label="Isi entri" placeholder="Hari ini aku merasa..." />
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row">
             <Button
               variant="primary"
+              className="w-full sm:w-auto"
               onClick={() => {
                 setOpenModal(false);
                 setShowToast(true);
@@ -54,7 +55,7 @@ export function JournalPage() {
             >
               Simpan
             </Button>
-            <Button variant="secondary" onClick={() => setOpenModal(false)}>
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setOpenModal(false)}>
               Batal
             </Button>
           </div>

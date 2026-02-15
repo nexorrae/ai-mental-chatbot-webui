@@ -9,7 +9,7 @@ const users = [
 export function AdminUsersPage() {
   return (
     <OutlinedCard className="space-y-4">
-      <h1 className="text-h4 font-extrabold">User Management</h1>
+      <h1 className="text-h4 font-semibold tracking-tight">User Management</h1>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-left text-caption">
           <thead>

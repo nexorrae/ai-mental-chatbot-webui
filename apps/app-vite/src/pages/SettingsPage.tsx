@@ -12,9 +12,9 @@ export function SettingsPage() {
   return (
     <div className="space-y-4">
       <OutlinedCard className="space-y-4">
-        <h1 className="text-h4 font-extrabold">Settings</h1>
+        <h1 className="text-h4 font-semibold tracking-tight">Settings</h1>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Select
             id="settings-privacy"
             label="Data sharing"
@@ -36,9 +36,10 @@ export function SettingsPage() {
           />
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
           <Button
             variant="primary"
+            className="w-full sm:w-auto"
             onClick={() => {
               setToast(true);
               window.setTimeout(() => setToast(false), 2500);
@@ -46,20 +47,20 @@ export function SettingsPage() {
           >
             Simpan preferensi
           </Button>
-          <Button variant="secondary">Export data</Button>
-          <Button variant="secondary">Delete data</Button>
+          <Button variant="secondary" className="w-full sm:w-auto">Export data</Button>
+          <Button variant="secondary" className="w-full sm:w-auto">Delete data</Button>
         </div>
         {toast && <Toast tone="success" message="Pengaturan tersimpan." />}
       </OutlinedCard>
 
       <OutlinedCard className="space-y-2">
-        <h2 className="text-h6 font-bold">Safety notice</h2>
+        <h2 className="text-h6 font-semibold tracking-tight">Safety notice</h2>
         <p className="text-body text-ink-soft">
           Jika kamu merasa tidak aman, hubungi bantuan profesional atau nomor darurat setempat.
         </p>
         <a
           href="https://www.who.int/teams/mental-health-and-substance-use/suicide-data"
-          className="text-caption font-semibold underline"
+          className="text-caption font-medium underline decoration-dotted underline-offset-4"
           target="_blank"
           rel="noreferrer"
         >

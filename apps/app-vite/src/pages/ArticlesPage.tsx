@@ -51,28 +51,28 @@ export function ArticlesPage() {
 
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <header className="border-b border-[#e8ece9] bg-white">
-        <div className="mx-auto flex w-full max-w-[1120px] items-center justify-between gap-4 px-4 py-4 md:px-8">
-          <Link to="/" className="text-h5 font-extrabold text-[#1f5f56]">
+      <header className="border-b border-border bg-white">
+        <div className="page-shell flex flex-wrap items-center justify-between gap-3 py-4">
+          <Link to="/" className="text-h5 font-semibold tracking-tight text-ink">
             Curhatin Articles
           </Link>
-          <Link to="/app/chat" className="rounded-pill bg-[#2a9d8f] px-5 py-2 text-caption font-bold text-white">
+          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-[#191919] px-4 text-caption font-medium text-white hover:bg-black">
             Konsultasi AI
           </Link>
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-[1120px] px-4 py-8 md:px-8">
+      <main className="page-shell py-8">
         <div className="mb-6 space-y-3">
-          <h1 className="text-h3 font-extrabold text-[#1f5f56]">See All Articles</h1>
-          <p className="text-body text-[#4a6a65]">
+          <h1 className="text-h3 font-semibold tracking-tight text-ink">See All Articles</h1>
+          <p className="text-body text-ink-soft">
             Artikel wellness, refleksi emosi, dan panduan penggunaan AI assistant secara aman.
           </p>
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Cari artikel (contoh: anxiety, journaling, burnout...)"
-            className="w-full max-w-[520px] rounded-[12px] border border-[#d8e6df] px-4 py-3 text-body"
+            className="h-10 w-full rounded-md border border-border bg-white px-3 text-[15px] sm:max-w-[540px]"
           />
         </div>
 
@@ -81,13 +81,13 @@ export function ArticlesPage() {
           <p className="text-body text-muted">Belum ada artikel yang cocok.</p>
         ) : null}
 
-        <div className="divide-y divide-[#e8ece9] border-y border-[#e8ece9]">
+        <div className="divide-y divide-border border-y border-border">
           {filtered.map((article) => (
             <article key={article.id} className="py-5">
               <Link to={`/articles/${article.slug}`} className="block">
-                <h2 className="text-h5 font-bold text-[#1f5f56]">{article.title}</h2>
-                <p className="mt-2 text-body text-[#4e6d68]">{article.excerpt}</p>
-                <p className="mt-2 text-caption text-[#68847f]">
+                <h2 className="text-h5 font-semibold text-ink">{article.title}</h2>
+                <p className="mt-2 text-body text-ink-soft">{article.excerpt}</p>
+                <p className="mt-2 text-caption text-muted">
                   {article.author} • {article.publishedAt ? formatter.format(new Date(article.publishedAt)) : 'Draft'} •{' '}
                   {article.readTimeMinutes} menit
                 </p>

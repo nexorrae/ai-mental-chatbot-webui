@@ -325,14 +325,11 @@ export function ChatPage() {
 
   return (
     <div className="space-y-4">
-      <section className="relative overflow-hidden rounded-[24px] border-base border-border bg-gradient-to-br from-[#edf8ef] via-[#e6f4ea] to-[#d7eedf] p-5 md:p-6">
-        <div className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-white/45 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-[#8bc8a0]/25 blur-3xl" />
-
-        <div className="relative space-y-4">
+      <section className="rounded-xl border border-border bg-white p-4 sm:p-5 md:p-6">
+        <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-h5 font-extrabold">Konsultasi AI Assistant CurhatIn</p>
+              <p className="text-h5 font-semibold tracking-tight">Konsultasi AI Assistant CurhatIn</p>
               <p className="text-caption text-ink-soft">
                 Cerita dengan bahasa sehari-hari. Anonymous default, login opsional untuk simpan konteks.
               </p>
@@ -343,12 +340,12 @@ export function ChatPage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="hide-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1">
             {categories.map((category) => (
               <Button
                 key={category.id}
                 variant={selectedCategory === category.id ? 'primary' : 'secondary'}
-                className="px-4 py-2 text-caption"
+                className="shrink-0 text-caption"
                 onClick={() => setSelectedCategory(category.id)}
               >
                 {category.label}
@@ -356,26 +353,26 @@ export function ChatPage() {
             ))}
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
-            <div className="rounded-[20px] border-base border-border bg-paper/90 p-4">
-              <div className="mb-3 flex items-center justify-between">
-                <p className="text-label font-semibold">Percakapan</p>
+          <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
+            <div className="rounded-lg border border-border bg-white p-3 sm:p-4">
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <p className="text-label font-medium">Percakapan</p>
                 {historyLoadedFromServer ? (
                   <span className="text-[11px] font-semibold text-success">Context loaded from account history</span>
                 ) : null}
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2 overflow-y-auto pr-1 sm:max-h-[520px]">
                 {messages.map((message, index) => (
                   <div
                     key={`${message.role}-${index}`}
                     className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[88%] rounded-2xl px-4 py-3 text-body ${
+                      className={`max-w-[92%] rounded-xl px-3.5 py-2.5 text-body sm:max-w-[84%] sm:px-4 sm:py-3 ${
                         message.role === 'user'
-                          ? 'bg-ink text-paper'
-                          : 'border-base border-border bg-white/90 text-ink'
+                          ? 'bg-[#191919] text-white'
+                          : 'border border-border bg-accent text-ink'
                       }`}
                     >
                       {message.text}
@@ -386,9 +383,9 @@ export function ChatPage() {
               </div>
             </div>
 
-            <div className="space-y-3 rounded-[20px] border-base border-border bg-paper/90 p-4">
+            <div className="space-y-3 rounded-lg border border-border bg-white p-3 sm:p-4">
               <div>
-                <p className="text-label font-semibold">Identitas</p>
+                <p className="text-label font-medium">Identitas</p>
                 <p className="text-caption text-muted">
                   {currentUserId
                     ? `Login sebagai ${userProfile?.name} (${currentUserId})`
@@ -397,18 +394,18 @@ export function ChatPage() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {currentUserId ? (
-                  <Button variant="secondary" onClick={logout}>
+                  <Button variant="secondary" className="w-full sm:w-auto" onClick={logout}>
                     Logout
                   </Button>
                 ) : (
-                  <Button variant="secondary" onClick={() => setShowLoginModal(true)}>
+                  <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setShowLoginModal(true)}>
                     Login untuk simpan konteks
                   </Button>
                 )}
               </div>
 
-              <div className="border-t-base border-border pt-3">
-                <p className="text-label font-semibold">Daily Check-in</p>
+              <div className="border-t border-border pt-3">
+                <p className="text-label font-medium">Daily Check-in</p>
                 <p className="text-caption text-muted">Mood + jurnal disimpan sesuai mode aktif.</p>
                 <div className="mt-2">
                   <MoodPicker onSelect={setMood} />
@@ -418,7 +415,7 @@ export function ChatPage() {
                 </p>
               </div>
 
-              <label className="flex items-start gap-2 rounded-xl border-base border-border bg-bg/70 p-3">
+              <label className="flex items-start gap-2 rounded-lg border border-border bg-accent p-3">
                 <input
                   type="checkbox"
                   className="mt-0.5"
@@ -434,7 +431,7 @@ export function ChatPage() {
         </div>
       </section>
 
-      <section className="rounded-[24px] border-base border-border bg-paper/90 p-5">
+      <section className="rounded-xl border border-border bg-white p-4 sm:p-5">
         <div className="space-y-3">
           <Textarea
             id="chat-input"
@@ -443,11 +440,11 @@ export function ChatPage() {
             value={journalInput}
             onChange={(event) => setJournalInput(event.target.value)}
           />
-          <div className="flex flex-wrap gap-2">
-            <Button variant="secondary" onClick={saveJournalLocally} disabled={isLoading}>
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={saveJournalLocally} disabled={isLoading}>
               Simpan Lokal
             </Button>
-            <Button onClick={startReflectFlow} disabled={!journalInput.trim() || isLoading}>
+            <Button className="w-full sm:w-auto" onClick={startReflectFlow} disabled={!journalInput.trim() || isLoading}>
               Reflect with AI
             </Button>
           </div>
@@ -471,7 +468,7 @@ export function ChatPage() {
           <p className="text-body">
             Data jurnal ini akan dikirim sementara ke AI. AI tidak untuk diagnosis medis, hanya untuk refleksi dan pertanyaan balik.
           </p>
-          <div className="rounded-md border-base border-border bg-bg p-3 text-caption text-ink-soft">
+          <div className="rounded-md border border-border bg-accent p-3 text-caption text-ink-soft">
             <p className="font-semibold text-ink">Pratinjau data:</p>
             <p className="mt-1 whitespace-pre-wrap">{journalInput.trim()}</p>
           </div>
@@ -496,7 +493,7 @@ export function ChatPage() {
           <label className="flex flex-col gap-2">
             <span className="text-caption font-semibold">Nama</span>
             <input
-              className="rounded-md border-base border-border bg-paper px-3 py-2"
+              className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
               value={loginName}
               onChange={(event) => setLoginName(event.target.value)}
               placeholder="Nama kamu"
@@ -505,18 +502,18 @@ export function ChatPage() {
           <label className="flex flex-col gap-2">
             <span className="text-caption font-semibold">Email</span>
             <input
-              className="rounded-md border-base border-border bg-paper px-3 py-2"
+              className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
               type="email"
               value={loginEmail}
               onChange={(event) => setLoginEmail(event.target.value)}
               placeholder="nama@email.com"
             />
           </label>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="secondary" onClick={() => setShowLoginModal(false)}>
+          <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setShowLoginModal(false)}>
               Batal
             </Button>
-            <Button onClick={submitLogin}>Masuk</Button>
+            <Button className="w-full sm:w-auto" onClick={submitLogin}>Masuk</Button>
           </div>
         </div>
       </Modal>

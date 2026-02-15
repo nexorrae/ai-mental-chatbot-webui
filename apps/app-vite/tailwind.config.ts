@@ -7,7 +7,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        sans: ['Inter', 'Segoe UI', 'ui-sans-serif', 'system-ui', 'sans-serif']
       }
     }
   }
