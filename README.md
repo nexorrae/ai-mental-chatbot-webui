@@ -39,6 +39,18 @@ npm run build
 npm run lint
 ```
 
+## Production Deploy (Private Backend via `/api`)
+
+Gunakan reverse proxy di domain frontend untuk akses backend, dan biarkan backend tetap private di Docker network internal.
+
+```bash
+docker network create curhatin-network || true
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+- Set `VITE_API_URL=` (kosong) agar frontend memakai same-origin `/api`.
+- Pastikan stack backend (`ai-mental-chatbot-sdk`) join network eksternal `curhatin-network`.
+
 ## Design Direction
 
 - Off-white background, thick 2-3px outlines, pill buttons, high-contrast typography.

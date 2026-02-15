@@ -19,7 +19,7 @@ function normalizeBase(value: string): string {
 
 export function getContentApiBase(): string {
   const fromEnv = import.meta.env.VITE_CONTENT_API_BASE as string | undefined;
-  const defaultBase = 'http://localhost:3000';
+  const defaultBase = '';
 
   return normalizeBase(fromEnv || defaultBase);
 }
@@ -27,6 +27,10 @@ export function getContentApiBase(): string {
 export function contentApi(path: string): string {
   const base = getContentApiBase();
   const nextPath = path.startsWith('/') ? path : `/${path}`;
+
+  if (!base) {
+    return nextPath;
+  }
 
   return `${base}${nextPath}`;
 }
