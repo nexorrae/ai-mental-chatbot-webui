@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppLayout } from './layouts/AppLayout';
 import { AdminLayout } from './layouts/AdminLayout';
+import { LandingPage } from './pages/LandingPage';
 import { ChatPage } from './pages/ChatPage';
 import { HistoryPage } from './pages/HistoryPage';
 import { JournalPage } from './pages/JournalPage';
@@ -21,7 +22,7 @@ import { AdminSettingsPage } from './pages/AdminSettingsPage';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/app/chat" replace />} />
+      <Route path="/" element={<LandingPage />} />
 
       <Route path="/app" element={<AppLayout />}>
         <Route index element={<Navigate to="chat" replace />} />
@@ -46,7 +47,7 @@ export default function App() {
         <Route path="settings" element={<AdminSettingsPage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/app/chat" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
