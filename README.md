@@ -4,6 +4,7 @@ Monorepo redesign untuk seluruh pengalaman `curhatinai.com`:
 - `apps/landing-next` -> Next.js + Tailwind (SEO pages: marketing, auth, onboarding, design system)
 - `apps/app-vite` -> Vite + Tailwind (core app chat/journal/mood/insights/resources/account + admin)
 - `packages/design-system` -> shared CSS tokens + Tailwind preset (soft neobrutalism)
+- `apps/landing-next/data/articles.json` -> source of truth article content (seeded + editable via admin)
 
 ## Information Architecture Audit
 Audit rute tersedia di `docs/ia-audit.md`.
@@ -18,6 +19,18 @@ npm run dev:app
 
 - Landing/Auth/Onboarding: `http://localhost:3000`
 - App/Admin (Vite): `http://localhost:5174`
+- Admin Articles CMS: `http://localhost:5174/admin/articles` (writes to Next API)
+
+## Article CMS (Next + Vite)
+
+- Next API endpoints:
+  - `GET /api/articles` -> published only
+  - `GET /api/articles?includeDraft=true` -> include drafts
+  - `POST /api/articles` -> create article
+  - `PATCH /api/articles/:slug` -> update article
+  - `DELETE /api/articles/:slug` -> delete article
+- Admin Vite uses `VITE_CONTENT_API_BASE` (see `apps/app-vite/.env.example`) to call Next API.
+- Blog pages (`/blog` and `/blog/[slug]`) read from shared article storage and are SEO-rendered in Next.
 
 ## Scripts
 

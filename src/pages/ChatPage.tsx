@@ -13,7 +13,7 @@ interface ChatPageProps {
 
 import { config } from '../config';
 
-const API_URL = config.apiUrl;
+const CHAT_ENDPOINT = config.chatEndpoint;
 
 const categories = [
     { id: 'General', icon: '🌿', label: 'Umum' },
@@ -95,7 +95,7 @@ export default function ChatPage({ onBack }: ChatPageProps) {
                 content: msg.content,
             }));
 
-            const response = await fetch(`${API_URL}/api/chat`, {
+            const response = await fetch(CHAT_ENDPOINT, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,6 +106,11 @@ export default function ChatPage({ onBack }: ChatPageProps) {
                     category: selectedCategory,
                 }),
             });
+
+            if (!response.ok) {
+                const bodyText = await response.text();
+                throw new Error(`HTTP ${response.status} ${response.statusText}: ${bodyText}`);
+            }
 
             const data = await response.json();
 
@@ -122,8 +127,8 @@ export default function ChatPage({ onBack }: ChatPageProps) {
 
             setMessages((prev) => [...prev, assistantMessage]);
         } catch (err) {
-            console.error('Failed to send message:', err);
-            setError('Gagal menghubungi server. Silakan coba lagi.');
+            console.error('Failed to send message:', err, 'endpoint:', CHAT_ENDPOINT);
+            setError('Gagal menghubungi server. Cek backend aktif dan konfigurasi API URL.');
         } finally {
             setIsLoading(false);
         }

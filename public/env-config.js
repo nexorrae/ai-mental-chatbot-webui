@@ -1,3 +1,4 @@
 window._env_ = {
-    VITE_API_URL: "http://localhost:3000",
+    // Leave empty to use same-origin (recommended behind reverse proxy /api)
+    VITE_API_URL: "",
 };

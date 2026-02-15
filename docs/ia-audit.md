@@ -53,6 +53,7 @@ Scope: `ai-mental-chatbot-webui` redesign (Next.js marketing/auth/onboarding + V
 ### F. Admin (Vite)
 - `/admin`
 - `/admin/users`
+- `/admin/articles`
 - `/admin/moderation`
 - `/admin/reports`
 - `/admin/settings`

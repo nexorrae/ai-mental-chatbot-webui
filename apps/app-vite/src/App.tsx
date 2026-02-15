@@ -13,6 +13,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { BillingPage } from './pages/BillingPage';
 import { AdminOverviewPage } from './pages/AdminOverviewPage';
 import { AdminUsersPage } from './pages/AdminUsersPage';
+import { AdminArticlesPage } from './pages/AdminArticlesPage';
 import { AdminModerationPage } from './pages/AdminModerationPage';
 import { AdminReportsPage } from './pages/AdminReportsPage';
 import { AdminSettingsPage } from './pages/AdminSettingsPage';
@@ -39,6 +40,7 @@ export default function App() {
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminOverviewPage />} />
         <Route path="users" element={<AdminUsersPage />} />
+        <Route path="articles" element={<AdminArticlesPage />} />
         <Route path="moderation" element={<AdminModerationPage />} />
         <Route path="reports" element={<AdminReportsPage />} />
         <Route path="settings" element={<AdminSettingsPage />} />

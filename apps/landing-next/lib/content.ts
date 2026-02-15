@@ -72,24 +72,3 @@ export const faqItems = [
       'Widget ini memberi jeda 1 menit agar kamu bisa menurunkan intensitas emosi sebelum melanjutkan percakapan.'
   }
 ];
-
-export const blogPosts = [
-  {
-    slug: 'ketika-overthinking-muncul',
-    title: 'Ketika overthinking muncul, mulai dari napas',
-    excerpt: 'Langkah kecil untuk kembali hadir di momen saat pikiran terasa terlalu ramai.',
-    date: '15 Februari 2026'
-  },
-  {
-    slug: 'ritual-jurnal-5-menit',
-    title: 'Ritual jurnal 5 menit sebelum tidur',
-    excerpt: 'Template singkat agar pikiran lebih ringan sebelum istirahat.',
-    date: '10 Februari 2026'
-  },
-  {
-    slug: 'cara-bicara-ke-diri-sendiri',
-    title: 'Cara bicara ke diri sendiri yang lebih lembut',
-    excerpt: 'Ubah nada batin menjadi lebih suportif dan tidak menghakimi.',
-    date: '06 Februari 2026'
-  }
-];

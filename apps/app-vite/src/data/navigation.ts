@@ -14,6 +14,7 @@ export const appNav = [
 export const adminNav = [
   { to: '/admin', label: 'Overview' },
   { to: '/admin/users', label: 'Users' },
+  { to: '/admin/articles', label: 'Articles' },
   { to: '/admin/moderation', label: 'Moderation' },
   { to: '/admin/reports', label: 'Reports' },
   { to: '/admin/settings', label: 'Admin Settings' }
