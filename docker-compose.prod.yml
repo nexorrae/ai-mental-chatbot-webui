@@ -8,8 +8,9 @@ services:
     container_name: ai-mental-chatbot-frontend
     restart: unless-stopped
     environment:
-      # Now pointing to itself (Nginx Proxy) because /api is proxied!
-      - VITE_API_URL=${VITE_API_URL:-https://curhatinai.com}
+      # Keep empty by default: frontend uses same-origin /api via reverse proxy.
+      - VITE_API_URL=${VITE_API_URL:-}
+      - VITE_CONTENT_API_BASE=${VITE_CONTENT_API_BASE:-}
     networks:
       - curhatin-network
     healthcheck:

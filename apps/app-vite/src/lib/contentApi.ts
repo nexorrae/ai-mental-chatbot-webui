@@ -1,3 +1,5 @@
+import { getRuntimeEnv } from './runtimeEnv';
+
 export interface WellnessArticle {
   id: string;
   slug: string;
@@ -18,10 +20,11 @@ function normalizeBase(value: string): string {
 }
 
 export function getContentApiBase(): string {
-  const fromEnv = import.meta.env.VITE_CONTENT_API_BASE as string | undefined;
+  const fromRuntime = getRuntimeEnv('VITE_CONTENT_API_BASE');
+  const fromBuild = import.meta.env.VITE_CONTENT_API_BASE as string | undefined;
   const defaultBase = '';
 
-  return normalizeBase(fromEnv || defaultBase);
+  return normalizeBase(fromRuntime || fromBuild || defaultBase);
 }
 
 export function contentApi(path: string): string {

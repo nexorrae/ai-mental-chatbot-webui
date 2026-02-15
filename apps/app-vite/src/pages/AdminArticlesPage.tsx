@@ -11,6 +11,7 @@ import {
   Toast
 } from '../components/ui';
 import { contentApi, getContentApiBase, type WellnessArticle } from '../lib/contentApi';
+import { getAdminToken } from '../lib/adminAuth';
 
 interface FormState {
   title: string;
@@ -56,12 +57,22 @@ export function AdminArticlesPage() {
 
   const apiBase = useMemo(() => getContentApiBase(), []);
 
+  function adminHeaders(contentType = false): HeadersInit {
+    const token = getAdminToken();
+    return {
+      ...(contentType ? { 'Content-Type': 'application/json' } : {}),
+      ...(token ? { 'x-admin-token': token } : {})
+    };
+  }
+
   const fetchArticles = useCallback(async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch(contentApi('/api/articles?includeDraft=true'));
+      const response = await fetch(contentApi('/api/articles?includeDraft=true'), {
+        headers: adminHeaders()
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
       const payload = await response.json();
@@ -117,9 +128,7 @@ export function AdminArticlesPage() {
     try {
       const response = await fetch(endpoint, {
         method,
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: adminHeaders(true),
         body: JSON.stringify(payload)
       });
 
@@ -143,7 +152,8 @@ export function AdminArticlesPage() {
 
     try {
       const response = await fetch(contentApi(`/api/articles/${slug}`), {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: adminHeaders()
       });
 
       const data = await response.json();
@@ -164,10 +174,10 @@ export function AdminArticlesPage() {
       <OutlinedCard className="space-y-3">
         <h1 className="text-h4 font-extrabold">Article CMS</h1>
         <p className="text-body text-ink-soft">
-          Kelola artikel wellness untuk landing page Next.js. Endpoint aktif di <code>{apiBase}</code>.
+          Kelola artikel wellness untuk landing page public. Endpoint aktif di <code>{apiBase || '/'}</code>.
         </p>
         <p className="text-caption text-muted">
-          Setelah publish, artikel otomatis tampil di halaman <code>/blog</code>.
+          Setelah publish, artikel otomatis tampil di halaman <code>/articles</code>.
         </p>
       </OutlinedCard>
 
@@ -303,7 +313,7 @@ export function AdminArticlesPage() {
                     </Button>
                     {article.status === 'published' ? (
                       <a
-                        href={`${apiBase}/blog/${article.slug}`}
+                        href={`${apiBase}/articles/${article.slug}`}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center rounded-pill border-base border-border px-4 py-2 text-caption font-semibold hover:bg-accent"
