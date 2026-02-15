@@ -102,8 +102,8 @@ export function LandingPage() {
       <header className="sticky top-0 z-30 border-b border-border bg-white/95 backdrop-blur">
         <div className="page-shell flex items-center justify-between gap-3 py-3.5">
           <Link to="/" className="flex items-center gap-2 text-[1.08rem] font-semibold tracking-[-0.02em] text-ink">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white p-1">
-              <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+            <span className="brand-mark brand-mark--lg">
+              <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
             </span>
             <span>CurhatIn AI</span>
           </Link>
@@ -112,7 +112,6 @@ export function LandingPage() {
             <a href="#fitur">Fitur</a>
             <a href="#workflow">Cara Kerja</a>
             <a href="#articles">Articles</a>
-            <Link to="/admin">Admin</Link>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -150,9 +149,6 @@ export function LandingPage() {
               <a className="rounded-md px-3 py-2 text-body text-ink-soft hover:bg-accent hover:text-ink" href="#articles" onClick={() => setMobileNavOpen(false)}>
                 Articles
               </a>
-              <Link className="rounded-md px-3 py-2 text-body text-ink-soft hover:bg-accent hover:text-ink" to="/admin" onClick={() => setMobileNavOpen(false)}>
-                Admin
-              </Link>
               <Link className="rounded-md px-3 py-2 text-body text-ink-soft hover:bg-accent hover:text-ink" to="/articles" onClick={() => setMobileNavOpen(false)}>
                 See All Articles
               </Link>
@@ -169,8 +165,8 @@ export function LandingPage() {
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-brand-green-soft text-lg">🌿</span>
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-brand-blue-soft text-lg">🫶</span>
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-accent text-lg">🧠</span>
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-white p-1.5">
-                  <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+                <span className="inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-border bg-white p-0.5">
+                  <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
                 </span>
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-accent text-lg">💬</span>
               </div>
@@ -376,8 +372,8 @@ export function LandingPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
             <div className="space-y-3">
               <p className="inline-flex items-center gap-2 text-h5 font-semibold tracking-tight text-ink">
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white p-1">
-                  <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+                <span className="brand-mark brand-mark--lg">
+                  <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
                 </span>
                 CurhatIn AI
               </p>

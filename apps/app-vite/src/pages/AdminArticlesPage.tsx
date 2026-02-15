@@ -11,7 +11,7 @@ import {
   Toast
 } from '../components/ui';
 import { contentApi, getContentApiBase, type WellnessArticle } from '../lib/contentApi';
-import { getAdminToken } from '../lib/adminAuth';
+import { getAdminCredentials } from '../lib/adminAuth';
 
 interface FormState {
   title: string;
@@ -58,10 +58,15 @@ export function AdminArticlesPage() {
   const apiBase = useMemo(() => getContentApiBase(), []);
 
   function adminHeaders(contentType = false): HeadersInit {
-    const token = getAdminToken();
+    const credentials = getAdminCredentials();
     return {
       ...(contentType ? { 'Content-Type': 'application/json' } : {}),
-      ...(token ? { 'x-admin-token': token } : {})
+      ...(credentials
+        ? {
+            'x-admin-username': credentials.username,
+            'x-admin-password': credentials.password
+          }
+        : {})
     };
   }
 

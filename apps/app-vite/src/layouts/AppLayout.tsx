@@ -1,10 +1,20 @@
 import { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { appNav } from '../data/navigation';
 import { BreathWidget, Footer, Navbar } from '../components/ui';
 
 export function AppLayout() {
   const [showMobileNav, setShowMobileNav] = useState(false);
+  const location = useLocation();
+  const isChatRoute = location.pathname === '/app/chat';
+
+  if (isChatRoute) {
+    return (
+      <div className="h-screen overflow-hidden bg-bg text-ink">
+        <Outlet />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-bg text-ink">

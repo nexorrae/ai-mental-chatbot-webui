@@ -1,6 +1,7 @@
 import { type KeyboardEvent, useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
-import { Badge, Button, GroundingCard, LoadingState, Modal, MoodPicker, Textarea, Toast } from '../components/ui';
+import { Button, LoadingState, Modal, Toast } from '../components/ui';
 import { getRuntimeEnv } from '../lib/runtimeEnv';
 import {
   createThread,
@@ -25,6 +26,15 @@ interface ChatResponseBody {
 interface UserProfile {
   name: string;
   email: string;
+  phone?: string;
+  provider: 'local' | 'google' | 'github';
+}
+
+interface LocalUserAccount {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
 }
 
 interface JournalEntry {
@@ -35,6 +45,7 @@ interface JournalEntry {
 }
 
 const USER_PROFILE_KEY = 'curhatin:user:profile:v2';
+const USER_ACCOUNTS_KEY = 'curhatin:user:accounts:v1';
 const GUEST_MESSAGES_LEGACY_KEY = 'curhatin:guest:messages:v2';
 const GUEST_ENTRIES_KEY = 'curhatin:guest:entries:v2';
 
@@ -72,14 +83,52 @@ function parseProfile(raw: string | null): UserProfile | null {
     const parsed: unknown = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object') return null;
     const profile = parsed as Partial<UserProfile>;
-    if (!profile.name || !profile.email) return null;
+    const email = profile.email?.trim().toLowerCase() ?? '';
+    if (!email || !email.includes('@')) return null;
+    const name = profile.name?.trim() || email.split('@')[0] || 'User';
+    const provider = profile.provider === 'google' || profile.provider === 'github' ? profile.provider : 'local';
+    const phone = profile.phone?.trim() ?? '';
+
     return {
-      name: profile.name.trim(),
-      email: profile.email.trim().toLowerCase()
+      name,
+      email,
+      phone,
+      provider
     };
   } catch {
     return null;
   }
+}
+
+function parseAccounts(raw: string | null): LocalUserAccount[] {
+  if (!raw) return [];
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed
+      .map((row): LocalUserAccount | null => {
+        if (!row || typeof row !== 'object') return null;
+        const account = row as Partial<LocalUserAccount>;
+        const name = account.name?.trim() ?? '';
+        const email = account.email?.trim().toLowerCase() ?? '';
+        const phone = account.phone?.trim() ?? '';
+        const password = account.password?.trim() ?? '';
+        if (!name || !email || !password) return null;
+        return { name, email, phone, password };
+      })
+      .filter((row): row is LocalUserAccount => row !== null);
+  } catch {
+    return [];
+  }
+}
+
+function loadAccounts(): LocalUserAccount[] {
+  return parseAccounts(window.localStorage.getItem(USER_ACCOUNTS_KEY));
+}
+
+function saveAccounts(accounts: LocalUserAccount[]): void {
+  window.localStorage.setItem(USER_ACCOUNTS_KEY, JSON.stringify(accounts));
 }
 
 function parseLegacyMessages(raw: string | null): ChatMessage[] {
@@ -143,6 +192,8 @@ function sortThreads(threads: ConversationThread[]): ConversationThread[] {
 
 export function ChatPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [threadQuery, setThreadQuery] = useState('');
   const [threads, setThreads] = useState<ConversationThread[]>([]);
   const [activeThreadId, setActiveThreadId] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
@@ -154,8 +205,13 @@ export function ChatPage() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [shareAnonymously, setShareAnonymously] = useState(false);
-  const [loginName, setLoginName] = useState('');
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [registerName, setRegisterName] = useState('');
+  const [registerEmail, setRegisterEmail] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  const [registerPhone, setRegisterPhone] = useState('');
   const [historyLoadedFromServer, setHistoryLoadedFromServer] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(() => parseProfile(window.localStorage.getItem(USER_PROFILE_KEY)));
   const [savedEntriesCount, setSavedEntriesCount] = useState<number>(0);
@@ -169,6 +225,22 @@ export function ChatPage() {
     () => normalizeBase(getRuntimeEnv('VITE_API_URL') ?? (import.meta.env.VITE_API_URL as string | undefined)),
     []
   );
+  const googleSsoUrl = useMemo(
+    () =>
+      (getRuntimeEnv('VITE_SSO_GOOGLE_URL') ??
+        (import.meta.env.VITE_SSO_GOOGLE_URL as string | undefined) ??
+        '')
+        .trim(),
+    []
+  );
+  const githubSsoUrl = useMemo(
+    () =>
+      (getRuntimeEnv('VITE_SSO_GITHUB_URL') ??
+        (import.meta.env.VITE_SSO_GITHUB_URL as string | undefined) ??
+        '')
+        .trim(),
+    []
+  );
   const chatEndpoint = useMemo(() => buildApiEndpoint(apiBaseUrl, '/api/chat'), [apiBaseUrl]);
   const chatHistoryEndpoint = useMemo(() => buildApiEndpoint(apiBaseUrl, '/api/chat/history'), [apiBaseUrl]);
 
@@ -177,6 +249,19 @@ export function ChatPage() {
     return threads.find((thread) => thread.id === activeThreadId) ?? threads[0];
   }, [threads, activeThreadId]);
   const messages: ChatMessage[] = activeThread?.messages ?? [{ role: 'assistant', text: STARTER_ASSISTANT_MESSAGE }];
+  const visibleThreads = useMemo(() => {
+    const keyword = threadQuery.trim().toLowerCase();
+    if (!keyword) return threads;
+    return threads.filter((thread) => {
+      const title = thread.title.toLowerCase();
+      const latest = thread.messages[thread.messages.length - 1]?.text.toLowerCase() ?? '';
+      return title.includes(keyword) || latest.includes(keyword);
+    });
+  }, [threadQuery, threads]);
+  const isStarterThread =
+    messages.length === 1 &&
+    messages[0]?.role === 'assistant' &&
+    messages[0]?.text === STARTER_ASSISTANT_MESSAGE;
 
   function applyThreadUpdate(threadId: string, updater: (thread: ConversationThread) => ConversationThread) {
     setThreads((prev) => {
@@ -194,6 +279,7 @@ export function ChatPage() {
     setActiveThreadId(threadId);
     setSelectedCategory(thread.category || 'general');
     setSearchParams({ thread: threadId }, { replace: true });
+    setSidebarOpen(false);
   }
 
   function createNewThread() {
@@ -203,6 +289,7 @@ export function ChatPage() {
     setJournalInput('');
     setErrorMessage(null);
     setSearchParams({ thread: next.id }, { replace: true });
+    setSidebarOpen(false);
   }
 
   useEffect(() => {
@@ -418,22 +505,92 @@ export function ChatPage() {
     }
   }
 
-  function submitLogin() {
-    const name = loginName.trim();
-    const email = loginEmail.trim().toLowerCase();
-    if (!name || !email || !email.includes('@')) {
-      setErrorMessage('Nama dan email valid diperlukan untuk login.');
-      return;
-    }
-
-    const profile: UserProfile = { name, email };
+  function completeLogin(profile: UserProfile, successMessage: string) {
     window.localStorage.setItem(USER_PROFILE_KEY, JSON.stringify(profile));
     setUserProfile(profile);
     setShowLoginModal(false);
-    setLoginName('');
-    setLoginEmail('');
-    setToastMessage('Login berhasil. Riwayat chat akun dimuat otomatis.');
+    setToastMessage(successMessage);
     setErrorMessage(null);
+  }
+
+  function submitUserLogin() {
+    const email = loginEmail.trim().toLowerCase();
+    const password = loginPassword.trim();
+    if (!email || !password || !email.includes('@')) {
+      setErrorMessage('Email dan password valid diperlukan untuk login.');
+      return;
+    }
+
+    const matchedAccount = loadAccounts().find((account) => account.email === email && account.password === password);
+    if (!matchedAccount) {
+      setErrorMessage('Email atau password salah. Coba lagi atau daftar akun baru.');
+      return;
+    }
+
+    completeLogin(
+      {
+        name: matchedAccount.name,
+        email: matchedAccount.email,
+        phone: matchedAccount.phone,
+        provider: 'local'
+      },
+      'Login berhasil. Riwayat chat akun dimuat otomatis.'
+    );
+    setLoginEmail('');
+    setLoginPassword('');
+  }
+
+  function submitUserRegister() {
+    const name = registerName.trim();
+    const email = registerEmail.trim().toLowerCase();
+    const password = registerPassword.trim();
+    const phone = registerPhone.trim();
+    if (!name || !email || !password || !phone) {
+      setErrorMessage('Nama, email, password, dan phone number wajib diisi.');
+      return;
+    }
+    if (!email.includes('@')) {
+      setErrorMessage('Format email belum valid.');
+      return;
+    }
+    if (!/^[0-9+()\\-\\s]{8,20}$/.test(phone)) {
+      setErrorMessage('Phone number minimal 8 digit (boleh pakai +, spasi, atau -).');
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMessage('Password minimal 6 karakter.');
+      return;
+    }
+
+    const accounts = loadAccounts();
+    if (accounts.some((account) => account.email === email)) {
+      setErrorMessage('Email sudah terdaftar. Gunakan menu login.');
+      return;
+    }
+
+    const nextAccount: LocalUserAccount = { name, email, password, phone };
+    saveAccounts([nextAccount, ...accounts]);
+    completeLogin(
+      {
+        name,
+        email,
+        phone,
+        provider: 'local'
+      },
+      'Registrasi berhasil. Akun aktif dan konteks chat siap disimpan.'
+    );
+    setRegisterName('');
+    setRegisterEmail('');
+    setRegisterPassword('');
+    setRegisterPhone('');
+  }
+
+  function startSsoLogin(provider: 'google' | 'github', url: string) {
+    if (!url) {
+      setErrorMessage(`SSO ${provider === 'google' ? 'Google' : 'GitHub'} belum dikonfigurasi di environment.`);
+      return;
+    }
+    window.location.href = url;
   }
 
   function logout() {
@@ -452,171 +609,260 @@ export function ChatPage() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="grid gap-4 xl:grid-cols-[280px_1fr]">
-        <aside className="flex min-h-[72vh] flex-col rounded-xl border border-border bg-white p-3 sm:p-4">
-          <Button onClick={createNewThread} className="w-full">
-            + Percakapan Baru
-          </Button>
+    <div className="h-full bg-bg text-ink">
+      <div className="flex h-full overflow-hidden">
+        <aside
+          className={`absolute inset-y-0 left-0 z-30 flex w-[280px] shrink-0 flex-col border-r border-border bg-[#f8faf8] transition-transform md:static md:translate-x-0 ${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="flex h-14 items-center justify-between border-b border-border px-3">
+            <Link to="/" className="inline-flex items-center gap-2 text-caption font-semibold tracking-tight text-ink">
+              <span className="brand-mark brand-mark--md">
+                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
+              </span>
+              CurhatIn AI
+            </Link>
+            <button
+              type="button"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-ink-soft md:hidden"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Tutup sidebar"
+            >
+              ×
+            </button>
+          </div>
 
-          <div className="mt-3 rounded-lg border border-border bg-accent p-3">
-            <p className="text-label font-medium text-ink">Mode aktif</p>
-            <p className="mt-1 text-caption text-muted">{currentUserId ? 'Login' : 'Anonymous guest'}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              <Badge tone="accent">AI by consent</Badge>
-              <Badge tone="success">{currentUserId ? 'Riwayat sinkron' : 'Lokal dulu'}</Badge>
+          <div className="space-y-2 border-b border-border p-3">
+            <Button className="w-full justify-start" onClick={createNewThread}>
+              + New chat
+            </Button>
+            <input
+              className="h-9 w-full rounded-md border border-border bg-white px-3 text-caption text-ink placeholder:text-muted"
+              placeholder="Search chats"
+              value={threadQuery}
+              onChange={(event) => setThreadQuery(event.target.value)}
+            />
+            <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted">
+              <Link to="/app/history" className="rounded-md border border-border bg-white px-2 py-1 hover:bg-accent hover:text-ink">
+                History
+              </Link>
+              <Link to="/articles" className="rounded-md border border-border bg-white px-2 py-1 hover:bg-accent hover:text-ink">
+                Articles
+              </Link>
+              <a href="/" className="rounded-md border border-border bg-white px-2 py-1 hover:bg-accent hover:text-ink">
+                Landing
+              </a>
             </div>
           </div>
 
-          <div className="mt-3 flex-1 overflow-y-auto pr-1">
-            <p className="mb-2 text-caption font-medium text-muted">Riwayat chat</p>
-            <div className="space-y-1">
-              {threads.map((thread) => (
+          <div className="min-h-0 flex-1 space-y-1 overflow-y-auto p-2">
+            {visibleThreads.length > 0 ? (
+              visibleThreads.map((thread) => (
                 <button
                   key={thread.id}
                   type="button"
                   onClick={() => switchThread(thread.id)}
-                  className={`w-full rounded-md border px-3 py-2 text-left transition-colors ${
+                  className={`w-full rounded-lg border px-3 py-2 text-left transition-colors ${
                     activeThread?.id === thread.id
-                      ? 'border-brand-blue/40 bg-brand-blue-soft'
-                      : 'border-border bg-white hover:bg-accent'
+                      ? 'border-brand-blue/30 bg-brand-blue-soft'
+                      : 'border-transparent hover:border-border hover:bg-white'
                   }`}
                 >
                   <p className="truncate text-caption font-medium text-ink">{thread.title}</p>
-                  <p className="mt-0.5 text-[11px] text-muted">{formatUpdatedAt(thread.updatedAt)}</p>
+                  <p className="mt-0.5 truncate text-[11px] text-muted">{formatUpdatedAt(thread.updatedAt)}</p>
                 </button>
-              ))}
-            </div>
+              ))
+            ) : (
+              <p className="px-2 py-3 text-caption text-muted">Belum ada chat yang cocok.</p>
+            )}
           </div>
 
-          <div className="mt-3 space-y-3 border-t border-border pt-3">
-            <div>
-              <p className="text-label font-medium text-ink">Mood check-in</p>
-              <div className="mt-2">
-                <MoodPicker onSelect={setMood} />
-              </div>
-              <p className="mt-2 text-caption text-muted">Entri tersimpan: <strong>{savedEntriesCount}</strong></p>
+          <div className="space-y-2 border-t border-border p-3">
+            <div className="rounded-lg border border-border bg-white p-2.5">
+              <p className="text-[11px] font-semibold text-ink">
+                {currentUserId ? `Login ${userProfile?.provider === 'local' ? 'Email' : userProfile?.provider}` : 'Anonymous mode'}
+              </p>
+              <p className="mt-1 text-[11px] text-muted">{currentUserId ? userProfile?.email : 'AI aktif hanya saat kamu klik kirim.'}</p>
+              <p className="mt-1 text-[11px] text-muted">Jurnal tersimpan: {savedEntriesCount}</p>
             </div>
-
-            <div className="flex flex-wrap gap-2">
-              {currentUserId ? (
-                <Button variant="secondary" className="w-full" onClick={logout}>
-                  Logout akun
-                </Button>
-              ) : (
-                <Button variant="secondary" className="w-full" onClick={() => setShowLoginModal(true)}>
-                  Login untuk simpan konteks
-                </Button>
-              )}
-            </div>
+            {currentUserId ? (
+              <Button variant="secondary" className="w-full" onClick={logout}>
+                Logout akun
+              </Button>
+            ) : (
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => {
+                  setAuthMode('login');
+                  setShowLoginModal(true);
+                }}
+              >
+                Login / Register
+              </Button>
+            )}
           </div>
         </aside>
 
-        <section className="flex min-h-[72vh] flex-col rounded-xl border border-border bg-white">
-          <header className="border-b border-border p-3 sm:p-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
+        {sidebarOpen ? (
+          <button
+            type="button"
+            className="absolute inset-0 z-20 bg-black/20 md:hidden"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Tutup sidebar overlay"
+          />
+        ) : null}
+
+        <section className="relative flex min-h-0 flex-1 flex-col bg-white">
+          <header className="flex h-14 items-center justify-between border-b border-border px-3 sm:px-4">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-ink-soft md:hidden"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Buka sidebar"
+              >
+                ☰
+              </button>
               <div>
-                <p className="text-h6 font-semibold tracking-tight text-ink">{activeThread?.title ?? 'Percakapan baru'}</p>
-                <p className="text-caption text-muted">
-                  {historyLoadedFromServer ? 'Riwayat akun terdeteksi' : 'UI chat gaya ChatGPT, tema CurhatIn'}
+                <p className="text-body font-semibold tracking-tight text-ink">{activeThread?.title ?? 'Percakapan baru'}</p>
+                <p className="text-[11px] text-muted">
+                  {historyLoadedFromServer ? 'Riwayat akun terdeteksi' : 'Chat layout model ChatGPT, tema CurhatIn'}
                 </p>
               </div>
-              <label className="inline-flex items-start gap-2 rounded-md border border-brand-green/30 bg-brand-green-soft px-3 py-2">
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="hidden items-center gap-1.5 rounded-md border border-brand-green/30 bg-brand-green-soft px-2 py-1 sm:inline-flex">
                 <input
                   type="checkbox"
-                  className="mt-0.5"
+                  className="h-3.5 w-3.5"
                   checked={shareAnonymously}
                   onChange={(event) => setShareAnonymously(event.target.checked)}
                 />
-                <span className="text-[11px] text-ink-soft">Bagikan anonim untuk knowledge base komunitas</span>
+                <span className="text-[11px] text-ink-soft">Anonim</span>
               </label>
-            </div>
-
-            <div className="hide-scrollbar -mx-1 mt-3 flex gap-2 overflow-x-auto px-1">
-              {categories.map((category) => (
+              {!currentUserId ? (
                 <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? 'primary' : 'secondary'}
-                  className="shrink-0 text-caption"
+                  variant="secondary"
+                  className="h-8 px-3 text-caption"
                   onClick={() => {
-                    setSelectedCategory(category.id);
-                    if (!activeThread) return;
-                    applyThreadUpdate(activeThread.id, (current) => ({
-                      ...current,
-                      category: category.id
-                    }));
+                    setAuthMode('login');
+                    setShowLoginModal(true);
                   }}
                 >
-                  {category.label}
+                  Login
                 </Button>
-              ))}
+              ) : null}
             </div>
           </header>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-white p-3 sm:p-4">
-            {messages.map((message, index) => (
-              <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-[92%] rounded-xl px-3.5 py-2.5 text-body sm:max-w-[84%] sm:px-4 sm:py-3 ${
-                    message.role === 'user'
-                      ? 'bg-[#191919] text-white'
-                      : 'border border-border bg-brand-blue-soft text-ink'
-                  }`}
-                >
-                  {message.text}
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            <div className="mx-auto flex h-full w-full max-w-3xl flex-col px-4 py-6 sm:px-6">
+              {isStarterThread ? (
+                <div className="flex flex-1 items-center justify-center">
+                  <div className="space-y-3 text-center">
+                    <p className="text-[clamp(1.5rem,4.2vw,2.2rem)] font-semibold tracking-[-0.02em] text-ink">
+                      What are you working on today?
+                    </p>
+                    <p className="text-caption text-muted">Mulai dari satu kalimat sederhana. AI hanya merespons saat kamu memberi trigger.</p>
+                  </div>
                 </div>
+              ) : null}
+
+              <div className={`space-y-4 ${isStarterThread ? 'pb-10' : 'mt-1 pb-10'}`}>
+                {messages.map((message, index) => (
+                  <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div
+                      className={`max-w-[88%] rounded-2xl px-4 py-3 text-body leading-relaxed ${
+                        message.role === 'user'
+                          ? 'bg-[#191919] text-white'
+                          : 'border border-border bg-brand-blue-soft text-ink'
+                      }`}
+                    >
+                      {message.text}
+                    </div>
+                  </div>
+                ))}
+                {isLoading ? <LoadingState label="AI sedang menyusun refleksi..." /> : null}
               </div>
-            ))}
-            {isLoading ? <LoadingState label="AI sedang menyusun refleksi..." /> : null}
+            </div>
           </div>
 
-          <div className="border-t border-border p-3 sm:p-4">
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <p className="text-caption font-medium text-muted">Contoh kalimat pembuka:</p>
-                <div className="hide-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
-                  {quickPrompts.map((prompt) => (
-                    <button
-                      key={prompt}
-                      type="button"
-                      className="shrink-0 rounded-md border border-brand-blue/30 bg-brand-blue-soft px-3 py-1.5 text-caption font-medium text-brand-blue"
-                      onClick={() => setJournalInput(prompt)}
+          <div className="border-t border-border bg-white/95 px-3 py-3 backdrop-blur sm:px-4">
+            <div className="mx-auto w-full max-w-3xl space-y-2.5">
+              <div className="hide-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+                {quickPrompts.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    className="shrink-0 rounded-full border border-brand-blue/25 bg-brand-blue-soft px-3 py-1.5 text-[11px] font-medium text-brand-blue"
+                    onClick={() => setJournalInput(prompt)}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+
+              <div className="rounded-2xl border border-border bg-white p-2.5 shadow-soft">
+                <textarea
+                  className="min-h-[92px] w-full resize-none border-0 bg-transparent px-2 py-1 text-body text-ink outline-none placeholder:text-muted"
+                  placeholder="Tulis perasaanmu di sini, lalu klik Kirim ke AI..."
+                  value={journalInput}
+                  onChange={(event) => setJournalInput(event.target.value)}
+                  onKeyDown={handleInputKeydown}
+                />
+                <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <select
+                      className="h-8 rounded-md border border-border bg-white px-2.5 text-[12px] text-ink"
+                      value={selectedCategory}
+                      onChange={(event) => {
+                        const nextCategory = event.target.value;
+                        setSelectedCategory(nextCategory);
+                        if (!activeThread) return;
+                        applyThreadUpdate(activeThread.id, (current) => ({
+                          ...current,
+                          category: nextCategory
+                        }));
+                      }}
                     >
-                      {prompt}
-                    </button>
-                  ))}
+                      {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.label}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      className="h-8 rounded-md border border-border bg-white px-2.5 text-[12px] text-ink"
+                      value={mood}
+                      onChange={(event) => setMood(event.target.value)}
+                    >
+                      <option value="Tenang">Mood: Tenang</option>
+                      <option value="Sedih">Mood: Sedih</option>
+                      <option value="Cemas">Mood: Cemas</option>
+                      <option value="Lelah">Mood: Lelah</option>
+                      <option value="Marah">Mood: Marah</option>
+                    </select>
+                    <Button variant="secondary" className="h-8 px-3 text-caption" onClick={saveJournalLocally} disabled={isLoading}>
+                      Simpan Lokal
+                    </Button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button className="h-8 px-3 text-caption" onClick={startReflectFlow} disabled={!journalInput.trim() || isLoading}>
+                      Kirim ke AI
+                    </Button>
+                  </div>
                 </div>
               </div>
 
-              <Textarea
-                id="chat-input"
-                label="Tulis jurnal / pesan refleksi"
-                placeholder="Contoh: Hari ini aku merasa capek tapi masih berusaha hadir..."
-                className="min-h-[96px]"
-                value={journalInput}
-                onChange={(event) => setJournalInput(event.target.value)}
-                onKeyDown={handleInputKeydown}
-              />
-
-              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                <Button variant="secondary" className="w-full sm:w-auto" onClick={saveJournalLocally} disabled={isLoading}>
-                  Simpan Lokal
-                </Button>
-                <Button className="w-full sm:w-auto" onClick={startReflectFlow} disabled={!journalInput.trim() || isLoading}>
-                  Kirim ke AI
-                </Button>
-              </div>
-              <p className="text-caption text-muted">
-                Tekan Enter untuk kirim, Shift+Enter untuk baris baru. AI tetap OFF by default sampai kamu konfirmasi.
-              </p>
+              <p className="px-1 text-[11px] text-muted">Enter untuk kirim, Shift+Enter untuk baris baru. AI tetap OFF by default sampai kamu konfirmasi.</p>
               {toastMessage ? <Toast message={toastMessage} tone="success" /> : null}
               {errorMessage ? <Toast message={errorMessage} tone="error" /> : null}
             </div>
           </div>
         </section>
       </div>
-
-      <GroundingCard />
 
       <Modal
         open={showConsentModal}
@@ -645,35 +891,132 @@ export function ChatPage() {
 
       <Modal
         open={showLoginModal}
-        title="Login untuk simpan konteks chat"
-        description="Guest tetap tersedia. Login ini untuk menyimpan memory chat per akun."
+        title={authMode === 'login' ? 'Login User' : 'Register User'}
+        description="Guest tetap tersedia. Login akun dipakai untuk menyimpan konteks chat personal."
         onClose={() => setShowLoginModal(false)}
       >
         <div className="space-y-4">
-          <label className="flex flex-col gap-2">
-            <span className="text-caption font-semibold">Nama</span>
-            <input
-              className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
-              value={loginName}
-              onChange={(event) => setLoginName(event.target.value)}
-              placeholder="Nama kamu"
-            />
-          </label>
-          <label className="flex flex-col gap-2">
-            <span className="text-caption font-semibold">Email</span>
-            <input
-              className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
-              type="email"
-              value={loginEmail}
-              onChange={(event) => setLoginEmail(event.target.value)}
-              placeholder="nama@email.com"
-            />
-          </label>
+          <div className="grid grid-cols-2 gap-2 rounded-md border border-border bg-accent p-1">
+            <button
+              type="button"
+              className={`h-9 rounded-md text-caption font-medium ${
+                authMode === 'login' ? 'bg-white text-ink shadow-soft' : 'text-ink-soft'
+              }`}
+              onClick={() => setAuthMode('login')}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className={`h-9 rounded-md text-caption font-medium ${
+                authMode === 'register' ? 'bg-white text-ink shadow-soft' : 'text-ink-soft'
+              }`}
+              onClick={() => setAuthMode('register')}
+            >
+              Register
+            </button>
+          </div>
+
+          {authMode === 'login' ? (
+            <div className="space-y-3">
+              <label className="flex flex-col gap-2">
+                <span className="text-caption font-semibold">Email</span>
+                <input
+                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  type="email"
+                  autoComplete="email"
+                  value={loginEmail}
+                  onChange={(event) => setLoginEmail(event.target.value)}
+                  placeholder="nama@email.com"
+                />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-caption font-semibold">Password</span>
+                <input
+                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  type="password"
+                  autoComplete="current-password"
+                  value={loginPassword}
+                  onChange={(event) => setLoginPassword(event.target.value)}
+                  placeholder="Masukkan password"
+                />
+              </label>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <label className="flex flex-col gap-2">
+                <span className="text-caption font-semibold">Nama</span>
+                <input
+                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  autoComplete="name"
+                  value={registerName}
+                  onChange={(event) => setRegisterName(event.target.value)}
+                  placeholder="Nama kamu"
+                />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-caption font-semibold">Email</span>
+                <input
+                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  type="email"
+                  autoComplete="email"
+                  value={registerEmail}
+                  onChange={(event) => setRegisterEmail(event.target.value)}
+                  placeholder="nama@email.com"
+                />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-caption font-semibold">Phone Number</span>
+                <input
+                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  autoComplete="tel"
+                  value={registerPhone}
+                  onChange={(event) => setRegisterPhone(event.target.value)}
+                  placeholder="+62 812 3456 7890"
+                />
+              </label>
+              <label className="flex flex-col gap-2">
+                <span className="text-caption font-semibold">Password</span>
+                <input
+                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  type="password"
+                  autoComplete="new-password"
+                  value={registerPassword}
+                  onChange={(event) => setRegisterPassword(event.target.value)}
+                  placeholder="Minimal 6 karakter"
+                />
+              </label>
+            </div>
+          )}
+
+          <div className="space-y-2 rounded-md border border-border bg-accent p-3">
+            <p className="text-caption font-semibold text-ink">SSO User</p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button
+                variant="secondary"
+                className="w-full sm:w-auto"
+                onClick={() => startSsoLogin('google', googleSsoUrl)}
+              >
+                Login with Google
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full sm:w-auto"
+                onClick={() => startSsoLogin('github', githubSsoUrl)}
+              >
+                Login with GitHub
+              </Button>
+            </div>
+            <p className="text-[11px] text-muted">Aktif jika URL SSO sudah diisi di environment frontend.</p>
+          </div>
+
           <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setShowLoginModal(false)}>
               Batal
             </Button>
-            <Button className="w-full sm:w-auto" onClick={submitLogin}>Masuk</Button>
+            <Button className="w-full sm:w-auto" onClick={authMode === 'login' ? submitUserLogin : submitUserRegister}>
+              {authMode === 'login' ? 'Masuk' : 'Daftar'}
+            </Button>
           </div>
         </div>
       </Modal>

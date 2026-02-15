@@ -54,8 +54,8 @@ export function ArticlesPage() {
       <header className="border-b border-border bg-white">
         <div className="page-shell flex flex-wrap items-center justify-between gap-3 py-4">
           <Link to="/" className="inline-flex items-center gap-2 text-h5 font-semibold tracking-tight text-ink">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white p-1">
-              <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+            <span className="brand-mark brand-mark--lg">
+              <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
             </span>
             Curhatin Articles
           </Link>

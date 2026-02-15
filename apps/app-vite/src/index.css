@@ -37,4 +37,30 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  .brand-mark {
+    @apply inline-flex items-center justify-center overflow-hidden rounded-md border border-border bg-white;
+  }
+
+  .brand-mark--sm {
+    @apply h-8 w-8 p-0.5;
+  }
+
+  .brand-mark--md {
+    @apply h-10 w-10 p-0.5;
+  }
+
+  .brand-mark--lg {
+    @apply h-12 w-12 p-0.5;
+  }
+
+  .brand-mark--xl {
+    @apply h-14 w-14 p-0.5;
+  }
+
+  .brand-mark__img {
+    @apply h-full w-full object-contain;
+    transform: scale(2.25);
+    transform-origin: center;
+  }
 }

@@ -29,8 +29,8 @@ export function Navbar({
           className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-[-0.015em] text-ink"
           onClick={() => setMobileOpen(false)}
         >
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-white p-1">
-            <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+          <span className="brand-mark brand-mark--md">
+            <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
           </span>
           {title}
         </Link>

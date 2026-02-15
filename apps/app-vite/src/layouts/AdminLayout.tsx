@@ -2,27 +2,54 @@ import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { adminNav } from '../data/navigation';
 import { Footer, Navbar, OutlinedCard, Button, Input, Toast } from '../components/ui';
-import { clearAdminToken, hasAdminToken, setAdminToken } from '../lib/adminAuth';
+import { clearAdminCredentials, hasAdminCredentials, setAdminCredentials } from '../lib/adminAuth';
+import { contentApi } from '../lib/contentApi';
 
 export function AdminLayout() {
-  const [tokenInput, setTokenInput] = useState('');
+  const [usernameInput, setUsernameInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
-  const [authenticated, setAuthenticated] = useState(() => hasAdminToken());
+  const [authenticated, setAuthenticated] = useState(() => hasAdminCredentials());
   const [showMobileNav, setShowMobileNav] = useState(false);
 
-  function submitLogin() {
-    if (!tokenInput.trim()) {
-      setAuthError('Masukkan admin token terlebih dahulu.');
+  async function submitLogin() {
+    if (!usernameInput.trim() || !passwordInput.trim()) {
+      setAuthError('Username dan password admin wajib diisi.');
       return;
     }
-    setAdminToken(tokenInput);
-    setTokenInput('');
+
+    setAuthLoading(true);
     setAuthError(null);
-    setAuthenticated(true);
+
+    const nextUsername = usernameInput.trim();
+    const nextPassword = passwordInput.trim();
+
+    try {
+      const response = await fetch(contentApi('/api/articles?includeDraft=true&limit=1'), {
+        headers: {
+          'x-admin-username': nextUsername,
+          'x-admin-password': nextPassword
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      setAdminCredentials(nextUsername, nextPassword);
+      setUsernameInput('');
+      setPasswordInput('');
+      setAuthenticated(true);
+    } catch {
+      setAuthError('Username atau password admin tidak valid.');
+    } finally {
+      setAuthLoading(false);
+    }
   }
 
   function logout() {
-    clearAdminToken();
+    clearAdminCredentials();
     setAuthenticated(false);
   }
 
@@ -32,8 +59,8 @@ export function AdminLayout() {
         <header className="border-b border-border bg-white">
           <div className="page-shell-narrow flex items-center justify-between gap-3 py-4">
             <p className="inline-flex items-center gap-2 text-h5 font-semibold text-ink">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white p-1">
-                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+              <span className="brand-mark brand-mark--xl">
+                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
               </span>
               CurhatIn Admin
             </p>
@@ -47,18 +74,29 @@ export function AdminLayout() {
           <OutlinedCard className="space-y-4">
             <h1 className="text-h4 font-semibold tracking-tight">Login Admin</h1>
             <p className="text-body text-ink-soft">
-              Masukkan admin token untuk maintenance artikel (create, update, delete) layaknya CMS.
+              Masuk pakai username dan password internal untuk maintenance artikel (create, update, delete).
             </p>
             <Input
-              id="admin-token"
-              label="Admin Token"
-              placeholder="Masukkan ADMIN_API_TOKEN"
+              id="admin-username"
+              label="Username"
+              placeholder="admin username"
+              autoComplete="username"
+              value={usernameInput}
+              onChange={(event) => setUsernameInput(event.target.value)}
+            />
+            <Input
+              id="admin-password"
+              label="Password"
+              placeholder="admin password"
               type="password"
-              value={tokenInput}
-              onChange={(event) => setTokenInput(event.target.value)}
+              autoComplete="current-password"
+              value={passwordInput}
+              onChange={(event) => setPasswordInput(event.target.value)}
             />
             <div className="flex flex-wrap gap-2">
-              <Button onClick={submitLogin}>Login</Button>
+              <Button onClick={() => void submitLogin()} disabled={authLoading}>
+                {authLoading ? 'Memeriksa...' : 'Login'}
+              </Button>
               <a
                 href="/articles"
                 className="inline-flex h-9 items-center rounded-md border border-border px-3 text-caption font-medium hover:bg-accent"

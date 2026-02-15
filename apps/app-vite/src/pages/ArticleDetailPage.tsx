@@ -57,8 +57,8 @@ export function ArticleDetailPage() {
         <div className="page-shell-narrow flex flex-wrap items-center justify-between gap-3 py-4">
           <div className="flex flex-wrap items-center gap-3">
             <Link to="/" className="inline-flex items-center gap-2 text-caption font-semibold tracking-tight text-ink">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-white p-1">
-                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+              <span className="brand-mark brand-mark--md">
+                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
               </span>
               CurhatIn
             </Link>
