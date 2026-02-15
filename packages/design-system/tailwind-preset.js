@@ -10,6 +10,10 @@ const preset = {
         bg: 'var(--color-bg)',
         border: 'var(--color-border)',
         accent: 'var(--color-accent)',
+        'brand-green': 'var(--color-brand-green)',
+        'brand-green-soft': 'var(--color-brand-green-soft)',
+        'brand-blue': 'var(--color-brand-blue)',
+        'brand-blue-soft': 'var(--color-brand-blue-soft)',
         success: 'var(--color-success)',
         warn: 'var(--color-warn)',
         error: 'var(--color-error)'

@@ -53,7 +53,10 @@ export function ArticlesPage() {
     <div className="min-h-screen bg-bg text-ink">
       <header className="border-b border-border bg-white">
         <div className="page-shell flex flex-wrap items-center justify-between gap-3 py-4">
-          <Link to="/" className="text-h5 font-semibold tracking-tight text-ink">
+          <Link to="/" className="inline-flex items-center gap-2 text-h5 font-semibold tracking-tight text-ink">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white p-1">
+              <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+            </span>
             Curhatin Articles
           </Link>
           <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-[#191919] px-4 text-caption font-medium text-white hover:bg-black">

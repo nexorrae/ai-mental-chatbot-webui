@@ -29,8 +29,8 @@ export function Navbar({
           className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-[-0.015em] text-ink"
           onClick={() => setMobileOpen(false)}
         >
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-border bg-accent text-[12px] text-ink-soft">
-            C
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-white p-1">
+            <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
           </span>
           {title}
         </Link>
@@ -137,8 +137,8 @@ export function Badge({
 }) {
   const toneClass = {
     default: 'bg-white text-ink-soft border-border',
-    accent: 'bg-accent text-ink-soft border-border',
-    success: 'bg-[#edf7f5] text-[#0f7b6c] border-[#ccebe7]',
+    accent: 'bg-brand-blue-soft text-brand-blue border-brand-blue/30',
+    success: 'bg-brand-green-soft text-brand-green border-brand-green/30',
     warn: 'bg-[#fff7eb] text-[#8a5c13] border-[#f2dfc0]',
     error: 'bg-[#fef1f1] text-[#b42318] border-[#f5d2d0]'
   }[tone];
@@ -320,7 +320,7 @@ export function Modal({
 export function Toast({ message, tone = 'default' }: { message: string; tone?: 'default' | 'success' | 'warn' | 'error' }) {
   const toneClass = {
     default: 'border-border bg-white text-ink',
-    success: 'border-[#ccebe7] bg-[#edf7f5] text-[#0f7b6c]',
+    success: 'border-brand-green/30 bg-brand-green-soft text-brand-green',
     warn: 'border-[#f2dfc0] bg-[#fff7eb] text-[#8a5c13]',
     error: 'border-[#f5d2d0] bg-[#fef1f1] text-[#b42318]'
   }[tone];

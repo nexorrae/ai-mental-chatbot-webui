@@ -31,7 +31,12 @@ export function AdminLayout() {
       <div className="min-h-screen bg-bg text-ink">
         <header className="border-b border-border bg-white">
           <div className="page-shell-narrow flex items-center justify-between gap-3 py-4">
-            <p className="text-h5 font-semibold text-ink">CurhatIn Admin</p>
+            <p className="inline-flex items-center gap-2 text-h5 font-semibold text-ink">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white p-1">
+                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+              </span>
+              CurhatIn Admin
+            </p>
             <a className="text-caption font-medium text-ink-soft underline decoration-dotted underline-offset-4 hover:text-ink" href="/">
               Kembali ke landing
             </a>

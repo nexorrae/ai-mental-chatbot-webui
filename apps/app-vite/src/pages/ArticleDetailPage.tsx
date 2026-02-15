@@ -55,9 +55,17 @@ export function ArticleDetailPage() {
     <div className="min-h-screen bg-bg text-ink">
       <header className="border-b border-border bg-white">
         <div className="page-shell-narrow flex flex-wrap items-center justify-between gap-3 py-4">
-          <Link to="/articles" className="text-caption font-medium text-ink-soft underline decoration-dotted underline-offset-4 hover:text-ink">
-            ← Kembali ke semua artikel
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to="/" className="inline-flex items-center gap-2 text-caption font-semibold tracking-tight text-ink">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-white p-1">
+                <img src="/CurhatinAI.png" alt="CurhatIn AI" className="h-full w-full object-contain" />
+              </span>
+              CurhatIn
+            </Link>
+            <Link to="/articles" className="text-caption font-medium text-ink-soft underline decoration-dotted underline-offset-4 hover:text-ink">
+              ← Kembali ke semua artikel
+            </Link>
+          </div>
           <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-[#191919] px-4 text-caption font-medium text-white hover:bg-black">
             Konsultasi AI
           </Link>
