@@ -1,0 +1,33 @@
+@import '@curhatin/design-system/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-ink antialiased;
+  }
+}
+
+@layer components {
+  .frame-panel {
+    @apply rounded-lg border-base border-border bg-paper p-6 shadow-soft;
+  }
+
+  .frame-panel-strong {
+    @apply rounded-lg border-strong border-border bg-paper p-6;
+  }
+
+  .section-wrap {
+    @apply mx-auto w-full max-w-content px-4 md:px-8;
+  }
+
+  .three-col-grid {
+    @apply grid gap-4 md:grid-cols-3;
+  }
+
+  .focus-outline {
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black/20;
+  }
+}

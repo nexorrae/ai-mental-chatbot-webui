@@ -1,0 +1,21 @@
+@import '@curhatin/design-system/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-4 ring-black/20;
+  }
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto w-full max-w-[1200px] px-4 md:px-8;
+  }
+}
