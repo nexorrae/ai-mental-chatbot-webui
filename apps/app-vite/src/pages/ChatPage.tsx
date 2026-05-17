@@ -612,7 +612,7 @@ export function ChatPage() {
     <div className="h-full bg-bg text-ink">
       <div className="flex h-full overflow-hidden">
         <aside
-          className={`absolute inset-y-0 left-0 z-30 flex w-[280px] shrink-0 flex-col border-r border-border bg-[#edf4ef] transition-transform md:static md:translate-x-0 ${
+          className={`absolute inset-y-0 left-0 z-30 flex w-[280px] shrink-0 flex-col border-r border-border bg-brand-blue-soft shadow-[8px_0_40px_rgba(8,10,6,0.12)] transition-transform md:static md:translate-x-0 md:shadow-none ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
@@ -625,7 +625,7 @@ export function ChatPage() {
             </Link>
             <button
               type="button"
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-ink-soft md:hidden"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-paper text-ink-soft shadow-soft hover:bg-brand-green-soft hover:text-ink md:hidden"
               onClick={() => setSidebarOpen(false)}
               aria-label="Tutup sidebar"
             >
@@ -638,19 +638,19 @@ export function ChatPage() {
               + New chat
             </Button>
             <input
-              className="h-9 w-full rounded-md border border-border bg-paper px-3 text-caption text-ink placeholder:text-muted focus-visible:border-brand-green"
+              className="h-9 w-full rounded-md border border-border bg-paper px-3 text-caption text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
               placeholder="Search chats"
               value={threadQuery}
               onChange={(event) => setThreadQuery(event.target.value)}
             />
             <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted">
-              <Link to="/app/history" className="rounded-pill border border-border bg-paper px-2 py-1 hover:bg-accent hover:text-ink">
-                History
+              <Link to="/app/history" className="rounded-md border border-border bg-paper px-2 py-1 shadow-sm hover:bg-brand-green-soft hover:text-ink">
+                Riwayat Sesi
               </Link>
-              <Link to="/articles" className="rounded-pill border border-border bg-paper px-2 py-1 hover:bg-accent hover:text-ink">
-                Articles
+              <Link to="/articles" className="rounded-md border border-border bg-paper px-2 py-1 shadow-sm hover:bg-brand-green-soft hover:text-ink">
+                Artikel
               </Link>
-              <a href="/" className="rounded-pill border border-border bg-paper px-2 py-1 hover:bg-accent hover:text-ink">
+              <a href="/" className="rounded-md border border-border bg-paper px-2 py-1 shadow-sm hover:bg-brand-green-soft hover:text-ink">
                 Landing
               </a>
             </div>
@@ -663,10 +663,10 @@ export function ChatPage() {
                   key={thread.id}
                   type="button"
                   onClick={() => switchThread(thread.id)}
-                  className={`w-full rounded-lg border px-3 py-2 text-left transition-colors ${
+                  className={`w-full rounded-md border px-3 py-2 text-left transition-colors ${
                     activeThread?.id === thread.id
-                      ? 'border-brand-green/40 bg-brand-green-soft'
-                      : 'border-transparent hover:border-border hover:bg-paper'
+                      ? 'border-brand-green/40 bg-paper shadow-soft'
+                      : 'border-transparent hover:border-border hover:bg-brand-green-soft/70'
                   }`}
                 >
                   <p className="truncate text-caption font-medium text-ink">{thread.title}</p>
@@ -679,7 +679,7 @@ export function ChatPage() {
           </div>
 
           <div className="space-y-2 border-t border-border p-3">
-            <div className="rounded-md border border-border bg-paper p-2.5">
+            <div className="rounded-md border border-border bg-paper/95 p-2.5 shadow-soft">
               <p className="text-[11px] font-semibold text-ink">
                 {currentUserId ? `Login ${userProfile?.provider === 'local' ? 'Email' : userProfile?.provider}` : 'Anonymous mode'}
               </p>
@@ -708,18 +708,18 @@ export function ChatPage() {
         {sidebarOpen ? (
           <button
             type="button"
-            className="absolute inset-0 z-20 bg-black/20 md:hidden"
+            className="absolute inset-0 z-20 bg-ink/35 backdrop-blur-[2px] md:hidden"
             onClick={() => setSidebarOpen(false)}
             aria-label="Tutup sidebar overlay"
           />
         ) : null}
 
         <section className="relative flex min-h-0 flex-1 flex-col bg-paper">
-          <header className="flex h-14 items-center justify-between border-b border-border px-3 sm:px-4">
+          <header className="flex h-14 items-center justify-between border-b border-border bg-paper/95 px-3 backdrop-blur-md sm:px-4">
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-ink-soft md:hidden"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-paper text-ink-soft shadow-soft hover:bg-brand-green-soft hover:text-ink md:hidden"
                 onClick={() => setSidebarOpen(true)}
                 aria-label="Buka sidebar"
               >
@@ -733,7 +733,7 @@ export function ChatPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <label className="hidden items-center gap-1.5 rounded-md border border-brand-green/30 bg-brand-green-soft px-2 py-1 sm:inline-flex">
+              <label className="hidden items-center gap-1.5 rounded-md border border-brand-green/30 bg-brand-green-soft/80 px-2 py-1 shadow-soft sm:inline-flex">
                 <input
                   type="checkbox"
                   className="h-3.5 w-3.5"
@@ -760,12 +760,17 @@ export function ChatPage() {
           <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="mx-auto flex h-full w-full max-w-3xl flex-col px-4 py-6 sm:px-6">
               {isStarterThread ? (
-                <div className="flex flex-1 items-center justify-center">
-                  <div className="space-y-3 text-center">
-                    <p className="font-serif text-[clamp(2.4rem,6vw,4.6rem)] font-semibold leading-[0.95] tracking-normal text-ink">
-                      What are you working on today?
+                <div className="flex flex-1 items-center justify-center py-10">
+                  <div className="space-y-4 text-center">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/10 text-3xl shadow-inner">
+                      🌱
+                    </div>
+                    <p className="font-serif text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.1] tracking-normal text-ink">
+                      Bagaimana perasaanmu hari ini?
                     </p>
-                    <p className="text-caption text-muted">Mulai dari satu kalimat sederhana. AI hanya merespons saat kamu memberi trigger.</p>
+                    <p className="mx-auto max-w-[400px] text-base text-ink-soft">
+                      Mulai ceritamu dari satu kalimat sederhana. Ruang ini aman, rahasia, dan tanpa penghakiman.
+                    </p>
                   </div>
                 </div>
               ) : null}
@@ -774,10 +779,10 @@ export function ChatPage() {
                 {messages.map((message, index) => (
                   <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div
-                      className={`max-w-[88%] rounded-lg px-4 py-3 text-body leading-relaxed ${
+                      className={`max-w-[88%] rounded-md px-4 py-3 text-body leading-relaxed shadow-soft ${
                         message.role === 'user'
-                          ? 'bg-brand-green text-white'
-                          : 'border border-border bg-paper text-ink'
+                          ? 'bg-brand-green text-paper'
+                          : 'border border-border bg-bg text-ink'
                       }`}
                     >
                       {message.text}
@@ -791,12 +796,12 @@ export function ChatPage() {
 
           <div className="border-t border-border bg-paper/95 px-3 py-3 backdrop-blur sm:px-4">
             <div className="mx-auto w-full max-w-3xl space-y-2.5">
-              <div className="hide-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+              <div className="hide-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-2">
                 {quickPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
-                    className="shrink-0 rounded-pill border border-brand-green/30 bg-brand-green-soft px-3 py-1.5 text-[11px] font-semibold text-brand-green"
+                    className="shrink-0 rounded-md border border-brand-green/30 bg-brand-green-soft px-3 py-1.5 text-xs font-medium text-brand-green transition-colors hover:bg-brand-green hover:text-white"
                     onClick={() => setJournalInput(prompt)}
                   >
                     {prompt}
@@ -804,10 +809,10 @@ export function ChatPage() {
                 ))}
               </div>
 
-              <div className="rounded-lg border border-border bg-paper p-2.5 shadow-soft">
+              <div className="rounded-xl border border-border bg-paper/95 p-3 shadow-sm transition-shadow focus-within:border-brand-green focus-within:shadow-md">
                 <textarea
-                  className="min-h-[92px] w-full resize-none border-0 bg-transparent px-2 py-1 text-body text-ink outline-none placeholder:text-muted"
-                  placeholder="Tulis perasaanmu di sini, lalu klik Kirim ke AI..."
+                  className="min-h-[80px] w-full resize-none border-0 bg-transparent px-2 py-1 text-base text-ink outline-none placeholder:text-muted focus-visible:ring-0"
+                  placeholder="Ceritakan perasaanmu di sini, lalu klik Kirim ke AI..."
                   value={journalInput}
                   onChange={(event) => setJournalInput(event.target.value)}
                   onKeyDown={handleInputKeydown}
@@ -815,7 +820,7 @@ export function ChatPage() {
                 <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex flex-wrap items-center gap-2">
                     <select
-                      className="h-8 rounded-md border border-border bg-paper px-2.5 text-[12px] text-ink"
+                      className="h-8 rounded-md border border-border bg-paper px-2.5 text-[12px] text-ink focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                       value={selectedCategory}
                       onChange={(event) => {
                         const nextCategory = event.target.value;
@@ -834,7 +839,7 @@ export function ChatPage() {
                       ))}
                     </select>
                     <select
-                      className="h-8 rounded-md border border-border bg-paper px-2.5 text-[12px] text-ink"
+                      className="h-8 rounded-md border border-border bg-paper px-2.5 text-[12px] text-ink focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                       value={mood}
                       onChange={(event) => setMood(event.target.value)}
                     >
@@ -874,7 +879,7 @@ export function ChatPage() {
           <p className="text-body">
             Data jurnal ini akan dikirim sementara ke AI. AI tidak untuk diagnosis medis, hanya untuk refleksi dan pertanyaan balik.
           </p>
-          <div className="rounded-md border border-border bg-accent p-3 text-caption text-ink-soft">
+          <div className="rounded-md border border-brand-green/20 bg-brand-green-soft/70 p-3 text-caption text-ink-soft">
             <p className="font-semibold text-ink">Pratinjau data:</p>
             <p className="mt-1 whitespace-pre-wrap">{journalInput.trim()}</p>
           </div>
@@ -896,7 +901,7 @@ export function ChatPage() {
         onClose={() => setShowLoginModal(false)}
       >
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-2 rounded-md border border-border bg-accent p-1">
+          <div className="grid grid-cols-2 gap-2 rounded-md border border-border bg-brand-blue-soft p-1">
             <button
               type="button"
               className={`h-9 rounded-md text-caption font-medium ${
@@ -922,7 +927,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Email</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                   type="email"
                   autoComplete="email"
                   value={loginEmail}
@@ -933,7 +938,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Password</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                   type="password"
                   autoComplete="current-password"
                   value={loginPassword}
@@ -947,7 +952,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Nama</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                   autoComplete="name"
                   value={registerName}
                   onChange={(event) => setRegisterName(event.target.value)}
@@ -957,7 +962,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Email</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                   type="email"
                   autoComplete="email"
                   value={registerEmail}
@@ -968,7 +973,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Phone Number</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                   autoComplete="tel"
                   value={registerPhone}
                   onChange={(event) => setRegisterPhone(event.target.value)}
@@ -978,7 +983,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Password</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15"
                   type="password"
                   autoComplete="new-password"
                   value={registerPassword}
@@ -989,7 +994,7 @@ export function ChatPage() {
             </div>
           )}
 
-          <div className="space-y-2 rounded-md border border-border bg-accent p-3">
+          <div className="space-y-2 rounded-md border border-brand-green/20 bg-brand-green-soft/70 p-3">
             <p className="text-caption font-semibold text-ink">SSO User</p>
             <div className="flex flex-col gap-2 sm:flex-row">
               <Button

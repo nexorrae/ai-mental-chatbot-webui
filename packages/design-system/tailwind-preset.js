@@ -3,20 +3,20 @@ const preset = {
   theme: {
     extend: {
       colors: {
-        ink: 'var(--color-ink)',
-        'ink-soft': 'var(--color-ink-soft)',
-        muted: 'var(--color-muted)',
-        paper: 'var(--color-paper)',
-        bg: 'var(--color-bg)',
-        border: 'var(--color-border)',
-        accent: 'var(--color-accent)',
-        'brand-green': 'var(--color-brand-green)',
-        'brand-green-soft': 'var(--color-brand-green-soft)',
-        'brand-blue': 'var(--color-brand-blue)',
-        'brand-blue-soft': 'var(--color-brand-blue-soft)',
-        success: 'var(--color-success)',
-        warn: 'var(--color-warn)',
-        error: 'var(--color-error)'
+        ink: 'rgb(var(--color-ink-rgb) / <alpha-value>)',
+        'ink-soft': 'rgb(var(--color-ink-soft-rgb) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted-rgb) / <alpha-value>)',
+        paper: 'rgb(var(--color-paper-rgb) / <alpha-value>)',
+        bg: 'rgb(var(--color-bg-rgb) / <alpha-value>)',
+        border: 'rgb(var(--color-border-rgb) / <alpha-value>)',
+        accent: 'rgb(var(--color-accent-rgb) / <alpha-value>)',
+        'brand-green': 'rgb(var(--color-brand-green-rgb) / <alpha-value>)',
+        'brand-green-soft': 'rgb(var(--color-brand-green-soft-rgb) / <alpha-value>)',
+        'brand-blue': 'rgb(var(--color-brand-blue-rgb) / <alpha-value>)',
+        'brand-blue-soft': 'rgb(var(--color-brand-blue-soft-rgb) / <alpha-value>)',
+        success: 'rgb(var(--color-success-rgb) / <alpha-value>)',
+        warn: 'rgb(var(--color-warn-rgb) / <alpha-value>)',
+        error: 'rgb(var(--color-error-rgb) / <alpha-value>)'
       },
       fontFamily: {
         sans: ['var(--font-sans)'],

@@ -5,19 +5,33 @@
 
   /* Color Tokens */
   --color-ink: #050505;
+  --color-ink-rgb: 5 5 5;
   --color-ink-soft: #30322c;
+  --color-ink-soft-rgb: 48 50 44;
   --color-muted: #8c8d89;
+  --color-muted-rgb: 140 141 137;
   --color-paper: #ffffff;
+  --color-paper-rgb: 255 255 255;
   --color-bg: #f3faf6;
+  --color-bg-rgb: 243 250 246;
   --color-border: #e5e7e1;
+  --color-border-rgb: 229 231 225;
   --color-accent: #e5f2c8;
+  --color-accent-rgb: 229 242 200;
   --color-brand-green: #4a640f;
+  --color-brand-green-rgb: 74 100 15;
   --color-brand-green-soft: #e5f2c8;
+  --color-brand-green-soft-rgb: 229 242 200;
   --color-brand-blue: #8f9d79;
+  --color-brand-blue-rgb: 143 157 121;
   --color-brand-blue-soft: #edf4ef;
+  --color-brand-blue-soft-rgb: 237 244 239;
   --color-success: #4a640f;
+  --color-success-rgb: 74 100 15;
   --color-warn: #8b6b1f;
+  --color-warn-rgb: 139 107 31;
   --color-error: #b42318;
+  --color-error-rgb: 180 35 24;
 
   /* Type Scale */
   --font-sans: Inter, 'Segoe UI', ui-sans-serif, system-ui, -apple-system, sans-serif;

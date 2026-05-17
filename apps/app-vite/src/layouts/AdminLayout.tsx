@@ -56,7 +56,7 @@ export function AdminLayout() {
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-bg text-ink">
-        <header className="border-b border-border bg-paper">
+        <header className="border-b border-border bg-paper/95 shadow-soft backdrop-blur-md">
           <div className="page-shell-narrow flex items-center justify-between gap-3 py-4">
             <p className="inline-flex items-center gap-2 text-h5 font-semibold text-ink">
               <span className="brand-mark brand-mark--xl">
@@ -64,7 +64,7 @@ export function AdminLayout() {
               </span>
               CurhatIn Admin
             </p>
-            <a className="text-caption font-medium text-ink-soft underline decoration-dotted underline-offset-4 hover:text-ink" href="/">
+            <a className="text-caption font-semibold text-brand-green underline decoration-dotted underline-offset-4 hover:text-[#3f560d]" href="/">
               Kembali ke landing
             </a>
           </div>
@@ -99,7 +99,7 @@ export function AdminLayout() {
               </Button>
               <a
                 href="/articles"
-                className="inline-flex h-9 items-center rounded-pill border border-border px-3 text-caption font-semibold hover:bg-accent"
+                className="inline-flex h-9 items-center rounded-md border border-border bg-paper px-3 text-sm font-medium text-ink shadow-sm hover:bg-bg"
               >
                 Lihat articles public
               </a>
@@ -118,7 +118,7 @@ export function AdminLayout() {
         links={adminNav}
         action={
           <div className="flex items-center gap-2">
-            <a className="text-caption font-medium underline decoration-dotted underline-offset-4" href="/app/chat">
+            <a className="text-caption font-semibold text-brand-green underline decoration-dotted underline-offset-4 hover:text-[#3f560d]" href="/app/chat">
               Buka app user
             </a>
             <Button variant="secondary" className="h-8 px-3 text-caption" onClick={logout}>
@@ -130,7 +130,7 @@ export function AdminLayout() {
 
       <div className="page-shell grid gap-4 py-4 md:grid-cols-[240px_1fr]">
         <aside
-          className={`space-y-1 rounded-md border border-border bg-paper p-2 ${showMobileNav ? 'block' : 'hidden'} md:block`}
+          className={`space-y-1 rounded-md border border-border bg-paper/95 p-2 shadow-soft ${showMobileNav ? 'block' : 'hidden'} md:block`}
         >
           {adminNav.map((item) => (
             <NavLink
@@ -139,8 +139,8 @@ export function AdminLayout() {
               end={item.to === '/admin'}
               onClick={() => setShowMobileNav(false)}
               className={({ isActive }) =>
-                `block rounded-md px-3 py-2 text-[13px] font-medium transition-colors ${
-                  isActive ? 'bg-brand-green text-white' : 'text-ink-soft hover:bg-accent hover:text-ink'
+                `block rounded-md px-3 py-2 text-[13px] font-semibold transition-colors ${
+                  isActive ? 'bg-brand-green text-paper shadow-soft' : 'text-ink-soft hover:bg-brand-green-soft hover:text-ink'
                 }`
               }
             >
@@ -160,7 +160,7 @@ export function AdminLayout() {
               </div>
               <button
                 type="button"
-                className="inline-flex h-8 items-center rounded-pill border border-border px-3 text-caption font-semibold text-ink-soft hover:bg-accent hover:text-ink md:hidden"
+                className="inline-flex h-8 items-center rounded-md border border-border bg-paper px-3 text-xs font-semibold text-ink shadow-sm hover:bg-bg md:hidden"
                 onClick={() => setShowMobileNav((prev) => !prev)}
                 aria-expanded={showMobileNav}
               >

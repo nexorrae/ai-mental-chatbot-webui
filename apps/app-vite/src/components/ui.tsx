@@ -22,11 +22,11 @@ export function Navbar({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="border-b border-border bg-paper/95 backdrop-blur">
+    <header className="border-b border-border bg-paper/95 backdrop-blur-md">
       <div className="page-shell flex items-center justify-between gap-3 py-4">
         <Link
           to="/app/chat"
-          className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-normal text-ink"
+          className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-normal text-ink transition-colors hover:text-brand-green"
           onClick={() => setMobileOpen(false)}
         >
           <span className="brand-mark brand-mark--md">
@@ -39,7 +39,7 @@ export function Navbar({
             <Link
               key={link.to}
               to={link.to}
-              className="rounded-pill px-3 py-1.5 text-[13px] font-semibold text-ink-soft transition-colors hover:bg-accent hover:text-ink"
+              className="rounded-md px-3 py-1.5 text-[13px] font-semibold text-ink-soft transition-colors hover:bg-brand-green-soft hover:text-ink"
             >
               {link.label}
             </Link>
@@ -48,7 +48,7 @@ export function Navbar({
         <div className="hidden md:flex md:items-center">{action}</div>
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-paper text-ink md:hidden"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-paper text-ink shadow-soft transition-colors hover:bg-brand-green-soft md:hidden"
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-expanded={mobileOpen}
           aria-controls="navbar-mobile-menu"
@@ -73,7 +73,7 @@ export function Navbar({
                 key={link.to}
                 to={link.to}
                 onClick={() => setMobileOpen(false)}
-                className="block rounded-md px-3 py-2 text-[14px] font-semibold text-ink-soft hover:bg-accent hover:text-ink"
+                className="block rounded-md px-3 py-2 text-[14px] font-semibold text-ink-soft hover:bg-brand-green-soft hover:text-ink"
               >
                 {link.label}
               </Link>
@@ -93,7 +93,7 @@ export function Footer({ compact = false }: { compact?: boolean }) {
         <p className="text-caption text-muted">Pelan-pelan, kamu aman di sini.</p>
         <a
           href="https://www.who.int/teams/mental-health-and-substance-use/suicide-data"
-          className="text-caption font-medium underline decoration-dotted underline-offset-4"
+        className="text-caption font-semibold text-brand-green underline decoration-dotted underline-offset-4"
           target="_blank"
           rel="noreferrer"
         >
@@ -113,11 +113,10 @@ export function Button({ variant = 'primary', fullWidth = false, className, chil
   return (
     <button
       className={clsx(
-        'inline-flex h-9 items-center justify-center rounded-pill border px-4 text-button font-semibold transition-colors',
-        'disabled:cursor-not-allowed disabled:opacity-60',
-        variant === 'primary' && 'border-brand-green bg-brand-green text-white hover:bg-[#3e540d]',
-        variant === 'secondary' && 'border-border bg-paper text-ink-soft hover:bg-accent hover:text-ink',
-        variant === 'ghost' && 'border-transparent bg-transparent text-ink-soft hover:bg-accent hover:text-ink',
+        'inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-button font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green/30 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.98]',
+        variant === 'primary' && 'border-transparent bg-brand-green text-white shadow-sm hover:bg-brand-green/90',
+        variant === 'secondary' && 'border-border bg-paper text-ink shadow-sm hover:bg-bg',
+        variant === 'ghost' && 'border-transparent bg-transparent text-ink hover:bg-bg',
         fullWidth && 'w-full',
         className
       )}
@@ -136,18 +135,18 @@ export function Badge({
   tone?: 'default' | 'accent' | 'success' | 'warn' | 'error';
 }) {
   const toneClass = {
-    default: 'bg-paper text-ink-soft border-border',
+    default: 'bg-bg text-ink-soft border-border',
     accent: 'bg-brand-green-soft text-brand-green border-brand-green/30',
     success: 'bg-brand-green-soft text-brand-green border-brand-green/30',
     warn: 'bg-[#f7efd8] text-[#806214] border-[#ead9aa]',
     error: 'bg-[#fef1f1] text-[#b42318] border-[#f5d2d0]'
   }[tone];
 
-  return <span className={clsx('inline-flex rounded-pill border px-2.5 py-1 text-[11px] font-semibold', toneClass)}>{children}</span>;
+  return <span className={clsx('inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors', toneClass)}>{children}</span>;
 }
 
 export function OutlinedCard({ children, className }: { children: ReactNode; className?: string }) {
-  return <section className={clsx('rounded-md border border-border bg-paper p-4 shadow-soft sm:p-5', className)}>{children}</section>;
+  return <section className={clsx('rounded-xl border border-border bg-paper p-5 shadow-sm', className)}>{children}</section>;
 }
 
 interface FieldProps {
@@ -160,18 +159,18 @@ interface FieldProps {
 export function Input({ id, label, hint, error, className, ...props }: FieldProps & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label htmlFor={id} className="flex w-full flex-col gap-1.5">
-      <span className="text-label font-semibold text-ink-soft">{label}</span>
+      <span className="text-sm font-medium leading-none text-ink peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{label}</span>
       <input
         id={id}
         className={clsx(
-          'h-10 w-full rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted',
-          'focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15',
-          error && 'border-error focus-visible:border-error',
+          'flex h-10 w-full rounded-md border border-border bg-paper px-3 py-2 text-sm text-ink placeholder:text-muted transition-colors',
+          'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-green focus-visible:border-brand-green disabled:cursor-not-allowed disabled:opacity-50',
+          error && 'border-error focus-visible:border-error focus-visible:ring-error',
           className
         )}
         {...props}
       />
-      {(hint || error) && <span className={clsx('text-caption', error ? 'text-error' : 'text-muted')}>{error ?? hint}</span>}
+      {(hint || error) && <span className={clsx('text-xs', error ? 'text-error' : 'text-muted')}>{error ?? hint}</span>}
     </label>
   );
 }
@@ -179,18 +178,18 @@ export function Input({ id, label, hint, error, className, ...props }: FieldProp
 export function Textarea({ id, label, hint, error, className, ...props }: FieldProps & TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <label htmlFor={id} className="flex w-full flex-col gap-1.5">
-      <span className="text-label font-semibold text-ink-soft">{label}</span>
+      <span className="text-sm font-medium leading-none text-ink peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{label}</span>
       <textarea
         id={id}
         className={clsx(
-          'min-h-24 w-full rounded-md border border-border bg-paper px-3 py-2.5 text-[15px]',
-          'focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15',
-          error && 'border-error focus-visible:border-error',
+          'flex min-h-[80px] w-full rounded-md border border-border bg-paper px-3 py-2 text-sm text-ink placeholder:text-muted transition-colors',
+          'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-green focus-visible:border-brand-green disabled:cursor-not-allowed disabled:opacity-50',
+          error && 'border-error focus-visible:border-error focus-visible:ring-error',
           className
         )}
         {...props}
       />
-      {(hint || error) && <span className={clsx('text-caption', error ? 'text-error' : 'text-muted')}>{error ?? hint}</span>}
+      {(hint || error) && <span className={clsx('text-xs', error ? 'text-error' : 'text-muted')}>{error ?? hint}</span>}
     </label>
   );
 }
@@ -206,13 +205,13 @@ export function Select({
 }: FieldProps & SelectHTMLAttributes<HTMLSelectElement> & { options: Array<{ value: string; label: string }> }) {
   return (
     <label htmlFor={id} className="flex w-full flex-col gap-1.5">
-      <span className="text-label font-semibold text-ink-soft">{label}</span>
+      <span className="text-sm font-medium leading-none text-ink peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{label}</span>
       <select
         id={id}
         className={clsx(
-          'h-10 w-full rounded-md border border-border bg-paper px-3 text-[15px]',
-          'focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15',
-          error && 'border-error focus-visible:border-error',
+          'flex h-10 w-full rounded-md border border-border bg-paper px-3 py-2 text-sm text-ink transition-colors',
+          'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-green focus-visible:border-brand-green disabled:cursor-not-allowed disabled:opacity-50',
+          error && 'border-error focus-visible:border-error focus-visible:ring-error',
           className
         )}
         {...props}
@@ -223,7 +222,7 @@ export function Select({
           </option>
         ))}
       </select>
-      {(hint || error) && <span className={clsx('text-caption', error ? 'text-error' : 'text-muted')}>{error ?? hint}</span>}
+      {(hint || error) && <span className={clsx('text-xs', error ? 'text-error' : 'text-muted')}>{error ?? hint}</span>}
     </label>
   );
 }
@@ -241,8 +240,8 @@ export function Tabs({ items }: { items: Array<{ id: string; label: string; pane
             role="tab"
             aria-selected={active === item.id}
             className={clsx(
-              'shrink-0 rounded-pill border px-3 py-1.5 text-caption font-semibold',
-              active === item.id ? 'border-brand-green bg-brand-green text-white' : 'border-border bg-paper text-ink-soft hover:bg-accent hover:text-ink'
+              'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-paper transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2',
+              active === item.id ? 'bg-ink text-white shadow-sm' : 'bg-transparent text-ink hover:bg-border/50'
             )}
             onClick={() => setActive(item.id)}
           >
@@ -265,14 +264,14 @@ export function Accordion({ items }: { items: Array<{ id: string; title: string;
         return (
           <OutlinedCard key={item.id} className="p-0">
             <button
-              className="flex w-full items-center justify-between px-4 py-3 text-left text-body font-medium"
+              className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-medium text-ink transition-colors hover:bg-bg rounded-t-xl"
               aria-expanded={open}
               onClick={() => setOpenId(open ? null : item.id)}
             >
               <span>{item.title}</span>
-              <span>{open ? '-' : '+'}</span>
+              <span className="text-muted text-sm">{open ? '-' : '+'}</span>
             </button>
-            {open && <div className="px-4 pb-4 text-body text-ink-soft">{item.content}</div>}
+            {open && <div className="px-5 pb-5 text-sm text-ink-soft">{item.content}</div>}
           </OutlinedCard>
         );
       })}
@@ -296,19 +295,19 @@ export function Modal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/25 p-3 sm:items-center sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink/50 p-3 backdrop-blur-sm sm:items-center sm:p-4">
       <div
-        className="w-full max-w-lg rounded-lg border border-border bg-paper p-4 shadow-soft sm:p-6"
+        className="w-full max-w-lg rounded-xl border border-border bg-paper p-5 shadow-lg sm:p-6"
         role="dialog"
         aria-modal="true"
       >
-        <div className="mb-4 flex items-center justify-between gap-2">
+        <div className="mb-5 flex items-center justify-between gap-2">
           <div>
-            <h3 className="text-h5 font-semibold">{title}</h3>
-            {description && <p className="text-caption text-muted">{description}</p>}
+            <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+            {description && <p className="text-sm text-muted">{description}</p>}
           </div>
-          <Button variant="ghost" className="h-8 px-2.5 text-caption" onClick={onClose}>
-            Tutup
+          <Button variant="ghost" className="h-8 w-8 p-0" onClick={onClose} aria-label="Tutup">
+            <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true"><path d="M5 5L15 15M15 5L5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
           </Button>
         </div>
         <div className="max-h-[60vh] overflow-y-auto sm:max-h-none">{children}</div>
@@ -321,7 +320,7 @@ export function Toast({ message, tone = 'default' }: { message: string; tone?: '
   const toneClass = {
     default: 'border-border bg-paper text-ink',
     success: 'border-brand-green/30 bg-brand-green-soft text-brand-green',
-    warn: 'border-[#f2dfc0] bg-[#fff7eb] text-[#8a5c13]',
+    warn: 'border-[#ead9aa] bg-[#f8f0d9] text-[#806214]',
     error: 'border-[#f5d2d0] bg-[#fef1f1] text-[#b42318]'
   }[tone];
 
@@ -336,11 +335,12 @@ export function Stepper({ steps, current }: { steps: string[]; current: number }
           key={step}
           aria-current={index === current ? 'step' : undefined}
           className={clsx(
-            'rounded-md border px-3 py-2 text-caption font-semibold',
-            index <= current ? 'border-brand-green bg-brand-green-soft text-ink' : 'border-border bg-paper text-muted'
+            'flex items-center gap-2 rounded-md border px-3 py-2 text-sm font-medium',
+            index <= current ? 'border-brand-green bg-brand-green/5 text-ink' : 'border-border bg-paper text-muted'
           )}
         >
-          {index + 1}. {step}
+          <span className={clsx("flex h-5 w-5 items-center justify-center rounded-full text-[10px]", index <= current ? "bg-brand-green text-white" : "bg-bg text-muted")}>{index + 1}</span>
+          {step}
         </li>
       ))}
     </ol>
@@ -349,8 +349,8 @@ export function Stepper({ steps, current }: { steps: string[]; current: number }
 
 export function GroundingCard({ compact = false }: { compact?: boolean }) {
   return (
-    <div className={clsx('rounded-md border border-border bg-accent', compact ? 'p-3' : 'p-4')}>
-      <p className="text-caption font-semibold uppercase tracking-wide">Grounding 5-4-3-2-1</p>
+    <div className={clsx('rounded-md border border-brand-green/20 bg-brand-green-soft/70', compact ? 'p-3' : 'p-4')}>
+      <p className="text-caption font-semibold text-brand-green">Grounding 5-4-3-2-1</p>
       <ul className="mt-2 list-disc space-y-1 pl-5 text-caption text-ink-soft">
         <li>5 hal yang kamu lihat.</li>
         <li>4 hal yang kamu rasakan di tubuh.</li>
@@ -384,7 +384,7 @@ export function EmptyState({
 export function LoadingState({ label = 'Memuat...' }: { label?: string }) {
   return (
     <OutlinedCard className="flex items-center gap-3">
-      <span className="h-4 w-4 animate-spin rounded-pill border-2 border-[#cfcfcf] border-r-transparent" />
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand-green/30 border-r-transparent" />
       <span className="text-caption text-muted">{label}</span>
     </OutlinedCard>
   );
@@ -414,7 +414,7 @@ export function BreathWidget() {
     return (
       <button
         onClick={() => setDismissed(false)}
-        className="fixed bottom-4 right-4 z-40 rounded-pill border border-border bg-paper px-3 py-2 text-caption font-semibold shadow-soft"
+        className="fixed bottom-4 right-4 z-40 rounded-md border border-border bg-paper px-3 py-2 text-sm font-semibold shadow-sm transition-transform hover:-translate-y-0.5 hover:bg-brand-green-soft"
       >
         Buka "Take a breath"
       </button>
@@ -422,7 +422,7 @@ export function BreathWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-40 rounded-md border border-border bg-paper p-4 shadow-soft sm:left-auto sm:w-[300px]">
+    <div className="fixed bottom-4 left-4 right-4 z-40 rounded-md border border-border bg-paper p-4 shadow-[0_18px_52px_rgba(8,10,6,0.13)] sm:left-auto sm:w-[300px]">
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="text-caption font-semibold">Take a breath - 1 menit</p>
@@ -477,7 +477,7 @@ export function ChatBubbleSet({
           <div
             className={clsx(
               'max-w-[92%] rounded-lg border px-4 py-3 text-body sm:max-w-[85%]',
-              msg.role === 'user' ? 'border-brand-green bg-brand-green text-white' : 'border-border bg-paper text-ink'
+              msg.role === 'user' ? 'border-brand-green bg-brand-green text-white shadow-soft' : 'border-border bg-bg text-ink'
             )}
           >
             {msg.text}
@@ -504,7 +504,7 @@ export function JournalEntryCard({
         <Badge tone="accent">{mood}</Badge>
       </div>
       <p className="text-body text-ink-soft">{content}</p>
-      <Button variant="secondary">Buka entri</Button>
+      <Button variant="secondary" className="h-9 px-3 text-caption">Buka entri</Button>
     </OutlinedCard>
   );
 }
@@ -528,8 +528,8 @@ export function MoodPicker({
             onSelect?.(mood);
           }}
           className={clsx(
-            'shrink-0 rounded-pill border px-3 py-1.5 text-caption font-semibold',
-            active === mood ? 'border-brand-green bg-brand-green text-white' : 'border-border bg-paper text-ink-soft hover:bg-accent hover:text-ink'
+            'inline-flex items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-green',
+            active === mood ? 'border-ink bg-ink text-white' : 'border-border bg-paper text-ink hover:bg-bg hover:text-ink'
           )}
         >
           {mood}
@@ -553,7 +553,7 @@ export function InsightsChartCard() {
           {data.map((value, index) => (
             <div key={index} className="flex flex-col items-center gap-1">
               <div className="flex h-28 w-full items-end rounded-sm border border-border bg-bg px-1">
-                <div className="w-full rounded-sm bg-brand-green" style={{ height: `${value}%` }} />
+                <div className="w-full rounded-sm bg-brand-green/90" style={{ height: `${value}%` }} />
               </div>
               <span className="text-[10px] font-semibold text-muted">{['S', 'S', 'R', 'K', 'J', 'S', 'M'][index]}</span>
             </div>

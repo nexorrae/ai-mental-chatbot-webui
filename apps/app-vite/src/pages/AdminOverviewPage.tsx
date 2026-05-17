@@ -29,7 +29,7 @@ export function AdminOverviewPage() {
         </p>
         <Link
           to="/admin/articles"
-          className="inline-flex h-9 items-center rounded-pill border border-brand-green bg-brand-green px-4 text-button font-semibold text-white hover:bg-[#3e540d]"
+          className="inline-flex h-9 items-center rounded-md border border-brand-green bg-brand-green px-4 text-button font-semibold text-white hover:bg-[#3e540d]"
         >
           Buka Article CMS
         </Link>

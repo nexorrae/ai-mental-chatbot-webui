@@ -66,7 +66,7 @@ export function ArticleDetailPage() {
               ← Kembali ke semua artikel
             </Link>
           </div>
-          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-pill bg-brand-green px-4 text-caption font-semibold text-white hover:bg-[#3e540d]">
+          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-brand-green px-4 text-sm font-semibold text-white hover:bg-[#3e540d]">
             Konsultasi AI
           </Link>
         </div>
@@ -98,7 +98,7 @@ export function ArticleDetailPage() {
 
             <div className="flex flex-wrap gap-2">
               {article.tags.map((tag) => (
-                <span key={`${article.slug}-${tag}`} className="rounded-pill border border-border bg-accent px-2.5 py-1 text-[11px] font-semibold text-ink-soft">
+                <span key={`${article.slug}-${tag}`} className="rounded-md border border-border bg-accent px-2.5 py-1 text-xs font-semibold text-ink-soft">
                   {tag}
                 </span>
               ))}
