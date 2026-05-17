@@ -99,9 +99,9 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <header className="sticky top-0 z-30 border-b border-border bg-white/95 backdrop-blur">
-        <div className="page-shell flex items-center justify-between gap-3 py-3.5">
-          <Link to="/" className="flex items-center gap-2 text-[1.08rem] font-semibold tracking-[-0.02em] text-ink">
+      <header className="sticky top-0 z-30 border-b border-border bg-paper/95 backdrop-blur">
+        <div className="page-shell flex items-center justify-between gap-3 py-4">
+          <Link to="/" className="flex items-center gap-2 text-[1.08rem] font-semibold tracking-normal text-ink">
             <span className="brand-mark brand-mark--lg">
               <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
             </span>
@@ -117,16 +117,16 @@ export function LandingPage() {
           <div className="flex items-center gap-2">
             <Link
               to="/articles"
-              className="hidden h-9 items-center rounded-md border border-border px-3 text-caption font-medium text-ink-soft transition-colors hover:bg-accent hover:text-ink md:inline-flex"
+            className="hidden h-9 items-center rounded-pill border border-border px-3 text-caption font-semibold text-ink-soft transition-colors hover:bg-accent hover:text-ink md:inline-flex"
             >
               See All Articles
             </Link>
-            <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-[#191919] px-4 text-caption font-medium text-white hover:bg-black">
+            <Link to="/app/chat" className="inline-flex h-9 items-center rounded-pill bg-brand-green px-4 text-caption font-semibold text-white hover:bg-[#3e540d]">
               Mulai Konsultasi
             </Link>
             <button
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-white text-ink md:hidden"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-paper text-ink md:hidden"
               onClick={() => setMobileNavOpen((prev) => !prev)}
               aria-expanded={mobileNavOpen}
               aria-controls="landing-mobile-nav"
@@ -158,24 +158,24 @@ export function LandingPage() {
       </header>
 
       <main>
-        <section className="border-b border-border bg-white">
-          <div className="page-shell py-12 sm:py-16 md:py-20">
+        <section className="border-b border-border bg-paper">
+          <div className="page-shell py-14 sm:py-20 md:py-24">
             <div className="mx-auto max-w-[980px]">
               <div className="mb-6 flex items-center justify-center -space-x-2">
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-brand-green-soft text-lg">🌿</span>
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-brand-blue-soft text-lg">🫶</span>
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-brand-green-soft text-lg">🫶</span>
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-accent text-lg">🧠</span>
-                <span className="inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-border bg-white p-0.5">
+                <span className="inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-border bg-paper p-0.5">
                   <img src="/CurhatinAI.png" alt="CurhatIn AI" className="brand-mark__img" />
                 </span>
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-border bg-accent text-lg">💬</span>
               </div>
 
               <div className="space-y-5 text-center">
-                <p className="mx-auto inline-flex rounded-full border border-brand-green/30 bg-brand-green-soft px-3 py-1 text-caption font-medium text-brand-green">
+                <p className="mx-auto inline-flex rounded-pill border border-brand-green/30 bg-brand-green-soft px-3 py-1 text-caption font-semibold text-brand-green">
                   Chatbot AI assistant for mental wellness
                 </p>
-                <h1 className="mx-auto max-w-[900px] text-[clamp(2.1rem,6vw,4.75rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-[#191919]">
+                <h1 className="mx-auto max-w-[980px] font-serif text-[clamp(3.2rem,10vw,8rem)] font-semibold leading-[0.9] tracking-normal text-ink">
                   Tempat aman untuk curhat, refleksi, dan menenangkan pikiran.
                 </h1>
                 <p className="mx-auto max-w-[760px] text-[1.03rem] leading-relaxed text-ink-soft sm:text-[1.08rem]">
@@ -184,32 +184,32 @@ export function LandingPage() {
                 </p>
 
                 <div className="flex flex-col justify-center gap-3 pt-1 sm:flex-row">
-                  <Link to="/app/chat" className="inline-flex h-11 items-center justify-center rounded-md bg-[#191919] px-6 text-button font-medium text-white hover:bg-black">
+                  <Link to="/app/chat" className="inline-flex h-11 items-center justify-center rounded-pill bg-brand-green px-6 text-button font-semibold text-white hover:bg-[#3e540d]">
                     Mulai Chat Sekarang
                   </Link>
-                  <a href="#workflow" className="inline-flex h-11 items-center justify-center rounded-md border border-brand-blue/30 bg-brand-blue-soft px-6 text-button font-medium text-brand-blue hover:brightness-95">
+                  <a href="#workflow" className="inline-flex h-11 items-center justify-center rounded-pill border border-brand-green/30 bg-brand-green-soft px-6 text-button font-semibold text-brand-green hover:brightness-95">
                     Lihat Cara Pakai
                   </a>
                 </div>
 
                 <div className="grid gap-3 pt-2 text-left sm:grid-cols-3">
-                  <div className="rounded-lg border border-border bg-white p-3.5">
+                  <div className="rounded-md border border-border bg-paper p-3.5">
                     <p className="text-h6 font-semibold tracking-tight text-ink">Anonymous by default</p>
                     <p className="mt-1 text-caption text-muted">Bisa langsung pakai tanpa akun.</p>
                   </div>
-                  <div className="rounded-lg border border-border bg-white p-3.5">
+                  <div className="rounded-md border border-border bg-paper p-3.5">
                     <p className="text-h6 font-semibold tracking-tight text-ink">AI by consent</p>
                     <p className="mt-1 text-caption text-muted">Data dikirim hanya saat kamu klik Reflect with AI.</p>
                   </div>
-                  <div className="rounded-lg border border-border bg-white p-3.5">
+                  <div className="rounded-md border border-border bg-paper p-3.5">
                     <p className="text-h6 font-semibold tracking-tight text-ink">Login optional</p>
                     <p className="mt-1 text-caption text-muted">Simpan konteks chat untuk sesi berikutnya kalau perlu.</p>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 grid gap-4 rounded-2xl border border-border bg-accent p-3.5 sm:p-4 lg:grid-cols-[300px_1fr]">
-                <div className="rounded-xl border border-border bg-white p-4">
+              <div className="mt-8 grid gap-4 rounded-lg border border-border bg-accent p-3.5 sm:p-4 lg:grid-cols-[300px_1fr]">
+                <div className="rounded-md border border-border bg-paper p-4">
                   <p className="text-caption font-medium text-muted">Mulai dari sini</p>
                   <h2 className="mt-2 text-h5 font-semibold tracking-tight text-ink">Checklist pengguna baru</h2>
                   <ul className="mt-3 space-y-2 text-caption text-ink-soft">
@@ -220,13 +220,13 @@ export function LandingPage() {
                   </ul>
                 </div>
 
-                <div className="rounded-xl border border-border bg-white p-4">
+                <div className="rounded-md border border-border bg-paper p-4">
                   <p className="text-caption font-medium text-muted">Contoh percakapan</p>
                   <div className="mt-3 space-y-2">
-                    <div className="max-w-[88%] rounded-lg border border-border bg-brand-blue-soft px-3 py-2.5 text-body text-ink">
+                    <div className="max-w-[88%] rounded-lg border border-border bg-brand-green-soft px-3 py-2.5 text-body text-ink">
                       Aku lagi capek, tapi susah jelasin capeknya dari mana.
                     </div>
-                    <div className="ml-auto max-w-[88%] rounded-lg bg-[#191919] px-3 py-2.5 text-body text-white">
+                    <div className="ml-auto max-w-[88%] rounded-lg bg-brand-green px-3 py-2.5 text-body text-white">
                       Wajar kok kalau rasanya campur aduk. Mungkin kita mulai dari satu momen paling berat hari ini?
                     </div>
                     <div className="max-w-[88%] rounded-lg border border-border bg-brand-green-soft px-3 py-2.5 text-body text-ink">
@@ -242,12 +242,12 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="border-b border-border bg-[#fafafa]">
+        <section className="border-b border-border bg-bg">
           <div className="page-shell py-4">
             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="text-caption text-muted">Dipakai komunitas dari</span>
               {partnerMarks.map((name) => (
-                <span key={name} className="inline-flex h-8 items-center rounded-md border border-border bg-white px-3 text-caption font-medium text-ink-soft">
+                <span key={name} className="inline-flex h-8 items-center rounded-pill border border-border bg-paper px-3 text-caption font-semibold text-ink-soft">
                   {name}
                 </span>
               ))}
@@ -257,9 +257,9 @@ export function LandingPage() {
 
         <section id="fitur" className="page-shell py-12 sm:py-14">
           <div className="grid gap-4 lg:grid-cols-[1fr_1.25fr]">
-            <div className="space-y-3 rounded-xl border border-border bg-white p-4 sm:p-5">
-              <p className="text-caption font-medium text-brand-blue">Kenapa CurhatIn AI?</p>
-              <h2 className="text-h2 font-semibold tracking-tight text-ink">Lebih jelas, lebih tenang, lebih gampang dipakai.</h2>
+            <div className="space-y-3 rounded-md border border-border bg-paper p-4 sm:p-5">
+              <p className="text-caption font-semibold text-brand-green">Kenapa CurhatIn AI?</p>
+              <h2 className="font-serif text-h2 font-semibold tracking-normal text-ink">Lebih jelas, lebih tenang, lebih gampang dipakai.</h2>
               <p className="text-body text-ink-soft">
                 UI didesain untuk orang awam: tombol jelas, alur sederhana, dan setiap langkah diberi penjelasan.
               </p>
@@ -268,7 +268,7 @@ export function LandingPage() {
               </Link>
             </div>
 
-            <div className="rounded-xl border border-border bg-white p-4 sm:p-5">
+            <div className="rounded-md border border-border bg-paper p-4 sm:p-5">
               <div className="divide-y divide-border">
                 {[
                   ['Satu layar fokus', 'Chat, check-in mood, dan status privasi ada dalam satu alur.'],
@@ -287,11 +287,11 @@ export function LandingPage() {
         </section>
 
         <section id="workflow" className="page-shell pb-12 sm:pb-14">
-          <div className="rounded-2xl border border-border bg-white p-4 sm:p-6">
+          <div className="rounded-md border border-border bg-paper p-4 sm:p-6">
             <div className="grid gap-5 lg:grid-cols-[300px_1fr]">
               <div className="space-y-3">
                 <p className="text-caption font-medium text-brand-green">Cara konsultasi cepat</p>
-                <h2 className="text-h3 font-semibold tracking-tight text-ink">3 langkah untuk mulai refleksi dengan AI.</h2>
+                <h2 className="font-serif text-h3 font-semibold tracking-normal text-ink">3 langkah untuk mulai refleksi dengan AI.</h2>
                 <p className="text-body text-ink-soft">
                   Dibuat supaya user baru langsung paham dari sesi pertama.
                 </p>
@@ -303,8 +303,8 @@ export function LandingPage() {
                   <p className="mt-1 text-h6 font-semibold tracking-tight text-ink">Tulis kondisi saat ini</p>
                   <p className="mt-1 text-caption text-ink-soft">Contoh: "Aku lagi cemas karena kerjaan numpuk."</p>
                 </article>
-                <article className="rounded-lg border border-brand-blue/30 bg-brand-blue-soft p-4">
-                  <p className="text-caption font-semibold text-brand-blue">Langkah 2</p>
+                <article className="rounded-md border border-brand-green/30 bg-brand-green-soft p-4">
+                  <p className="text-caption font-semibold text-brand-green">Langkah 2</p>
                   <p className="mt-1 text-h6 font-semibold tracking-tight text-ink">Klik Reflect with AI</p>
                   <p className="mt-1 text-caption text-ink-soft">Akan muncul konfirmasi sebelum data diproses AI.</p>
                 </article>
@@ -313,7 +313,7 @@ export function LandingPage() {
                   <p className="mt-1 text-h6 font-semibold tracking-tight text-ink">Baca insight lalu lanjutkan</p>
                   <p className="mt-1 text-caption text-ink-soft">AI bantu merangkum, bertanya balik, dan mengarahkan refleksi.</p>
                 </article>
-                <article className="rounded-lg border border-border bg-white p-4">
+                <article className="rounded-md border border-border bg-paper p-4">
                   <p className="text-caption font-semibold text-ink-soft">Opsional</p>
                   <p className="mt-1 text-h6 font-semibold tracking-tight text-ink">Login untuk simpan konteks</p>
                   <p className="mt-1 text-caption text-ink-soft">Agar sesi berikutnya lebih personal untuk akunmu.</p>
@@ -324,11 +324,11 @@ export function LandingPage() {
         </section>
 
         <section className="page-shell pb-12">
-          <h2 className="text-h3 font-semibold tracking-tight text-ink">Pilih kebutuhanmu hari ini.</h2>
+          <h2 className="font-serif text-h3 font-semibold tracking-normal text-ink">Pilih kebutuhanmu hari ini.</h2>
           <p className="mt-2 text-body text-ink-soft">Mulai dari use case yang paling dekat dengan kondisimu.</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {useCases.map((useCase, index) => (
-              <article key={useCase} className="rounded-lg border border-border bg-white p-4">
+              <article key={useCase} className="rounded-md border border-border bg-paper p-4">
                 <p className="text-caption font-medium text-muted">Use case {index + 1}</p>
                 <p className="mt-1 text-h6 font-semibold tracking-tight text-ink">{useCase}</p>
                 <p className="mt-2 text-caption text-ink-soft">Buka chat dan mulai dengan satu kalimat sederhana.</p>
@@ -340,17 +340,17 @@ export function LandingPage() {
         <section id="articles" className="page-shell pb-16 sm:pb-20">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-h4 font-semibold tracking-tight text-ink">Articles</h2>
+              <h2 className="font-serif text-h4 font-semibold tracking-normal text-ink">Articles</h2>
               <p className="text-caption text-muted">Konten edukasi untuk SEO dan pembelajaran pengguna ({articleCountLabel}).</p>
             </div>
-            <Link to="/articles" className="text-caption font-medium text-brand-blue underline decoration-dotted underline-offset-4 hover:text-[#235ccc]">
+            <Link to="/articles" className="text-caption font-semibold text-brand-green underline decoration-dotted underline-offset-4 hover:text-[#3e540d]">
               See all articles →
             </Link>
           </div>
 
           {loadingArticles ? <p className="text-caption text-muted">Memuat artikel...</p> : null}
 
-          <div className="divide-y divide-border rounded-xl border border-border bg-white">
+          <div className="divide-y divide-border rounded-md border border-border bg-paper">
             {articles.slice(0, 5).map((article) => (
               <article key={article.id} className="p-4 sm:p-5">
                 <Link to={`/articles/${article.slug}`} className="block">
@@ -367,7 +367,7 @@ export function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-border bg-[#fafafa]">
+      <footer className="border-t border-border bg-paper">
         <div className="page-shell py-10">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
             <div className="space-y-3">

@@ -53,7 +53,7 @@ export function ArticleDetailPage() {
 
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <header className="border-b border-border bg-white">
+      <header className="border-b border-border bg-paper">
         <div className="page-shell-narrow flex flex-wrap items-center justify-between gap-3 py-4">
           <div className="flex flex-wrap items-center gap-3">
             <Link to="/" className="inline-flex items-center gap-2 text-caption font-semibold tracking-tight text-ink">
@@ -66,7 +66,7 @@ export function ArticleDetailPage() {
               ← Kembali ke semua artikel
             </Link>
           </div>
-          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-[#191919] px-4 text-caption font-medium text-white hover:bg-black">
+          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-pill bg-brand-green px-4 text-caption font-semibold text-white hover:bg-[#3e540d]">
             Konsultasi AI
           </Link>
         </div>
@@ -87,7 +87,7 @@ export function ArticleDetailPage() {
         {article ? (
           <article className="space-y-5 sm:space-y-6">
             <header className="space-y-3">
-              <h1 className="text-[clamp(1.8rem,7vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-ink">
+              <h1 className="font-serif text-[clamp(2.4rem,8vw,4.4rem)] font-semibold leading-[0.95] tracking-normal text-ink">
                 {article.title}
               </h1>
               <p className="text-body text-ink-soft">{article.excerpt}</p>
@@ -98,7 +98,7 @@ export function ArticleDetailPage() {
 
             <div className="flex flex-wrap gap-2">
               {article.tags.map((tag) => (
-                <span key={`${article.slug}-${tag}`} className="rounded-md border border-border bg-accent px-2.5 py-1 text-[11px] font-medium text-ink-soft">
+                <span key={`${article.slug}-${tag}`} className="rounded-pill border border-border bg-accent px-2.5 py-1 text-[11px] font-semibold text-ink-soft">
                   {tag}
                 </span>
               ))}

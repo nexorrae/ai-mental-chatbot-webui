@@ -14,9 +14,9 @@ const primaryLinks = [
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <header className="sticky top-0 z-30 border-b-base border-border bg-bg/95 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-content items-center justify-between gap-4 px-4 py-3 md:px-8">
-          <Link href="/" className="text-h6 font-extrabold tracking-tight">
+      <header className="sticky top-0 z-30 border-b-base border-border bg-paper/95 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-content items-center justify-between gap-4 px-4 py-4 md:px-8">
+          <Link href="/" className="text-h6 font-extrabold tracking-normal">
             curhatinai.com
           </Link>
 
@@ -25,7 +25,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-pill border-base border-transparent px-3 py-2 text-caption font-semibold hover:border-border hover:bg-paper"
+                className="rounded-pill border-base border-transparent px-3 py-2 text-caption font-semibold hover:border-border hover:bg-accent"
               >
                 {link.label}
               </Link>

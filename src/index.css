@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 /* ========================================
    Design System - Mental Health Green Theme
@@ -6,28 +6,29 @@
 
 :root {
   /* Color Palette */
-  --color-primary: #2E7D6F;
-  --color-primary-light: #4DB3A4;
-  --color-primary-dark: #1E5A4F;
-  --color-secondary: #8BC4B8;
-  --color-accent: #C8E6C9;
-  --color-accent-soft: #E8F5E9;
+  --color-primary: #4a640f;
+  --color-primary-light: #8f9d79;
+  --color-primary-dark: #050505;
+  --color-secondary: #e5f2c8;
+  --color-accent: #e5f2c8;
+  --color-accent-soft: #edf4ef;
 
   /* Neutrals */
-  --color-background: #F5FAF8;
+  --color-background: #f3faf6;
   --color-surface: #FFFFFF;
-  --color-text: #1A3C34;
-  --color-text-light: #4A6B62;
-  --color-text-muted: #7A9B92;
-  --color-border: #D4E5E0;
+  --color-text: #050505;
+  --color-text-light: #30322c;
+  --color-text-muted: #8c8d89;
+  --color-border: #e5e7e1;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #2E7D6F 0%, #4DB3A4 100%);
-  --gradient-hero: linear-gradient(180deg, #F5FAF8 0%, #E8F5E9 100%);
-  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #F5FAF8 100%);
+  --gradient-primary: linear-gradient(135deg, #4a640f 0%, #4a640f 100%);
+  --gradient-hero: linear-gradient(180deg, #ffffff 0%, #f3faf6 100%);
+  --gradient-card: linear-gradient(145deg, #ffffff 0%, #edf4ef 100%);
 
   /* Typography */
   --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -61,11 +62,11 @@
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(30, 90, 79, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(30, 90, 79, 0.1), 0 2px 4px -2px rgba(30, 90, 79, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(30, 90, 79, 0.1), 0 4px 6px -4px rgba(30, 90, 79, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(30, 90, 79, 0.1), 0 8px 10px -6px rgba(30, 90, 79, 0.1);
-  --shadow-glow: 0 0 40px rgba(46, 125, 111, 0.15);
+  --shadow-sm: 0 1px 2px 0 rgba(5, 5, 5, 0.04);
+  --shadow-md: 0 4px 12px -6px rgba(5, 5, 5, 0.12);
+  --shadow-lg: 0 14px 24px -18px rgba(5, 5, 5, 0.22);
+  --shadow-xl: 0 22px 44px -28px rgba(5, 5, 5, 0.28);
+  --shadow-glow: 0 0 0 rgba(5, 5, 5, 0);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -136,6 +137,7 @@ h6 {
   font-weight: 700;
   line-height: 1.2;
   color: var(--color-primary-dark);
+  font-family: var(--font-serif);
 }
 
 h1 {

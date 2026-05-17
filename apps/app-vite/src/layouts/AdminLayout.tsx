@@ -56,7 +56,7 @@ export function AdminLayout() {
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-bg text-ink">
-        <header className="border-b border-border bg-white">
+        <header className="border-b border-border bg-paper">
           <div className="page-shell-narrow flex items-center justify-between gap-3 py-4">
             <p className="inline-flex items-center gap-2 text-h5 font-semibold text-ink">
               <span className="brand-mark brand-mark--xl">
@@ -99,7 +99,7 @@ export function AdminLayout() {
               </Button>
               <a
                 href="/articles"
-                className="inline-flex h-9 items-center rounded-md border border-border px-3 text-caption font-medium hover:bg-accent"
+                className="inline-flex h-9 items-center rounded-pill border border-border px-3 text-caption font-semibold hover:bg-accent"
               >
                 Lihat articles public
               </a>
@@ -130,7 +130,7 @@ export function AdminLayout() {
 
       <div className="page-shell grid gap-4 py-4 md:grid-cols-[240px_1fr]">
         <aside
-          className={`space-y-1 rounded-lg border border-border bg-white p-2 ${showMobileNav ? 'block' : 'hidden'} md:block`}
+          className={`space-y-1 rounded-md border border-border bg-paper p-2 ${showMobileNav ? 'block' : 'hidden'} md:block`}
         >
           {adminNav.map((item) => (
             <NavLink
@@ -140,7 +140,7 @@ export function AdminLayout() {
               onClick={() => setShowMobileNav(false)}
               className={({ isActive }) =>
                 `block rounded-md px-3 py-2 text-[13px] font-medium transition-colors ${
-                  isActive ? 'bg-accent text-ink' : 'text-ink-soft hover:bg-accent hover:text-ink'
+                  isActive ? 'bg-brand-green text-white' : 'text-ink-soft hover:bg-accent hover:text-ink'
                 }`
               }
             >
@@ -160,7 +160,7 @@ export function AdminLayout() {
               </div>
               <button
                 type="button"
-                className="inline-flex h-8 items-center rounded-md border border-border px-3 text-caption font-medium text-ink-soft hover:bg-accent hover:text-ink md:hidden"
+                className="inline-flex h-8 items-center rounded-pill border border-border px-3 text-caption font-semibold text-ink-soft hover:bg-accent hover:text-ink md:hidden"
                 onClick={() => setShowMobileNav((prev) => !prev)}
                 aria-expanded={showMobileNav}
               >

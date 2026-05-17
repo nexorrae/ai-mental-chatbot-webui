@@ -7,16 +7,17 @@
 @layer base {
   body {
     @apply bg-bg text-ink antialiased;
+    font-family: var(--font-sans);
   }
 }
 
 @layer components {
   .frame-panel {
-    @apply rounded-lg border-base border-border bg-paper p-6 shadow-soft;
+    @apply rounded-md border-base border-border bg-paper p-6 shadow-soft;
   }
 
   .frame-panel-strong {
-    @apply rounded-lg border-strong border-border bg-paper p-6;
+    @apply rounded-md border-strong border-border bg-paper p-6;
   }
 
   .section-wrap {

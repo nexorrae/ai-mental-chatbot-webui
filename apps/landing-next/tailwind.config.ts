@@ -10,7 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        sans: ['var(--font-sans)'],
+        serif: ['var(--font-serif)']
       }
     }
   }

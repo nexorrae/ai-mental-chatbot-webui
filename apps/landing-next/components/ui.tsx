@@ -30,7 +30,7 @@ const buttonClassName = (variant: ButtonVariant, fullWidth: boolean, className?:
   clsx(
     'inline-flex items-center justify-center rounded-pill border-base px-5 py-2.5 text-button font-semibold transition focus-visible:outline-none',
     'disabled:cursor-not-allowed disabled:opacity-50',
-    variant === 'primary' && 'border-border bg-ink text-paper hover:translate-y-[-1px]',
+    variant === 'primary' && 'border-brand-green bg-brand-green text-paper hover:bg-[#3e540d]',
     variant === 'secondary' && 'border-border bg-paper text-ink hover:bg-accent',
     variant === 'ghost' && 'border-transparent bg-transparent text-ink hover:bg-accent',
     fullWidth && 'w-full',
@@ -71,10 +71,10 @@ export function LinkButton({
 
 export function Badge({ children, tone = 'default' }: { children: ReactNode; tone?: 'default' | 'accent' | 'success' | 'warn' | 'error'; }) {
   const toneClass = {
-    default: 'bg-paper text-ink border-border',
-    accent: 'bg-accent text-ink border-border',
-    success: 'bg-[#e8f7ee] text-success border-success',
-    warn: 'bg-[#fff5e7] text-warn border-warn',
+    default: 'bg-paper text-ink-soft border-border',
+    accent: 'bg-brand-green-soft text-brand-green border-brand-green/30',
+    success: 'bg-brand-green-soft text-success border-success/30',
+    warn: 'bg-[#f7efd8] text-warn border-[#ead9aa]',
     error: 'bg-[#ffeceb] text-error border-error'
   }[tone];
 
@@ -87,7 +87,7 @@ export function Badge({ children, tone = 'default' }: { children: ReactNode; ton
 
 export function OutlinedCard({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div className={clsx('rounded-lg border-base border-border bg-paper p-6 shadow-soft', className)}>
+    <div className={clsx('rounded-md border-base border-border bg-paper p-6 shadow-soft', className)}>
       {children}
     </div>
   );
@@ -107,7 +107,7 @@ export function Input({ id, label, hint, error, className, ...props }: FieldProp
       <input
         id={id}
         className={clsx(
-          'w-full rounded-md border-base border-border bg-paper px-4 py-3 text-body text-ink placeholder:text-muted',
+          'w-full rounded-md border-base border-border bg-paper px-4 py-3 text-body text-ink placeholder:text-muted focus-visible:border-brand-green',
           'focus-visible:outline-none',
           error && 'border-error',
           className
@@ -126,7 +126,7 @@ export function Textarea({ id, label, hint, error, className, ...props }: FieldP
       <textarea
         id={id}
         className={clsx(
-          'min-h-28 w-full resize-y rounded-md border-base border-border bg-paper px-4 py-3 text-body text-ink placeholder:text-muted',
+          'min-h-28 w-full resize-y rounded-md border-base border-border bg-paper px-4 py-3 text-body text-ink placeholder:text-muted focus-visible:border-brand-green',
           'focus-visible:outline-none',
           error && 'border-error',
           className
@@ -150,7 +150,7 @@ export function Select({ id, label, hint, error, options, className, ...props }:
       <select
         id={id}
         className={clsx(
-          'w-full rounded-md border-base border-border bg-paper px-4 py-3 text-body text-ink',
+          'w-full rounded-md border-base border-border bg-paper px-4 py-3 text-body text-ink focus-visible:border-brand-green',
           'focus-visible:outline-none',
           error && 'border-error',
           className
@@ -193,7 +193,7 @@ export function Tabs({ items, defaultTab }: { items: TabItem[]; defaultTab?: str
             onClick={() => setActive(item.id)}
             className={clsx(
               'rounded-pill border-base px-4 py-2 text-button font-semibold transition',
-              active === item.id ? 'border-border bg-ink text-paper' : 'border-border bg-paper text-ink hover:bg-accent'
+              active === item.id ? 'border-brand-green bg-brand-green text-paper' : 'border-border bg-paper text-ink hover:bg-accent'
             )}
           >
             {item.label}
@@ -265,7 +265,7 @@ export function Modal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-xl rounded-lg border-strong border-border bg-paper p-6 shadow-soft" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div className="w-full max-w-xl rounded-md border-strong border-border bg-paper p-6 shadow-soft" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div className="space-y-1">
             <h3 id="modal-title" className="text-h5 font-bold">{title}</h3>
@@ -378,7 +378,7 @@ export function BreathWidget() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 w-[280px] rounded-lg border-strong border-border bg-paper p-4 shadow-soft">
+    <div className="fixed bottom-5 right-5 z-40 w-[280px] rounded-md border-strong border-border bg-paper p-4 shadow-soft">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-caption font-bold text-ink">Take a breath - 1 menit</p>
@@ -451,7 +451,7 @@ export function ChatBubbleSet({
           <div
             className={clsx(
               'max-w-[85%] rounded-lg border-base px-4 py-3 text-body',
-              msg.role === 'user' ? 'border-border bg-ink text-paper' : 'border-border bg-paper text-ink'
+              msg.role === 'user' ? 'border-brand-green bg-brand-green text-paper' : 'border-border bg-paper text-ink'
             )}
           >
             {msg.text}
@@ -498,7 +498,7 @@ export function MoodPicker({
           key={mood}
           className={clsx(
             'rounded-pill border-base px-4 py-2 text-caption font-semibold',
-            activeMood === mood ? 'border-border bg-ink text-paper' : 'border-border bg-paper text-ink hover:bg-accent'
+            activeMood === mood ? 'border-brand-green bg-brand-green text-paper' : 'border-border bg-paper text-ink hover:bg-accent'
           )}
           onClick={() => {
             setActiveMood(mood);
@@ -535,7 +535,7 @@ export function InsightsChartCard() {
           <div key={bar.label} className="flex flex-col items-center gap-2">
             <div className="flex h-32 w-full items-end rounded-sm border-base border-border bg-bg px-1">
               <div
-                className="w-full rounded-sm border border-border bg-accent"
+                className="w-full rounded-sm border border-border bg-brand-green"
                 style={{ height: `${bar.value}%` }}
                 aria-label={`${bar.label} ${bar.value}`}
               />

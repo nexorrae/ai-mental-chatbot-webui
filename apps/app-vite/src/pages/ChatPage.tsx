@@ -612,7 +612,7 @@ export function ChatPage() {
     <div className="h-full bg-bg text-ink">
       <div className="flex h-full overflow-hidden">
         <aside
-          className={`absolute inset-y-0 left-0 z-30 flex w-[280px] shrink-0 flex-col border-r border-border bg-[#f8faf8] transition-transform md:static md:translate-x-0 ${
+          className={`absolute inset-y-0 left-0 z-30 flex w-[280px] shrink-0 flex-col border-r border-border bg-[#edf4ef] transition-transform md:static md:translate-x-0 ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
@@ -638,19 +638,19 @@ export function ChatPage() {
               + New chat
             </Button>
             <input
-              className="h-9 w-full rounded-md border border-border bg-white px-3 text-caption text-ink placeholder:text-muted"
+              className="h-9 w-full rounded-md border border-border bg-paper px-3 text-caption text-ink placeholder:text-muted focus-visible:border-brand-green"
               placeholder="Search chats"
               value={threadQuery}
               onChange={(event) => setThreadQuery(event.target.value)}
             />
             <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted">
-              <Link to="/app/history" className="rounded-md border border-border bg-white px-2 py-1 hover:bg-accent hover:text-ink">
+              <Link to="/app/history" className="rounded-pill border border-border bg-paper px-2 py-1 hover:bg-accent hover:text-ink">
                 History
               </Link>
-              <Link to="/articles" className="rounded-md border border-border bg-white px-2 py-1 hover:bg-accent hover:text-ink">
+              <Link to="/articles" className="rounded-pill border border-border bg-paper px-2 py-1 hover:bg-accent hover:text-ink">
                 Articles
               </Link>
-              <a href="/" className="rounded-md border border-border bg-white px-2 py-1 hover:bg-accent hover:text-ink">
+              <a href="/" className="rounded-pill border border-border bg-paper px-2 py-1 hover:bg-accent hover:text-ink">
                 Landing
               </a>
             </div>
@@ -665,8 +665,8 @@ export function ChatPage() {
                   onClick={() => switchThread(thread.id)}
                   className={`w-full rounded-lg border px-3 py-2 text-left transition-colors ${
                     activeThread?.id === thread.id
-                      ? 'border-brand-blue/30 bg-brand-blue-soft'
-                      : 'border-transparent hover:border-border hover:bg-white'
+                      ? 'border-brand-green/40 bg-brand-green-soft'
+                      : 'border-transparent hover:border-border hover:bg-paper'
                   }`}
                 >
                   <p className="truncate text-caption font-medium text-ink">{thread.title}</p>
@@ -679,7 +679,7 @@ export function ChatPage() {
           </div>
 
           <div className="space-y-2 border-t border-border p-3">
-            <div className="rounded-lg border border-border bg-white p-2.5">
+            <div className="rounded-md border border-border bg-paper p-2.5">
               <p className="text-[11px] font-semibold text-ink">
                 {currentUserId ? `Login ${userProfile?.provider === 'local' ? 'Email' : userProfile?.provider}` : 'Anonymous mode'}
               </p>
@@ -714,7 +714,7 @@ export function ChatPage() {
           />
         ) : null}
 
-        <section className="relative flex min-h-0 flex-1 flex-col bg-white">
+        <section className="relative flex min-h-0 flex-1 flex-col bg-paper">
           <header className="flex h-14 items-center justify-between border-b border-border px-3 sm:px-4">
             <div className="flex items-center gap-2">
               <button
@@ -762,7 +762,7 @@ export function ChatPage() {
               {isStarterThread ? (
                 <div className="flex flex-1 items-center justify-center">
                   <div className="space-y-3 text-center">
-                    <p className="text-[clamp(1.5rem,4.2vw,2.2rem)] font-semibold tracking-[-0.02em] text-ink">
+                    <p className="font-serif text-[clamp(2.4rem,6vw,4.6rem)] font-semibold leading-[0.95] tracking-normal text-ink">
                       What are you working on today?
                     </p>
                     <p className="text-caption text-muted">Mulai dari satu kalimat sederhana. AI hanya merespons saat kamu memberi trigger.</p>
@@ -774,10 +774,10 @@ export function ChatPage() {
                 {messages.map((message, index) => (
                   <div key={`${message.role}-${index}`} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div
-                      className={`max-w-[88%] rounded-2xl px-4 py-3 text-body leading-relaxed ${
+                      className={`max-w-[88%] rounded-lg px-4 py-3 text-body leading-relaxed ${
                         message.role === 'user'
-                          ? 'bg-[#191919] text-white'
-                          : 'border border-border bg-brand-blue-soft text-ink'
+                          ? 'bg-brand-green text-white'
+                          : 'border border-border bg-paper text-ink'
                       }`}
                     >
                       {message.text}
@@ -789,14 +789,14 @@ export function ChatPage() {
             </div>
           </div>
 
-          <div className="border-t border-border bg-white/95 px-3 py-3 backdrop-blur sm:px-4">
+          <div className="border-t border-border bg-paper/95 px-3 py-3 backdrop-blur sm:px-4">
             <div className="mx-auto w-full max-w-3xl space-y-2.5">
               <div className="hide-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
                 {quickPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
-                    className="shrink-0 rounded-full border border-brand-blue/25 bg-brand-blue-soft px-3 py-1.5 text-[11px] font-medium text-brand-blue"
+                    className="shrink-0 rounded-pill border border-brand-green/30 bg-brand-green-soft px-3 py-1.5 text-[11px] font-semibold text-brand-green"
                     onClick={() => setJournalInput(prompt)}
                   >
                     {prompt}
@@ -804,7 +804,7 @@ export function ChatPage() {
                 ))}
               </div>
 
-              <div className="rounded-2xl border border-border bg-white p-2.5 shadow-soft">
+              <div className="rounded-lg border border-border bg-paper p-2.5 shadow-soft">
                 <textarea
                   className="min-h-[92px] w-full resize-none border-0 bg-transparent px-2 py-1 text-body text-ink outline-none placeholder:text-muted"
                   placeholder="Tulis perasaanmu di sini, lalu klik Kirim ke AI..."
@@ -815,7 +815,7 @@ export function ChatPage() {
                 <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex flex-wrap items-center gap-2">
                     <select
-                      className="h-8 rounded-md border border-border bg-white px-2.5 text-[12px] text-ink"
+                      className="h-8 rounded-md border border-border bg-paper px-2.5 text-[12px] text-ink"
                       value={selectedCategory}
                       onChange={(event) => {
                         const nextCategory = event.target.value;
@@ -834,7 +834,7 @@ export function ChatPage() {
                       ))}
                     </select>
                     <select
-                      className="h-8 rounded-md border border-border bg-white px-2.5 text-[12px] text-ink"
+                      className="h-8 rounded-md border border-border bg-paper px-2.5 text-[12px] text-ink"
                       value={mood}
                       onChange={(event) => setMood(event.target.value)}
                     >
@@ -900,7 +900,7 @@ export function ChatPage() {
             <button
               type="button"
               className={`h-9 rounded-md text-caption font-medium ${
-                authMode === 'login' ? 'bg-white text-ink shadow-soft' : 'text-ink-soft'
+                authMode === 'login' ? 'bg-paper text-ink shadow-soft' : 'text-ink-soft'
               }`}
               onClick={() => setAuthMode('login')}
             >
@@ -909,7 +909,7 @@ export function ChatPage() {
             <button
               type="button"
               className={`h-9 rounded-md text-caption font-medium ${
-                authMode === 'register' ? 'bg-white text-ink shadow-soft' : 'text-ink-soft'
+                authMode === 'register' ? 'bg-paper text-ink shadow-soft' : 'text-ink-soft'
               }`}
               onClick={() => setAuthMode('register')}
             >
@@ -922,7 +922,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Email</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
                   type="email"
                   autoComplete="email"
                   value={loginEmail}
@@ -933,7 +933,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Password</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
                   type="password"
                   autoComplete="current-password"
                   value={loginPassword}
@@ -947,7 +947,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Nama</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
                   autoComplete="name"
                   value={registerName}
                   onChange={(event) => setRegisterName(event.target.value)}
@@ -957,7 +957,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Email</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
                   type="email"
                   autoComplete="email"
                   value={registerEmail}
@@ -968,7 +968,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Phone Number</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
                   autoComplete="tel"
                   value={registerPhone}
                   onChange={(event) => setRegisterPhone(event.target.value)}
@@ -978,7 +978,7 @@ export function ChatPage() {
               <label className="flex flex-col gap-2">
                 <span className="text-caption font-semibold">Password</span>
                 <input
-                  className="h-10 rounded-md border border-border bg-white px-3 text-[15px]"
+                  className="h-10 rounded-md border border-border bg-paper px-3 text-[15px]"
                   type="password"
                   autoComplete="new-password"
                   value={registerPassword}

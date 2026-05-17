@@ -18,6 +18,10 @@ const preset = {
         warn: 'var(--color-warn)',
         error: 'var(--color-error)'
       },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        serif: ['var(--font-serif)']
+      },
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',

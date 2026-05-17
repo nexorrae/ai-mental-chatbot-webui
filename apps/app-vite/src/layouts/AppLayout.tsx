@@ -10,7 +10,7 @@ export function AppLayout() {
 
   if (isChatRoute) {
     return (
-      <div className="h-screen overflow-hidden bg-bg text-ink">
+    <div className="h-screen overflow-hidden bg-bg text-ink">
         <Outlet />
       </div>
     );
@@ -26,7 +26,7 @@ export function AppLayout() {
 
       <div className="page-shell grid gap-5 py-4 md:grid-cols-[220px_1fr] md:py-6">
         <aside
-          className={`space-y-1 rounded-lg border border-border bg-white p-2 ${showMobileNav ? 'block' : 'hidden'} md:block`}
+          className={`space-y-1 rounded-md border border-border bg-paper p-2 ${showMobileNav ? 'block' : 'hidden'} md:block`}
         >
           {appNav.map((item) => (
             <NavLink
@@ -36,7 +36,7 @@ export function AppLayout() {
               className={({ isActive }) =>
                 `block rounded-md px-3 py-2 text-[13px] font-medium transition-colors ${
                   isActive
-                    ? 'bg-accent text-ink'
+                    ? 'bg-brand-green text-white'
                     : 'text-ink-soft hover:bg-accent hover:text-ink'
                 }`
               }
@@ -47,7 +47,7 @@ export function AppLayout() {
         </aside>
 
         <div className="space-y-4">
-          <div className="flex flex-col gap-3 rounded-lg border border-border bg-gradient-to-r from-brand-green-soft via-white to-brand-blue-soft px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 rounded-md border border-border bg-paper px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-h6 font-semibold tracking-tight">Napas dulu, lalu lanjut.</p>
               <p className="text-caption text-muted">Anonymous by default. Login opsional untuk simpan konteks personalmu.</p>
@@ -55,7 +55,7 @@ export function AppLayout() {
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                className="inline-flex h-8 items-center rounded-md border border-border px-3 text-caption font-medium text-ink-soft hover:bg-accent hover:text-ink md:hidden"
+                className="inline-flex h-8 items-center rounded-pill border border-border px-3 text-caption font-semibold text-ink-soft hover:bg-accent hover:text-ink md:hidden"
                 onClick={() => setShowMobileNav((prev) => !prev)}
                 aria-expanded={showMobileNav}
               >

@@ -51,7 +51,7 @@ export function ArticlesPage() {
 
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <header className="border-b border-border bg-white">
+      <header className="border-b border-border bg-paper">
         <div className="page-shell flex flex-wrap items-center justify-between gap-3 py-4">
           <Link to="/" className="inline-flex items-center gap-2 text-h5 font-semibold tracking-tight text-ink">
             <span className="brand-mark brand-mark--lg">
@@ -59,7 +59,7 @@ export function ArticlesPage() {
             </span>
             Curhatin Articles
           </Link>
-          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-[#191919] px-4 text-caption font-medium text-white hover:bg-black">
+          <Link to="/app/chat" className="inline-flex h-9 items-center rounded-pill bg-brand-green px-4 text-caption font-semibold text-white hover:bg-[#3e540d]">
             Konsultasi AI
           </Link>
         </div>
@@ -75,7 +75,7 @@ export function ArticlesPage() {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Cari artikel (contoh: anxiety, journaling, burnout...)"
-            className="h-10 w-full rounded-md border border-border bg-white px-3 text-[15px] sm:max-w-[540px]"
+            className="h-10 w-full rounded-md border border-border bg-paper px-3 text-[15px] focus-visible:border-brand-green sm:max-w-[540px]"
           />
         </div>
 

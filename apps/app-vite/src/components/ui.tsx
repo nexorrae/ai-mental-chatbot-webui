@@ -22,11 +22,11 @@ export function Navbar({
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="border-b border-border bg-white/95 backdrop-blur">
-      <div className="page-shell flex items-center justify-between gap-3 py-3">
+    <header className="border-b border-border bg-paper/95 backdrop-blur">
+      <div className="page-shell flex items-center justify-between gap-3 py-4">
         <Link
           to="/app/chat"
-          className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-[-0.015em] text-ink"
+          className="inline-flex items-center gap-2 text-[15px] font-semibold tracking-normal text-ink"
           onClick={() => setMobileOpen(false)}
         >
           <span className="brand-mark brand-mark--md">
@@ -39,7 +39,7 @@ export function Navbar({
             <Link
               key={link.to}
               to={link.to}
-              className="rounded-md px-3 py-1.5 text-[13px] font-medium text-ink-soft transition-colors hover:bg-accent hover:text-ink"
+              className="rounded-pill px-3 py-1.5 text-[13px] font-semibold text-ink-soft transition-colors hover:bg-accent hover:text-ink"
             >
               {link.label}
             </Link>
@@ -48,7 +48,7 @@ export function Navbar({
         <div className="hidden md:flex md:items-center">{action}</div>
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-white text-ink md:hidden"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-paper text-ink md:hidden"
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-expanded={mobileOpen}
           aria-controls="navbar-mobile-menu"
@@ -66,14 +66,14 @@ export function Navbar({
         </button>
       </div>
       {mobileOpen ? (
-        <div id="navbar-mobile-menu" className="border-t border-border md:hidden">
+        <div id="navbar-mobile-menu" className="border-t border-border bg-paper md:hidden">
           <div className="page-shell space-y-1 py-3">
             {links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 onClick={() => setMobileOpen(false)}
-                className="block rounded-md px-3 py-2 text-[14px] font-medium text-ink-soft hover:bg-accent hover:text-ink"
+                className="block rounded-md px-3 py-2 text-[14px] font-semibold text-ink-soft hover:bg-accent hover:text-ink"
               >
                 {link.label}
               </Link>
@@ -88,7 +88,7 @@ export function Navbar({
 
 export function Footer({ compact = false }: { compact?: boolean }) {
   return (
-    <footer className={clsx('border-t border-border bg-white', compact ? 'mt-4' : 'mt-8')}>
+    <footer className={clsx('border-t border-border bg-paper', compact ? 'mt-4' : 'mt-8')}>
       <div className="page-shell flex flex-col gap-2 py-4">
         <p className="text-caption text-muted">Pelan-pelan, kamu aman di sini.</p>
         <a
@@ -113,10 +113,10 @@ export function Button({ variant = 'primary', fullWidth = false, className, chil
   return (
     <button
       className={clsx(
-        'inline-flex h-9 items-center justify-center rounded-md border px-3.5 text-button font-medium transition-colors',
+        'inline-flex h-9 items-center justify-center rounded-pill border px-4 text-button font-semibold transition-colors',
         'disabled:cursor-not-allowed disabled:opacity-60',
-        variant === 'primary' && 'border-[#191919] bg-[#191919] text-white hover:bg-[#111111]',
-        variant === 'secondary' && 'border-border bg-white text-ink-soft hover:bg-accent hover:text-ink',
+        variant === 'primary' && 'border-brand-green bg-brand-green text-white hover:bg-[#3e540d]',
+        variant === 'secondary' && 'border-border bg-paper text-ink-soft hover:bg-accent hover:text-ink',
         variant === 'ghost' && 'border-transparent bg-transparent text-ink-soft hover:bg-accent hover:text-ink',
         fullWidth && 'w-full',
         className
@@ -136,18 +136,18 @@ export function Badge({
   tone?: 'default' | 'accent' | 'success' | 'warn' | 'error';
 }) {
   const toneClass = {
-    default: 'bg-white text-ink-soft border-border',
-    accent: 'bg-brand-blue-soft text-brand-blue border-brand-blue/30',
+    default: 'bg-paper text-ink-soft border-border',
+    accent: 'bg-brand-green-soft text-brand-green border-brand-green/30',
     success: 'bg-brand-green-soft text-brand-green border-brand-green/30',
-    warn: 'bg-[#fff7eb] text-[#8a5c13] border-[#f2dfc0]',
+    warn: 'bg-[#f7efd8] text-[#806214] border-[#ead9aa]',
     error: 'bg-[#fef1f1] text-[#b42318] border-[#f5d2d0]'
   }[tone];
 
-  return <span className={clsx('inline-flex rounded-md border px-2.5 py-1 text-[11px] font-medium', toneClass)}>{children}</span>;
+  return <span className={clsx('inline-flex rounded-pill border px-2.5 py-1 text-[11px] font-semibold', toneClass)}>{children}</span>;
 }
 
 export function OutlinedCard({ children, className }: { children: ReactNode; className?: string }) {
-  return <section className={clsx('rounded-lg border border-border bg-white p-4 shadow-soft sm:p-5', className)}>{children}</section>;
+  return <section className={clsx('rounded-md border border-border bg-paper p-4 shadow-soft sm:p-5', className)}>{children}</section>;
 }
 
 interface FieldProps {
@@ -160,12 +160,12 @@ interface FieldProps {
 export function Input({ id, label, hint, error, className, ...props }: FieldProps & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label htmlFor={id} className="flex w-full flex-col gap-1.5">
-      <span className="text-label font-medium text-ink-soft">{label}</span>
+      <span className="text-label font-semibold text-ink-soft">{label}</span>
       <input
         id={id}
         className={clsx(
-          'h-10 w-full rounded-md border border-border bg-white px-3 text-[15px] text-ink placeholder:text-muted',
-          'focus-visible:border-[#c7c7c7] focus-visible:ring-2 focus-visible:ring-black/5',
+          'h-10 w-full rounded-md border border-border bg-paper px-3 text-[15px] text-ink placeholder:text-muted',
+          'focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15',
           error && 'border-error focus-visible:border-error',
           className
         )}
@@ -179,12 +179,12 @@ export function Input({ id, label, hint, error, className, ...props }: FieldProp
 export function Textarea({ id, label, hint, error, className, ...props }: FieldProps & TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <label htmlFor={id} className="flex w-full flex-col gap-1.5">
-      <span className="text-label font-medium text-ink-soft">{label}</span>
+      <span className="text-label font-semibold text-ink-soft">{label}</span>
       <textarea
         id={id}
         className={clsx(
-          'min-h-24 w-full rounded-md border border-border bg-white px-3 py-2.5 text-[15px]',
-          'focus-visible:border-[#c7c7c7] focus-visible:ring-2 focus-visible:ring-black/5',
+          'min-h-24 w-full rounded-md border border-border bg-paper px-3 py-2.5 text-[15px]',
+          'focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15',
           error && 'border-error focus-visible:border-error',
           className
         )}
@@ -206,12 +206,12 @@ export function Select({
 }: FieldProps & SelectHTMLAttributes<HTMLSelectElement> & { options: Array<{ value: string; label: string }> }) {
   return (
     <label htmlFor={id} className="flex w-full flex-col gap-1.5">
-      <span className="text-label font-medium text-ink-soft">{label}</span>
+      <span className="text-label font-semibold text-ink-soft">{label}</span>
       <select
         id={id}
         className={clsx(
-          'h-10 w-full rounded-md border border-border bg-white px-3 text-[15px]',
-          'focus-visible:border-[#c7c7c7] focus-visible:ring-2 focus-visible:ring-black/5',
+          'h-10 w-full rounded-md border border-border bg-paper px-3 text-[15px]',
+          'focus-visible:border-brand-green focus-visible:ring-2 focus-visible:ring-brand-green/15',
           error && 'border-error focus-visible:border-error',
           className
         )}
@@ -241,8 +241,8 @@ export function Tabs({ items }: { items: Array<{ id: string; label: string; pane
             role="tab"
             aria-selected={active === item.id}
             className={clsx(
-              'shrink-0 rounded-md border px-3 py-1.5 text-caption font-medium',
-              active === item.id ? 'border-border bg-accent text-ink' : 'border-border bg-white text-ink-soft hover:bg-accent hover:text-ink'
+              'shrink-0 rounded-pill border px-3 py-1.5 text-caption font-semibold',
+              active === item.id ? 'border-brand-green bg-brand-green text-white' : 'border-border bg-paper text-ink-soft hover:bg-accent hover:text-ink'
             )}
             onClick={() => setActive(item.id)}
           >
@@ -298,7 +298,7 @@ export function Modal({
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/25 p-3 sm:items-center sm:p-4">
       <div
-        className="w-full max-w-lg rounded-xl border border-border bg-white p-4 shadow-soft sm:p-6"
+        className="w-full max-w-lg rounded-lg border border-border bg-paper p-4 shadow-soft sm:p-6"
         role="dialog"
         aria-modal="true"
       >
@@ -319,13 +319,13 @@ export function Modal({
 
 export function Toast({ message, tone = 'default' }: { message: string; tone?: 'default' | 'success' | 'warn' | 'error' }) {
   const toneClass = {
-    default: 'border-border bg-white text-ink',
+    default: 'border-border bg-paper text-ink',
     success: 'border-brand-green/30 bg-brand-green-soft text-brand-green',
     warn: 'border-[#f2dfc0] bg-[#fff7eb] text-[#8a5c13]',
     error: 'border-[#f5d2d0] bg-[#fef1f1] text-[#b42318]'
   }[tone];
 
-  return <div className={clsx('rounded-md border px-3 py-2 text-caption font-medium shadow-soft', toneClass)}>{message}</div>;
+  return <div className={clsx('rounded-md border px-3 py-2 text-caption font-semibold shadow-soft', toneClass)}>{message}</div>;
 }
 
 export function Stepper({ steps, current }: { steps: string[]; current: number }) {
@@ -336,8 +336,8 @@ export function Stepper({ steps, current }: { steps: string[]; current: number }
           key={step}
           aria-current={index === current ? 'step' : undefined}
           className={clsx(
-            'rounded-md border px-3 py-2 text-caption font-medium',
-            index <= current ? 'border-border bg-accent text-ink' : 'border-border bg-white text-muted'
+            'rounded-md border px-3 py-2 text-caption font-semibold',
+            index <= current ? 'border-brand-green bg-brand-green-soft text-ink' : 'border-border bg-paper text-muted'
           )}
         >
           {index + 1}. {step}
@@ -414,7 +414,7 @@ export function BreathWidget() {
     return (
       <button
         onClick={() => setDismissed(false)}
-        className="fixed bottom-4 right-4 z-40 rounded-md border border-border bg-white px-3 py-2 text-caption font-medium shadow-soft"
+        className="fixed bottom-4 right-4 z-40 rounded-pill border border-border bg-paper px-3 py-2 text-caption font-semibold shadow-soft"
       >
         Buka "Take a breath"
       </button>
@@ -422,7 +422,7 @@ export function BreathWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-40 rounded-lg border border-border bg-white p-4 shadow-soft sm:left-auto sm:w-[300px]">
+    <div className="fixed bottom-4 left-4 right-4 z-40 rounded-md border border-border bg-paper p-4 shadow-soft sm:left-auto sm:w-[300px]">
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="text-caption font-semibold">Take a breath - 1 menit</p>
@@ -477,7 +477,7 @@ export function ChatBubbleSet({
           <div
             className={clsx(
               'max-w-[92%] rounded-lg border px-4 py-3 text-body sm:max-w-[85%]',
-              msg.role === 'user' ? 'border-[#191919] bg-[#191919] text-white' : 'border-border bg-white text-ink'
+              msg.role === 'user' ? 'border-brand-green bg-brand-green text-white' : 'border-border bg-paper text-ink'
             )}
           >
             {msg.text}
@@ -528,8 +528,8 @@ export function MoodPicker({
             onSelect?.(mood);
           }}
           className={clsx(
-            'shrink-0 rounded-md border px-3 py-1.5 text-caption font-medium',
-            active === mood ? 'border-border bg-accent text-ink' : 'border-border bg-white text-ink-soft hover:bg-accent hover:text-ink'
+            'shrink-0 rounded-pill border px-3 py-1.5 text-caption font-semibold',
+            active === mood ? 'border-brand-green bg-brand-green text-white' : 'border-border bg-paper text-ink-soft hover:bg-accent hover:text-ink'
           )}
         >
           {mood}
@@ -553,7 +553,7 @@ export function InsightsChartCard() {
           {data.map((value, index) => (
             <div key={index} className="flex flex-col items-center gap-1">
               <div className="flex h-28 w-full items-end rounded-sm border border-border bg-bg px-1">
-                <div className="w-full rounded-sm bg-accent" style={{ height: `${value}%` }} />
+                <div className="w-full rounded-sm bg-brand-green" style={{ height: `${value}%` }} />
               </div>
               <span className="text-[10px] font-semibold text-muted">{['S', 'S', 'R', 'K', 'J', 'S', 'M'][index]}</span>
             </div>

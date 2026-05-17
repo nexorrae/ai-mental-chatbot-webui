@@ -1,35 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   color-scheme: light;
 
   /* Color Tokens */
-  --color-ink: #191919;
-  --color-ink-soft: #37352f;
-  --color-muted: #787774;
+  --color-ink: #050505;
+  --color-ink-soft: #30322c;
+  --color-muted: #8c8d89;
   --color-paper: #ffffff;
-  --color-bg: #ffffff;
-  --color-border: #e8e8e7;
-  --color-accent: #f7f7f5;
-  --color-brand-green: #2f9e6f;
-  --color-brand-green-soft: #e9f7f0;
-  --color-brand-blue: #2f6fe4;
-  --color-brand-blue-soft: #ecf3ff;
-  --color-success: #0f7b6c;
-  --color-warn: #9a6700;
+  --color-bg: #f3faf6;
+  --color-border: #e5e7e1;
+  --color-accent: #e5f2c8;
+  --color-brand-green: #4a640f;
+  --color-brand-green-soft: #e5f2c8;
+  --color-brand-blue: #8f9d79;
+  --color-brand-blue-soft: #edf4ef;
+  --color-success: #4a640f;
+  --color-warn: #8b6b1f;
   --color-error: #b42318;
 
   /* Type Scale */
-  --text-h1: clamp(2rem, 5vw, 4rem);
-  --text-h2: clamp(1.65rem, 3.5vw, 2.7rem);
-  --text-h3: clamp(1.4rem, 2.5vw, 2rem);
-  --text-h4: 1.3rem;
-  --text-h5: 1.12rem;
+  --font-sans: Inter, 'Segoe UI', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', ui-serif, serif;
+  --text-h1: clamp(3rem, 10vw, 8.5rem);
+  --text-h2: clamp(2.2rem, 5.5vw, 4.5rem);
+  --text-h3: clamp(1.9rem, 4vw, 3.2rem);
+  --text-h4: clamp(1.45rem, 2.2vw, 2rem);
+  --text-h5: 1.18rem;
   --text-h6: 1rem;
-  --text-body: 0.98rem;
-  --text-caption: 0.84rem;
-  --text-button: 0.92rem;
-  --text-label: 0.82rem;
+  --text-body: 0.96rem;
+  --text-caption: 0.82rem;
+  --text-button: 0.9rem;
+  --text-label: 0.78rem;
 
   /* Layout Tokens */
   --container-sm: 640px;
@@ -53,17 +55,17 @@
   --space-20: 80px;
 
   /* Radius + Borders */
-  --radius-sm: 8px;
-  --radius-md: 10px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
   --radius-lg: 12px;
-  --radius-xl: 14px;
+  --radius-xl: 24px;
   --radius-pill: 999px;
   --border-strong: 1px;
   --border-default: 1px;
 
   /* Misc */
-  --shadow-soft: 0 1px 1px rgba(15, 23, 42, 0.03), 0 2px 8px rgba(15, 23, 42, 0.05);
-  --focus-ring: 0 0 0 3px rgba(17, 24, 39, 0.1);
+  --shadow-soft: 0 1px 1px rgba(5, 5, 5, 0.025), 0 8px 28px rgba(5, 5, 5, 0.045);
+  --focus-ring: 0 0 0 3px rgba(74, 100, 15, 0.16);
 }
 
 * {
@@ -77,7 +79,7 @@ body {
 }
 
 body {
-  font-family: Inter, 'Segoe UI', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   background: var(--color-bg);
   color: var(--color-ink);
   line-height: 1.5;
@@ -92,7 +94,9 @@ h6 {
   margin: 0;
   color: var(--color-ink);
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
+  font-family: var(--font-serif);
+  font-weight: 600;
 }
 
 h1 { font-size: var(--text-h1); }

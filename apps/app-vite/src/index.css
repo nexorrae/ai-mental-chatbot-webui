@@ -13,6 +13,7 @@
 
   body {
     @apply bg-bg text-ink antialiased;
+    font-family: var(--font-sans);
   }
 
   :focus-visible {
@@ -22,11 +23,11 @@
 
 @layer components {
   .page-shell {
-    @apply mx-auto w-full max-w-[1360px] px-3 sm:px-4 lg:px-5 2xl:px-6;
+    @apply mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-8;
   }
 
   .page-shell-narrow {
-    @apply mx-auto w-full max-w-[980px] px-3 sm:px-4 lg:px-5;
+    @apply mx-auto w-full max-w-[980px] px-4 sm:px-6 lg:px-8;
   }
 
   .hide-scrollbar {
