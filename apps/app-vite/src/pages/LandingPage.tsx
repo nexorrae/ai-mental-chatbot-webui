@@ -358,25 +358,23 @@ export function LandingPage() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-xl border border-border bg-paper shadow-sm">
-              <div className="divide-y divide-border">
+            <div className="grid gap-4 sm:grid-cols-2">
                 {[
                   { title: 'Satu layar fokus', desc: 'Chat, check-in mood, dan status privasi ada dalam satu alur.', icon: '🎯' },
                   { title: 'Bahasa non-teknis', desc: 'Semua label dan instruksi pakai wording yang mudah dipahami.', icon: '💬' },
                   { title: 'Kontrol data transparan', desc: 'Kamu bisa lihat kapan data diproses AI dan kapan tetap lokal.', icon: '🛡️' },
                   { title: 'Akses fleksibel', desc: 'Bisa anonymous atau login untuk menyimpan konteks personal.', icon: '✨' }
                 ].map(({title, desc, icon}) => (
-                  <div key={title} className="group flex gap-4 p-5 transition-colors hover:bg-bg sm:p-6">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-green/10 text-xl shadow-inner transition-transform group-hover:scale-110 group-hover:bg-brand-green/20">
+                  <div key={title} className="group flex flex-col gap-4 rounded-xl border border-border bg-paper p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-md sm:p-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-green/10 text-xl shadow-inner transition-transform group-hover:scale-110 group-hover:bg-brand-green/20">
                       {icon}
                     </div>
-                    <div className="flex flex-col justify-center">
+                    <div>
                       <p className="text-base font-semibold tracking-tight text-ink transition-colors group-hover:text-brand-green">{title}</p>
                       <p className="mt-1 text-sm leading-relaxed text-ink-soft">{desc}</p>
                     </div>
                   </div>
                 ))}
-              </div>
             </div>
           </div>
         </section>
@@ -425,13 +423,18 @@ export function LandingPage() {
         <section className="landing-shell pb-12">
           <h2 className="font-serif text-h3 font-semibold tracking-normal text-ink">Pilih kebutuhanmu hari ini.</h2>
           <p className="mt-2 text-body text-ink-soft">Mulai dari use case yang paling dekat dengan kondisimu.</p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {useCases.map((useCase, index) => (
-              <article key={useCase} className="rounded-md border border-border bg-paper p-4">
-                <p className="text-caption font-medium text-muted">Use case {index + 1}</p>
-                <p className="mt-1 text-h6 font-semibold tracking-tight text-ink">{useCase}</p>
-                <p className="mt-2 text-caption text-ink-soft">Buka chat dan mulai dengan satu kalimat sederhana.</p>
-              </article>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {useCases.map((useCase) => (
+              <Link to="/app/chat" key={useCase} className="group relative overflow-hidden rounded-xl border border-border bg-paper p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-md">
+                <div className="absolute right-4 top-4 text-brand-green opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+                <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-md bg-brand-green-soft text-brand-green">
+                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <p className="text-h6 font-semibold tracking-tight text-ink transition-colors group-hover:text-brand-green">{useCase}</p>
+                <p className="mt-2 text-xs leading-relaxed text-ink-soft">Buka chat dan mulai dengan satu kalimat sederhana.</p>
+              </Link>
             ))}
           </div>
         </section>
@@ -449,17 +452,25 @@ export function LandingPage() {
 
           {loadingArticles ? <p className="text-caption text-muted">Memuat artikel...</p> : null}
 
-          <div className="divide-y divide-border rounded-md border border-border bg-paper">
-            {articles.slice(0, 5).map((article) => (
-              <article key={article.id} className="p-4 sm:p-5">
-                <Link to={`/articles/${article.slug}`} className="block">
-                  <h3 className="text-h5 font-semibold tracking-tight text-ink">{article.title}</h3>
-                  <p className="mt-1 text-body text-ink-soft">{article.excerpt}</p>
-                  <p className="mt-2 text-caption text-muted">
-                    {article.author} • {article.publishedAt ? dateFormatter.format(new Date(article.publishedAt)) : 'Draft'} •{' '}
-                    {article.readTimeMinutes} menit
-                  </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {articles.slice(0, 3).map((article) => (
+              <article key={article.id} className="group relative flex flex-col justify-between rounded-xl border border-border bg-paper p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-brand-green/40 hover:shadow-md">
+                <Link to={`/articles/${article.slug}`} className="absolute inset-0 z-10">
+                  <span className="sr-only">Baca artikel {article.title}</span>
                 </Link>
+                <div>
+                  <div className="mb-3 inline-flex items-center rounded-full border border-brand-green/20 bg-brand-green-soft px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-green">
+                    Artikel
+                  </div>
+                  <h3 className="text-h5 font-semibold tracking-tight text-ink transition-colors group-hover:text-brand-green">{article.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-soft line-clamp-3">{article.excerpt}</p>
+                </div>
+                <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
+                  <p className="text-[11px] font-medium text-muted">
+                    {article.author} • {article.publishedAt ? dateFormatter.format(new Date(article.publishedAt)) : 'Draft'}
+                  </p>
+                  <p className="text-[11px] font-medium text-brand-green">{article.readTimeMinutes} min read</p>
+                </div>
               </article>
             ))}
           </div>
