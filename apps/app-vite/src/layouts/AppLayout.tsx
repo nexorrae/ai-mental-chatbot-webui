@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { appNav } from '../data/navigation';
-import { BreathWidget, Footer, Navbar } from '../components/ui';
+import { BreathWidget, Footer, Navbar, Toast, ThemeToggle } from '../components/ui';
 
 export function AppLayout() {
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -53,6 +53,7 @@ export function AppLayout() {
               <p className="text-caption text-muted">Anonymous by default. Login opsional untuk simpan konteks personalmu.</p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
+              <ThemeToggle />
               <button
                 type="button"
                 className="inline-flex h-8 items-center rounded-md border border-border bg-paper px-3 text-xs font-semibold text-ink shadow-sm hover:bg-bg md:hidden"

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { contentApi, type WellnessArticle } from '../lib/contentApi';
+import { ThemeToggle } from '../components/ui';
 
 const fallbackArticles: WellnessArticle[] = [
   {
@@ -156,6 +157,7 @@ export function LandingPage() {
             <Link to="/app/chat" className="inline-flex h-9 items-center rounded-md bg-brand-green px-4 text-sm font-semibold text-white hover:bg-[#3e540d]">
               Mulai Konsultasi
             </Link>
+            <ThemeToggle />
             <button
               type="button"
               className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-paper text-ink md:hidden"

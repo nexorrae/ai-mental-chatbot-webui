@@ -9,6 +9,7 @@ import {
   useState
 } from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../lib/ThemeProvider';
 
 export function Navbar({
   title,
@@ -101,6 +102,18 @@ export function Footer({ compact = false }: { compact?: boolean }) {
         </a>
       </div>
     </footer>
+  );
+}
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  return (
+    <button
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="rounded-md p-2 hover:bg-brand-green-soft"
+    >
+      {theme === 'dark' ? '🌙' : '☀️'}
+    </button>
   );
 }
 

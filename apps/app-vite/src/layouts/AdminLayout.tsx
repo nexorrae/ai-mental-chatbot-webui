@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { adminNav } from '../data/navigation';
-import { Footer, Navbar, OutlinedCard, Button, Input, Toast } from '../components/ui';
+import { Footer, Navbar, OutlinedCard, Button, Input, Toast, ThemeToggle } from '../components/ui';
 import { clearAdminCredentials, hasAdminCredentials, setAdminCredentials } from '../lib/adminAuth';
 import { contentApi } from '../lib/contentApi';
 
@@ -118,6 +118,7 @@ export function AdminLayout() {
         links={adminNav}
         action={
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <a className="text-caption font-semibold text-brand-green underline decoration-dotted underline-offset-4 hover:text-[#3f560d]" href="/app/chat">
               Buka app user
             </a>

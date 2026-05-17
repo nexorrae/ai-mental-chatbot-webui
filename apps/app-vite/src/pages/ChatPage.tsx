@@ -1,7 +1,7 @@
 import { type KeyboardEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
-import { Button, LoadingState, Modal, Toast } from '../components/ui';
+import { Button, LoadingState, Modal, Toast, ThemeToggle } from '../components/ui';
 import { getRuntimeEnv } from '../lib/runtimeEnv';
 import {
   createThread,
@@ -733,6 +733,7 @@ export function ChatPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               <label className="hidden items-center gap-1.5 rounded-md border border-brand-green/30 bg-brand-green-soft/80 px-2 py-1 shadow-soft sm:inline-flex">
                 <input
                   type="checkbox"
